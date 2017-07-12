@@ -39,7 +39,8 @@ class ModifyUsersTable extends Migration
             });
 
             Schema::table('users', function (Blueprint $table) {
-                $table->boolean('enabled')->default(false);
+                $table->boolean('activated')->default(false);
+                $table->boolean('forbidden')->default(false);
                 $table->softDeletes('deleted_at');
             });
         });
@@ -73,6 +74,7 @@ class ModifyUsersTable extends Migration
 
             Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('enabled');
+                $table->dropColumn('forbidden');
                 $table->dropColumn('deleted_at');
             });
         });

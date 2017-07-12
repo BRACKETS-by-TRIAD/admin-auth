@@ -1,6 +1,6 @@
 <?php namespace Brackets\AdminAuth\Providers;
 
-use Brackets\AdminGenerator\Generate\ModelFactory;
+use Brackets\AdminAuth\Console\Generate\GenerateUser;
 use Illuminate\Support\ServiceProvider;
 
 class AdminAuthProvider extends ServiceProvider
@@ -28,6 +28,10 @@ class AdminAuthProvider extends ServiceProvider
 //        $this->loadMigrationsFrom(__DIR__ . '/../../install-stubs/database/migrations');
 //        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
 //        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'brackets/admin-auth');
+
+        $this->commands([
+            GenerateUser::class,
+        ]);
     }
 
     /**
