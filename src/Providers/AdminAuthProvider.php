@@ -1,9 +1,9 @@
-<?php namespace Brackets\Admin;
+<?php namespace Brackets\AdminAuth\Providers;
 
 use Brackets\AdminGenerator\Generate\ModelFactory;
 use Illuminate\Support\ServiceProvider;
 
-class AdminProvider extends ServiceProvider
+class AdminAuthProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -12,15 +12,20 @@ class AdminProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'brackets/admin');
+        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+//        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'brackets/admin');
+
+//        $this->publishes([
+//            __DIR__.'/../../install-stubs/resources/assets' => resource_path('assets')
+//        ], 'assets');
+//
+//        $this->publishes([
+//            __DIR__.'/../../install-stubs/resources/views' => resource_path('views')
+//        ], 'views');
 
         $this->publishes([
-            __DIR__.'/../install-stubs/resources/assets' => resource_path('assets')
-        ], 'assets');
-
-        $this->publishes([
-            __DIR__.'/../install-stubs/resources/views' => resource_path('views')
-        ], 'views');
+            __DIR__.'/../../install-stubs/database/migrations' => database_path('migrations')
+        ]);
     }
 
     /**
@@ -30,6 +35,6 @@ class AdminProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 }
