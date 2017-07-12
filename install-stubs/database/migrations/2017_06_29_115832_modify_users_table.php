@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdminUsersTable extends Migration
+class ModifyUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,13 @@ class CreateAdminUsersTable extends Migration
      */
     public function up()
     {
-        DB::transaction(function () {
+        \DB::transaction(function () {
             Schema::table('users', function (Blueprint $table) {
                 $table->string('first_name')->nullable();
                 $table->string('last_name')->nullable();
             });
 
-            $users = DB::table('users')->orderBy('id')->get();
+            $users = \DB::table('users')->orderBy('id')->get();
             foreach ($users as $user) {
                 $name = explode(' ', trim($user->name));
                 $firstName = $name[0];
@@ -31,7 +31,7 @@ class CreateAdminUsersTable extends Migration
                     'last_name' => $lastName,
                 ];
 
-                DB::table('users')->where('id', $user->id)->update($data);
+                \DB::table('users')->where('id', $user->id)->update($data);
             }
 
             Schema::table('users', function (Blueprint $table) {
