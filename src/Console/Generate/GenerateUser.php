@@ -46,7 +46,10 @@ class GenerateUser extends Command {
 
         if($force) {
             //remove all files
-            $this->files->delete();
+            $this->files->delete(app_path('Http/Controllers/Admin/UsersController.php'));
+            $this->files->delete(app_path('Models/User.php'));
+            $this->files->deleteDirectory(resource_path('assets/js/admin/user'));
+            $this->files->deleteDirectory(resource_path('views/admin/user'));
         }
 
         if($withModelOption) {
@@ -92,8 +95,9 @@ class GenerateUser extends Command {
 
     protected function getOptions() {
         return [
-            ['withModel', 'm', InputOption::VALUE_OPTIONAL, 'Specify if generating also model'],
+            ['withModel', 'm', InputOption::VALUE_NONE, 'Specify if generating also model'],
             ['force', 'f', InputOption::VALUE_NONE, 'Force will delete files before regenerating admin user'],
+            ['seed', 's', InputOption::VALUE_NONE, 'Seeds table with fake data'],
         ];
     }
 
