@@ -22,6 +22,9 @@
         "illuminate/support": "5.4.*",
         "brackets/admin": "dev-master"
     },
+    "require-dev": {
+        "brackets/admin-generator": "dev-master"
+    },
     "autoload": {
         "classmap": [],
         "psr-4": {

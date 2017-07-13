@@ -39,8 +39,9 @@ class GenerateUser extends Command {
      */
     public function fire()
     {
-
         $tableNameArgument = 'users';
+        $modelOption = $this->option('model');
+        $controllerOption = $this->option('controller');
         $withModelOption = $this->option('withModel');
         $force = $this->option('force');
 
@@ -48,35 +49,45 @@ class GenerateUser extends Command {
             //remove all files
             $this->files->delete(app_path('Http/Controllers/Admin/UsersController.php'));
             $this->files->delete(app_path('Models/User.php'));
-            $this->files->deleteDirectory(resource_path('assets/js/admin/user'));
+//            $this->files->deleteDirectory(resource_path('assets/js/admin/user'));
             $this->files->deleteDirectory(resource_path('views/admin/user'));
         }
 
         if($withModelOption) {
             $this->call('admin:generate:model', [
                 'table_name' => $tableNameArgument,
+                '--model' => $modelOption,
             ]);
+
+            //TODO change config/auth.php to use our user model for auth
         }
 
         $this->call('admin:generate:controller', [
             'table_name' => $tableNameArgument,
+            '--model' => $modelOption,
+            '--controller' => $controllerOption,
         ]);
 
 
         $this->call('admin:generate:routes', [
             'table_name' => $tableNameArgument,
+            '--model' => $modelOption,
+            '--controller' => $controllerOption,
         ]);
 
         $this->call('admin:generate:index', [
             'table_name' => $tableNameArgument,
+            '--model' => $modelOption,
         ]);
 
         $this->call('admin:generate:form', [
             'table_name' => $tableNameArgument,
+            '--model' => $modelOption,
         ]);
 
         $this->call('admin:generate:factory', [
             'table_name' => $tableNameArgument,
+            '--model' => $modelOption,
         ]);
 
         if ($this->option('seed')) {
@@ -95,7 +106,9 @@ class GenerateUser extends Command {
 
     protected function getOptions() {
         return [
-            ['withModel', 'm', InputOption::VALUE_NONE, 'Specify if generating also model'],
+            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Specify custom model name'],
+            ['controller', 'c', InputOption::VALUE_OPTIONAL, 'Specify custom controller name'],
+            ['withModel', 'w', InputOption::VALUE_NONE, 'Specify if generating also model'],
             ['force', 'f', InputOption::VALUE_NONE, 'Force will delete files before regenerating admin user'],
             ['seed', 's', InputOption::VALUE_NONE, 'Seeds table with fake data'],
         ];

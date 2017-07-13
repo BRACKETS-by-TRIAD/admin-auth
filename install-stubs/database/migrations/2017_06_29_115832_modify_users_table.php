@@ -43,6 +43,18 @@ class ModifyUsersTable extends Migration
                 $table->boolean('forbidden')->default(false);
                 $table->softDeletes('deleted_at');
             });
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropUnique(['email']);
+            });
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->unique(['email', 'deleted_at']);
+            });
+
+            Schema::table('users', function ($table) {
+                \DB::statement('CREATE UNIQUE INDEX users_email_null_deleted_at ON users (email) WHERE deleted_at IS NULL;');
+            });
         });
     }
 
@@ -54,6 +66,24 @@ class ModifyUsersTable extends Migration
     public function down()
     {
         DB::transaction(function () {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropIndex('users_email_null_deleted_at');
+            });
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropUnique(['email', 'deleted_at']);
+            });
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->unique(['email']);
+            });
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('activated');
+                $table->dropColumn('forbidden');
+                $table->dropColumn('deleted_at');
+            });
+
             Schema::table('users', function (Blueprint $table) {
                 $table->string('name');
             });
@@ -70,12 +100,6 @@ class ModifyUsersTable extends Migration
             Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('first_name');
                 $table->dropColumn('last_name');
-            });
-
-            Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn('enabled');
-                $table->dropColumn('forbidden');
-                $table->dropColumn('deleted_at');
             });
         });
     }
