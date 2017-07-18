@@ -140,12 +140,18 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Mark all token records as used by user.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate  $user
+     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate $user
+     * @param string|null $token
      * @return void
      */
-    public function markAsUsed(CanActivateContract $user)
+    public function markAsUsed(CanActivateContract $user, $token = null)
     {
-        $this->getTable()->where('email', $user->getEmailForActivation())->update(['used' => true]);
+        $query = $this->getTable()
+            ->where('email', $user->getEmailForActivation());
+        if(!is_null($token)) {
+            $query = $query->where('token', $token);
+        }
+        $query->update(['used' => true]);
     }
 
     /**

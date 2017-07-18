@@ -41,10 +41,11 @@ interface TokenRepositoryInterface
     /**
      * Mark all token records as used by user.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate  $user
+     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate $user
+     * @param $token
      * @return void
      */
-    public function markAsUsed(CanActivateContract $user);
+    public function markAsUsed(CanActivateContract $user, $token);
 
     /**
      * Determine if a token record exists and is valid.

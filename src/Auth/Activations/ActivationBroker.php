@@ -89,7 +89,7 @@ class ActivationBroker implements ActivationBrokerContract
         // in their persistent storage. Then we'll flag the token as used and return.
         $callback($user);
 
-        $this->tokens->markAsUsed($user);
+        $this->tokens->markAsUsed($user, $credentials['token']);
 
         return static::ACTIVATED;
     }

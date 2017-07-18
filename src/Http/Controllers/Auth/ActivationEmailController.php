@@ -110,9 +110,9 @@ class ActivationEmailController extends Controller {
     }
 
     /**
-     * Get the broker to be used during password reset.
+     * Get the broker to be used during activation.
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     * @return \Brackets\AdminAuth\Contracts\Auth\ActivationBroker
      */
     public function broker()
     {
