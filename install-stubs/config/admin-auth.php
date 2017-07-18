@@ -34,4 +34,15 @@ return [
     */
 
     'logout-redirect' => '/admin/login',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Password reset
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the url for redirect after password reset
+    |
+    */
+
+    'password-reset-redirect' => '/admin/login',
 ];

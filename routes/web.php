@@ -19,7 +19,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/admin/password',                   'ForgotPasswordController@showLinkRequestForm')->name('brackets/admin-auth:admin/showLinkRequestForm');
         Route::post('/admin/password/send',             'ForgotPasswordController@sendResetLinkEmail')->name('brackets/admin-auth:admin/sendResetLinkEmail');
 
-        Route::get('/admin/password/{token}',           'ResetPasswordController@showResetForm')->name('brackets/admin-auth:admin/showResetForm');
+        Route::get('/admin/password/{token}',      'ResetPasswordController@showResetForm')->name('brackets/admin-auth:admin/showResetForm');
         Route::post('/admin/password/reset',            'ResetPasswordController@reset')->name('brackets/admin-auth:admin/reset');
 
         Route::any('/admin/logout',                     'LoginController@logout')->name('brackets/admin-auth:admin/logout');

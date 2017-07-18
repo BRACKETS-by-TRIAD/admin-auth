@@ -50,6 +50,11 @@ class AdminAuthProvider extends ServiceProvider
             'Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated'
         );
 
+        $this->app->bind(
+            'Illuminate\Auth\Notifications\ResetPassword',
+            'Brackets\AdminAuth\Notifications\ResetPassword'
+        );
+
         $this->mergeConfigFrom(
             __DIR__.'/../../install-stubs/config/admin-auth.php', 'admin-auth'
         );
