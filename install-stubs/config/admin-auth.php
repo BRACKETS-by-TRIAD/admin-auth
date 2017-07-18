@@ -12,4 +12,26 @@ return [
     */
 
     'activation' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the url for redirect after login
+    |
+    */
+
+    'login-redirect' => '/admin/user',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Logout
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the url for redirect after logout
+    |
+    */
+
+    'logout-redirect' => '/admin/login',
 ];

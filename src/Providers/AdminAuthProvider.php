@@ -45,6 +45,11 @@ class AdminAuthProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(
+            'App\Http\Middleware\RedirectIfAuthenticated',
+            'Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated'
+        );
+
         $this->mergeConfigFrom(
             __DIR__.'/../../install-stubs/config/admin-auth.php', 'admin-auth'
         );
