@@ -6,7 +6,7 @@
             <div class="card-group ">
                 <div class="card p-a-2">
                     <div class="card-block">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/reset') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/password/reset') }}">
                             {{ csrf_field() }}
                             <h1>Reset Password</h1>
                             @if (session('status'))

@@ -1,6 +1,8 @@
 <?php namespace Brackets\AdminAuth\Providers;
 
+use Brackets\AdminAuth\Auth\Activations\ActivationServiceProvider;
 use Brackets\AdminAuth\Console\Generate\GenerateUser;
+use Brackets\AdminAuth\Facades\Activation;
 use Illuminate\Support\ServiceProvider;
 
 class AdminAuthProvider extends ServiceProvider
@@ -29,13 +31,20 @@ class AdminAuthProvider extends ServiceProvider
             __DIR__.'/../../install-stubs/config/admin-auth.php' => config_path('admin-auth.php'),
         ]);
 
-//        $this->loadMigrationsFrom(__DIR__ . '/../../install-stubs/database/migrations');
+        $this->publishes([
+            __DIR__.'/../../install-stubs/resources/lang' => resource_path('lang/vendor/admin-auth'),
+        ]);
+
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'admin-auth');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'brackets/admin-auth');
 
         $this->commands([
             GenerateUser::class,
         ]);
+
+        $this->app->register(ActivationServiceProvider::class);
     }
 
     /**
@@ -58,5 +67,8 @@ class AdminAuthProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../../install-stubs/config/admin-auth.php', 'admin-auth'
         );
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Activation', Activation::class);
     }
 }
