@@ -169,12 +169,22 @@ class ActivationBroker implements ActivationBrokerContract
     }
 
     /**
-     * Get the password reset token repository implementation.
+     * Get the activation token repository implementation.
      *
      * @return \Brackets\AdminAuth\Auth\Activations\TokenRepositoryInterface
      */
     public function getRepository()
     {
         return $this->tokens;
+    }
+
+    /**
+     * Get the user model class implementation.
+     *
+     * @return \Brackets\AdminAuth\Auth\Activations\TokenRepositoryInterface
+     */
+    public function getUserModelClass()
+    {
+        return $this->users->getModel();
     }
 }

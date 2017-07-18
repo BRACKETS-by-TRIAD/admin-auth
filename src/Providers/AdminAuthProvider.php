@@ -45,6 +45,7 @@ class AdminAuthProvider extends ServiceProvider
         ]);
 
         $this->app->register(ActivationServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**
