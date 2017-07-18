@@ -52,8 +52,12 @@ class ModifyUsersTable extends Migration
                 $table->unique(['email', 'deleted_at']);
             });
 
-            Schema::table('users', function ($table) {
+            Schema::table('users', function (Blueprint $table) {
                 \DB::statement('CREATE UNIQUE INDEX users_email_null_deleted_at ON users (email) WHERE deleted_at IS NULL;');
+            });
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('language', 2)->default('en');
             });
         });
     }
@@ -66,6 +70,10 @@ class ModifyUsersTable extends Migration
     public function down()
     {
         DB::transaction(function () {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('language');
+            });
+
             Schema::table('users', function (Blueprint $table) {
                 $table->dropIndex('users_email_null_deleted_at');
             });
