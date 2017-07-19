@@ -15,7 +15,7 @@ class LoginTest extends TestCase
     /** @test */
     public function user_can_log_in()
     {
-//        $this->disableExceptionHandling();
+        $this->disableExceptionHandling();
         $response = $this->get('/admin/login');
 //        dd($response);
         $response->assertStatus(200);
