@@ -5,7 +5,7 @@ namespace Brackets\AdminAuth\Notifications;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPassword extends Notification
+class ActivationNotification extends Notification
 {
     /**
      * The password reset token.
@@ -46,8 +46,8 @@ class ResetPassword extends Notification
     {
         //TODO change to template?
         return (new MailMessage)
-            ->line('You are receiving this email because we received a password reset request for your account.')
-            ->action('Reset Password', route('brackets/admin-auth:admin/password/showResetForm', $this->token))
-            ->line('If you did not request a password reset, no further action is required.');
+            ->line('You are receiving this email because we received an activation request for your account.')
+            ->action('Activate your account', route('brackets/admin-auth:admin/activation/activate', $this->token))
+            ->line('If you did not request an activation, no further action is required.');
     }
 }

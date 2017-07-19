@@ -16,12 +16,15 @@ Route::middleware(['web'])->group(function () {
         Route::get('/admin/login',                      'LoginController@showLoginForm')->name('brackets/admin-auth:admin/showLoginForm');
         Route::post('/admin/login',                     'LoginController@login')->name('brackets/admin-auth:admin/login');
 
-        Route::get('/admin/password',                   'ForgotPasswordController@showLinkRequestForm')->name('brackets/admin-auth:admin/showLinkRequestForm');
-        Route::post('/admin/password/send',             'ForgotPasswordController@sendResetLinkEmail')->name('brackets/admin-auth:admin/sendResetLinkEmail');
-
-        Route::get('/admin/password/{token}',      'ResetPasswordController@showResetForm')->name('brackets/admin-auth:admin/showResetForm');
-        Route::post('/admin/password/reset',            'ResetPasswordController@reset')->name('brackets/admin-auth:admin/reset');
-
         Route::any('/admin/logout',                     'LoginController@logout')->name('brackets/admin-auth:admin/logout');
+
+        Route::get('/admin/password',                   'ForgotPasswordController@showLinkRequestForm')->name('brackets/admin-auth:admin/password/showLinkRequestForm');
+        Route::post('/admin/password/send',             'ForgotPasswordController@sendResetLinkEmail')->name('brackets/admin-auth:admin/password/sendResetLinkEmail');
+        Route::get('/admin/password/{token}',           'ResetPasswordController@showResetForm')->name('brackets/admin-auth:admin/password/showResetForm');
+        Route::post('/admin/password/reset',            'ResetPasswordController@reset')->name('brackets/admin-auth:admin/password/reset');
+
+        Route::get('/admin/activation',                 'ActivationEmailController@showLinkRequestForm')->name('brackets/admin-auth:admin/activation/showLinkRequestForm');
+        Route::post('/admin/activation/send',           'ActivationEmailController@sendActivationEmail')->name('brackets/admin-auth:admin/activation/sendActivationEmail');
+        Route::get('/admin/activation/{token}',         'ActivationController@activate')->name('brackets/admin-auth:admin/activation/activate');
     });
 });

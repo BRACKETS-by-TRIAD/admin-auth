@@ -29,7 +29,7 @@
                                     <button type="submit" class="btn btn-primary p-x-2">Login</button>
                                 </div>
                                 <div class="col-xs-6 text-xs-right">
-                                    <a href="{{ route('brackets/admin-auth:admin/showLinkRequestForm') }}" class="btn btn-link p-x-0">Forgot password?</a>
+                                    <a href="{{ route('brackets/admin-auth:admin/password/showLinkRequestForm') }}" class="btn btn-link p-x-0">Forgot password?</a>
                                 </div>
                             </div>
                         </form>

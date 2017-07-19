@@ -45,4 +45,42 @@ return [
     */
 
     'password-reset-redirect' => '/admin/login',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Activation
+    |--------------------------------------------------------------------------
+    |
+    | This options controls if activation is required or not
+    | And the activation redirect controls where to redirect after activation
+    |
+    */
+
+    'activation-required' => env('ACTIVATION_REQUIRED', false),
+
+    'activation-redirect' => '/admin/login',
+
+    /*
+    |
+    | You may specify multiple activation configurations if you have more
+    | than one user table or model in the application and you want to have
+    | separate activation settings based on the specific user types.
+    |
+    | The expire time is the number of minutes that the reset token should be
+    | considered valid. This security feature keeps tokens short-lived so
+    | they have less time to be guessed. You may change this as needed.
+    |
+    */
+
+    'activations' => [
+        'users' => [
+            'provider' => 'users',
+            'table' => 'activations',
+            'expire' => 60 * 24,
+        ],
+    ],
+
+    'defaults' => [
+        'activations' => 'users',
+    ],
 ];
