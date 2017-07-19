@@ -23,12 +23,25 @@
         "brackets/admin": "dev-master"
     },
     "require-dev": {
-        "brackets/admin-generator": "dev-master"
+        "brackets/admin-generator": "dev-master",
+        "orchestra/testbench": "~3.0"
     },
     "autoload": {
         "classmap": [],
         "psr-4": {
             "Brackets\\AdminAuth\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Brackets\\AdminAuth\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Brackets\\AdminAuth\\Providers\\AdminAuthProvider"
+            ]
         }
     }
 }
