@@ -1,6 +1,6 @@
 <?php
 
-namespace Brackets\AdminAuth\Tests\Auth;
+namespace Brackets\AdminAuth\Tests\Feaure\Auth;
 
 use Brackets\AdminAuth\Tests\TestCase;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +15,12 @@ class LoginTest extends TestCase
     /** @test */
     public function user_can_log_in()
     {
-        $this->disableExceptionHandling();
+//        $this->disableExceptionHandling();
         $response = $this->get('/admin/login');
 //        dd($response);
         $response->assertStatus(200);
 
-        $user = factory(\App\Models\User::class)->create([
+        $user = \App\User::create([
             'email' => 'john@example.com',
             'password' => bcrypt('testpass123')
         ]);

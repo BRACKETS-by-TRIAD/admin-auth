@@ -2,9 +2,10 @@
 
 namespace Brackets\AdminAuth\Tests;
 
-use App\Exceptions\Handler;
+use Brackets\AdminAuth\Tests\Exceptions\Handler;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orchestra\Testbench\Traits\CreatesApplication;
 
@@ -17,6 +18,7 @@ abstract class TestCase extends Orchestra
         parent::setUp();
         $this->getEnvironmentSetUp($this->app);
         $this->setUpDatabase($this->app);
+
     }
 
     /**
@@ -28,6 +30,7 @@ abstract class TestCase extends Orchestra
     {
         return [
             \Brackets\AdminAuth\Providers\AdminAuthProvider::class,
+            \Brackets\Admin\AdminProvider::class,
         ];
     }
 
@@ -50,11 +53,14 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase($app)
     {
-//        $app['db']->connection()->getSchemaBuilder()->create('test_models', function (Blueprint $table) {
-//            $table->increments('id');
-//            $table->string('name');
-//            $table->integer('width')->nullable();
-//        });
+        $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('email');
+            $table->string('password');
+            $table->string('remember_token')->nullable();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
+        });
         $this->artisan('migrate');
     }
 
