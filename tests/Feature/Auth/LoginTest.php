@@ -3,6 +3,7 @@
 namespace Brackets\AdminAuth\Tests\Feaure\Auth;
 
 use Brackets\AdminAuth\Tests\TestCase;
+use Brackets\AdminAuth\Tests\TestUserModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -20,11 +21,12 @@ class LoginTest extends TestCase
 //        dd($response);
         $response->assertStatus(200);
 
-        $user = \App\User::create([
+        $user = TestUserModel::create([
             'email' => 'john@example.com',
             'password' => bcrypt('testpass123')
         ]);
-        $this->seeInDatabase('users', [
+
+        $this->assertDatabaseHas('test_user_models', [
             'email' => 'john@example.com',
             'password' => bcrypt('testpass123'),
         ]);

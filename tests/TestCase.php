@@ -53,7 +53,7 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase($app)
     {
-        $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('test_user_models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
             $table->string('password');
