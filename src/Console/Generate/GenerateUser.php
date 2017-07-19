@@ -49,7 +49,7 @@ class GenerateUser extends Command {
             //remove all files
             $this->files->delete(app_path('Http/Controllers/Admin/UsersController.php'));
             $this->files->delete(app_path('Models/User.php'));
-//            $this->files->deleteDirectory(resource_path('assets/js/admin/user'));
+            $this->files->deleteDirectory(resource_path('assets/js/admin/user'));
             $this->files->deleteDirectory(resource_path('views/admin/user'));
         }
 
@@ -57,6 +57,7 @@ class GenerateUser extends Command {
             $this->call('admin:generate:model', [
                 'table_name' => $tableNameArgument,
                 '--model' => $modelOption,
+                '--template' => 'user',
             ]);
 
             //TODO change config/auth.php to use our user model for auth

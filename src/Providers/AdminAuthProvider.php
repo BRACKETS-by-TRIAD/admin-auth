@@ -1,6 +1,7 @@
 <?php namespace Brackets\AdminAuth\Providers;
 
 use Brackets\AdminAuth\Auth\Activations\ActivationServiceProvider;
+use Brackets\AdminAuth\Console\Generate\GenerateProfile;
 use Brackets\AdminAuth\Console\Generate\GenerateUser;
 use Brackets\AdminAuth\Facades\Activation;
 use Illuminate\Support\ServiceProvider;
@@ -42,6 +43,7 @@ class AdminAuthProvider extends ServiceProvider
 
         $this->commands([
             GenerateUser::class,
+            GenerateProfile::class,
         ]);
 
         $this->app->register(ActivationServiceProvider::class);
