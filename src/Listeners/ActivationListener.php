@@ -21,5 +21,7 @@ class ActivationListener
             'eloquent.created: ' . Activation::broker()->getUserModelClass(),
             ActivationService::class
         );
+
+        //TODO listen on user edit and if email has changed, deactivate user and send email again
     }
 }

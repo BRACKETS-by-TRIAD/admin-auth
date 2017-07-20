@@ -41,38 +41,49 @@ class GenerateProfile extends Command {
     {
         $tableNameArgument = 'users';
         $modelOption = $this->option('model');
-        $controllerOption = $this->option('controller');
+        $controllerOption = !empty($this->option('controller')) ? $this->option('controller') : 'ProfileController';
         $force = $this->option('force');
 
         if($force) {
             //remove all files
-//            $this->files->delete(app_path('Http/Controllers/Admin/ProfileController.php'));
-//            $this->files->deleteDirectory(resource_path('assets/js/admin/profile'));
-//            $this->files->deleteDirectory(resource_path('views/admin/profile'));
+            $this->files->delete(app_path('Http/Controllers/Admin/ProfileController.php'));
+            $this->files->deleteDirectory(resource_path('assets/js/admin/profile'));
+            $this->files->deleteDirectory(resource_path('views/admin/profile'));
         }
 
-//        $this->call('admin:generate:controller', [
-//            'table_name' => $tableNameArgument,
-//            '--model' => $modelOption,
-//            '--controller' => 'ProfileController',
-//            '--template' => 'profile',
-//        ]);
-
+        $this->call('admin:generate:controller', [
+            'table_name' => $tableNameArgument,
+            '--model' => $modelOption,
+            '--controller' => $controllerOption,
+            '--template' => 'profile',
+        ]);
 
         $this->call('admin:generate:routes', [
             'table_name' => $tableNameArgument,
             '--model' => $modelOption,
-            '--controller' => 'ProfileController',
+            '--controller' => $controllerOption,
             '--template' => 'profile',
         ]);
 
-//        $this->call('admin:generate:form', [
-//            'table_name' => $tableNameArgument,
-//            '--model' => $modelOption,
-//            '--template' => 'profile',
-//        ]);
-//
-//        $this->info('Generating whole admin profile finished');
+        $this->call('admin:generate:full-form', [
+            'table_name' => $tableNameArgument,
+            '--model' => $modelOption,
+            '--template' => 'profile',
+            '--name' => 'edit-profile',
+            '--view-name' => 'profile',
+            '--route' => 'admin/profile/update',
+        ]);
+
+        $this->call('admin:generate:full-form', [
+            'table_name' => $tableNameArgument,
+            '--model' => $modelOption,
+            '--template' => 'profile.password',
+            '--name' => 'edit-password',
+            '--view-name' => 'profile',
+            '--route' => 'admin/password/update',
+        ]);
+
+        $this->info('Generating whole admin profile finished');
 
     }
 
@@ -86,7 +97,6 @@ class GenerateProfile extends Command {
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Specify custom model name'],
             ['controller', 'c', InputOption::VALUE_OPTIONAL, 'Specify custom controller name'],
             ['force', 'f', InputOption::VALUE_NONE, 'Force will delete files before regenerating admin profile'],
-            ['seed', 's', InputOption::VALUE_NONE, 'Seeds table with fake data'],
         ];
     }
 
