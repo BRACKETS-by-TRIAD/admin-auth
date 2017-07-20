@@ -38,7 +38,6 @@ class AdminAuthProvider extends ServiceProvider
 
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'admin-auth');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'brackets/admin-auth');
 
         $this->commands([
@@ -70,6 +69,10 @@ class AdminAuthProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../../install-stubs/config/admin-auth.php', 'admin-auth'
         );
+
+        if(config('admin-auth.use-routes', true)) {
+            $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+        }
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Activation', Activation::class);
