@@ -19,12 +19,13 @@
     ],
     "require": {
         "php": ">=5.6.4",
-        "illuminate/support": "5.4.*",
+        "laravel/laravel": "5.4.*",
         "brackets/admin": "dev-master"
     },
     "require-dev": {
         "brackets/admin-generator": "dev-master",
-        "orchestra/testbench": "~3.0"
+        "orchestra/testbench": "~3.0",
+        "phpunit/phpunit": "~5.7"
     },
     "autoload": {
         "classmap": [],
@@ -37,6 +38,20 @@
             "Brackets\\AdminAuth\\Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../AdminGenerator"
+        },
+        {
+            "type": "path",
+            "url": "../Admin"
+        },
+        {
+            "type": "path",
+            "url": "../Simpleweb"
+        }
+    ],
     "extra": {
         "laravel": {
             "providers": [

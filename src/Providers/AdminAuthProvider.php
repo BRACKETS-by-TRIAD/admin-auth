@@ -43,6 +43,9 @@ class AdminAuthProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'admin-auth');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'brackets/admin-auth');
+        if (app()->environment() == 'testing') {
+            $this->loadViewsFrom(__DIR__ . '/../../tests/resources', 'brackets/admin');
+        }
 
         $this->commands([
             GenerateUser::class,
