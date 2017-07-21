@@ -1,6 +1,6 @@
 @extends('brackets/admin-auth::admin.layout.simple')
 
-@section('content')
+@section('body')
     <div class="row">
         <div class="col-md-8 m-x-auto pull-xs-none vamiddle">
             <div class="card-group ">
