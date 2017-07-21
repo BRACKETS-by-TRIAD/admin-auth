@@ -9,7 +9,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orchestra\Testbench\Traits\CreatesApplication;
 
-abstract class TestCase extends Orchestra
+abstract class TestBracketsCase extends Orchestra
 {
     use CreatesApplication;
 
@@ -46,6 +46,15 @@ abstract class TestCase extends Orchestra
             'prefix' => '',
         ]);
         $app['config']->set('app.key', '6rE9Nz59bGRbeMATftriyQjrpF7DcOQm');
+
+        //Set test user model as auth provider
+        $app['config']->set('auth.providers.users.model', TestBracketsUserModel::class);
+
+        //Sets the forbidden check
+        $app['config']->set('admin-auth.check-forbidden', true);
+
+        //Sets the activation check
+        $app['config']->set('admin-auth.activation-required', true);
     }
 
     /**
@@ -53,11 +62,16 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase($app)
     {
-        $app['db']->connection()->getSchemaBuilder()->create('test_user_models', function (Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('test_brackets_user_models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
             $table->string('password');
             $table->string('remember_token')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->boolean('activated')->default(false);
+            $table->boolean('forbidden')->default(false);
+            $table->softDeletes('deleted_at');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });

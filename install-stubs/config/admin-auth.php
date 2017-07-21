@@ -14,6 +14,14 @@ return [
     'login-redirect' => '/admin/user',
 
     /*
+    |
+    | This option controls if Login should check also forbidden key
+    |
+    */
+
+    'check-forbidden' => true,
+
+    /*
     |--------------------------------------------------------------------------
     | Logout
     |--------------------------------------------------------------------------

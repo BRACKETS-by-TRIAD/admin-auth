@@ -83,7 +83,14 @@ class LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-        return array_merge($request->only($this->username(), 'password'), ['activated' => 1, 'forbidden' => 0, 'deleted_at' => null]);
+        $conditions = [];
+        if(config('admin-auth.check-forbidden')) {
+            $conditions['forbidden'] = false;
+        }
+        if(config('admin-auth.activation-required')) {
+            $conditions['activated'] = true;
+        }
+        return array_merge($request->only($this->username(), 'password'), $conditions);
     }
 
     /**

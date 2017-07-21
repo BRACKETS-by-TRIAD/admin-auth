@@ -2,12 +2,12 @@
 
 namespace Brackets\AdminAuth\Tests\Auth;
 
-use Brackets\AdminAuth\Tests\TestCase;
+use Brackets\AdminAuth\Tests\TestStandardCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ForgotPasswordTest extends TestCase
+class ResetPasswordStandardTest extends TestStandardCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;

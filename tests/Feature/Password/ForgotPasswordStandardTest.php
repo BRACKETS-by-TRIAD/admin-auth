@@ -2,36 +2,36 @@
 
 namespace Brackets\AdminAuth\Tests\Auth;
 
-use Brackets\AdminAuth\Tests\TestCase;
+use Brackets\AdminAuth\Tests\TestStandardCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ActivationTest extends TestCase
+class ForgotPasswordStandardTest extends TestStandardCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
 
     /** @test */
-    public function activate_user_if_token_is_ok()
+    public function can_see_forgot_password_form()
     {
 
     }
 
     /** @test */
-    public function do_not_activate_user_if_token_does_not_exists()
+    public function send_forgot_password_email_after_user_created()
     {
 
     }
 
     /** @test */
-    public function do_not_activate_user_if_token_used()
+    public function send_forgot_password_email_after_form_filled()
     {
 
     }
 
     /** @test */
-    public function do_not_activate_user_if_token_expired()
+    public function do_not_send_activation_email_if_email_not_found()
     {
 
     }

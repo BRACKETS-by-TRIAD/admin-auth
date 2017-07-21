@@ -33,7 +33,7 @@ class ActivationService
         if($response == Activation::ACTIVATION_LINK_SENT) {
             Log::info('Activation e-mail has been send: '. trans($response));
         } else {
-            Log::erro('Sending activation e-mail has failed: '. trans($response));
+            Log::error('Sending activation e-mail has failed: '. trans($response));
         }
 
         return true;
