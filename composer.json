@@ -43,5 +43,15 @@
                 "Brackets\\AdminAuth\\Providers\\AdminAuthProvider"
             ]
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@bitbucket.org:TRIAD-Advertising/admin.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@bitbucket.org:TRIAD-Advertising/admingenerator.git"
+        }
+    ]
 }
