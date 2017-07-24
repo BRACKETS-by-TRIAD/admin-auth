@@ -8,13 +8,18 @@ use Brackets\AdminAuth\Tests\TestStandardCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class LogoutStandardTest extends TestStandardCase
+class LogoutTest extends TestStandardCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
 
-    /** @test */
-    public function auth_user_can_logout()
+    public function setUp()
+    {
+        parent::setUp();
+        $this->disableExceptionHandling();
+    }
+
+    protected function createTestUser()
     {
         $user = TestStandardUserModel::create([
             'email' => 'john@example.com',
@@ -25,12 +30,20 @@ class LogoutStandardTest extends TestStandardCase
             'email' => 'john@example.com',
         ]);
 
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        return $user;
+    }
+
+    /** @test */
+    public function auth_user_can_logout()
+    {
+        $user = $this->createTestUser();
+
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
         $this->assertNotEmpty(Auth::user());
 
-        $response = $this->json('GET', '/admin/logout');
+        $response = $this->get('/admin/logout');
         $response->assertStatus(302);
         $response->assertRedirect('/admin/login');
 
@@ -42,7 +55,7 @@ class LogoutStandardTest extends TestStandardCase
     {
         $this->assertEmpty(Auth::user());
 
-        $response = $this->json('GET', '/admin/logout');
+        $response = $this->get('/admin/logout');
         $response->assertStatus(302);
         $response->assertRedirect('/admin/login');
 

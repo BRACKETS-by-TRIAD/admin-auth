@@ -20,6 +20,24 @@ class LoginBracketsTest extends TestBracketsCase
         $this->disableExceptionHandling();
     }
 
+    protected function createTestUser($activated = true, $forbidden = false)
+    {
+        $user = TestBracketsUserModel::create([
+            'email' => 'john@example.com',
+            'password' => bcrypt('testpass123'),
+            'activated' => $activated,
+            'forbidden' => $forbidden,
+        ]);
+
+        $this->assertDatabaseHas('test_brackets_user_models', [
+            'email' => 'john@example.com',
+            'activated' => $activated,
+            'forbidden' => $forbidden,
+        ]);
+
+        return $user;
+    }
+
     /** @test */
     public function login_page_is_accessible()
     {
@@ -30,20 +48,9 @@ class LoginBracketsTest extends TestBracketsCase
     /** @test */
     public function user_can_log_in()
     {
-        $user = TestBracketsUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123'),
-            'activated' => true,
-            'forbidden' => false,
-        ]);
+        $user = $this->createTestUser();
 
-        $this->assertDatabaseHas('test_brackets_user_models', [
-            'email' => 'john@example.com',
-            'activated' => true,
-            'forbidden' => false,
-        ]);
-
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
         $this->assertNotEmpty(Auth::user());
@@ -52,21 +59,10 @@ class LoginBracketsTest extends TestBracketsCase
     /** @test */
     public function user_with_wrong_credentials_cannot_log_in()
     {
-        $user = TestBracketsUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123'),
-            'activated' => true,
-            'forbidden' => false,
-        ]);
+        $user = $this->createTestUser();
 
-        $this->assertDatabaseHas('test_brackets_user_models', [
-            'email' => 'john@example.com',
-            'activated' => true,
-            'forbidden' => false,
-        ]);
-
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass1231']);
-        $response->assertStatus(422);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass1231']);
+        $response->assertStatus(302);
 
         $this->assertEmpty(Auth::user());
     }
@@ -74,21 +70,10 @@ class LoginBracketsTest extends TestBracketsCase
     /** @test */
     public function not_activated_user_cannot_log_in()
     {
-        $user = TestBracketsUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123'),
-            'activated' => false,
-            'forbidden' => false,
-        ]);
+        $user = $this->createTestUser(false);
 
-        $this->assertDatabaseHas('test_brackets_user_models', [
-            'email' => 'john@example.com',
-            'activated' => false,
-            'forbidden' => false,
-        ]);
-
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
-        $response->assertStatus(422);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response->assertStatus(302);
 
         $this->assertEmpty(Auth::user());
     }
@@ -97,22 +82,11 @@ class LoginBracketsTest extends TestBracketsCase
     //Fixme Maybe not???
     public function not_activated_user_can_log_in_if_activation_disabled()
     {
-        $user = TestBracketsUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123'),
-            'activated' => false,
-            'forbidden' => false,
-        ]);
-
-        $this->assertDatabaseHas('test_brackets_user_models', [
-            'email' => 'john@example.com',
-            'activated' => false,
-            'forbidden' => false,
-        ]);
+        $user = $this->createTestUser(false);
 
         $this->app['config']->set('admin-auth.activation-required', false);
 
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
         $this->assertNotEmpty(Auth::user());
@@ -121,21 +95,10 @@ class LoginBracketsTest extends TestBracketsCase
     /** @test */
     public function forbidden_user_cannot_log_in()
     {
-        $user = TestBracketsUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123'),
-            'activated' => true,
-            'forbidden' => true,
-        ]);
+        $user = $this->createTestUser(true, true);
 
-        $this->assertDatabaseHas('test_brackets_user_models', [
-            'email' => 'john@example.com',
-            'activated' => true,
-            'forbidden' => true,
-        ]);
-
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
-        $response->assertStatus(422);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response->assertStatus(302);
 
         $this->assertEmpty(Auth::user());
     }
@@ -144,6 +107,7 @@ class LoginBracketsTest extends TestBracketsCase
     public function deleted_user_cannot_log_in()
     {
         $time = Carbon::now();
+        //Delted at is not fillable, therefore we need to unguard to force fill
         TestBracketsUserModel::unguard();
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
@@ -161,8 +125,8 @@ class LoginBracketsTest extends TestBracketsCase
             'deleted_at' => $time,
         ]);
 
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
-        $response->assertStatus(422);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response->assertStatus(302);
 
         $this->assertEmpty(Auth::user());
     }
@@ -170,24 +134,18 @@ class LoginBracketsTest extends TestBracketsCase
     /** @test */
     public function already_auth_user_is_redirected_from_login()
     {
-        $user = TestBracketsUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123')
-        ]);
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated');
 
-        $this->assertDatabaseHas('test_standard_user_models', [
-            'email' => 'john@example.com',
-        ]);
+        $user = $this->createTestUser();
 
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
         $response->assertRedirect('/admin/user');
 
         $this->assertNotEmpty(Auth::user());
 
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
-        //TODO enable middleware
-        $response->assertRedirect('/home');
+        $response->assertRedirect($this->app['config']->get('admin-auth.login-redirect'));
     }
 }

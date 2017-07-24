@@ -13,12 +13,14 @@ abstract class TestBracketsCase extends Orchestra
 {
     use CreatesApplication;
 
+    protected $sendNotification;
+
     public function setUp()
     {
         parent::setUp();
         $this->getEnvironmentSetUp($this->app);
         $this->setUpDatabase($this->app);
-
+        $this->sendNotification = false;
     }
 
     /**

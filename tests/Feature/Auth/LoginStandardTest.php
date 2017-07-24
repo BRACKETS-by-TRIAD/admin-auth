@@ -19,6 +19,20 @@ class LoginStandardTest extends TestStandardCase
         $this->disableExceptionHandling();
     }
 
+    protected function createTestUser()
+    {
+        $user = TestStandardUserModel::create([
+            'email' => 'john@example.com',
+            'password' => bcrypt('testpass123')
+        ]);
+
+        $this->assertDatabaseHas('test_standard_user_models', [
+            'email' => 'john@example.com',
+        ]);
+
+        return $user;
+    }
+
     /** @test */
     public function login_page_is_accessible()
     {
@@ -29,16 +43,9 @@ class LoginStandardTest extends TestStandardCase
     /** @test */
     public function user_can_log_in()
     {
-        $user = TestStandardUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123')
-        ]);
+        $user = $this->createTestUser();
 
-        $this->assertDatabaseHas('test_standard_user_models', [
-            'email' => 'john@example.com',
-        ]);
-
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
         $this->assertNotEmpty(Auth::user());
@@ -47,17 +54,10 @@ class LoginStandardTest extends TestStandardCase
     /** @test */
     public function user_with_wrong_credentials_cannot_log_in()
     {
-        $user = TestStandardUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123')
-        ]);
+        $user = $this->createTestUser();
 
-        $this->assertDatabaseHas('test_standard_user_models', [
-            'email' => 'john@example.com',
-        ]);
-
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass1231']);
-        $response->assertStatus(422);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass1231']);
+        $response->assertStatus(302);
 
         $this->assertEmpty(Auth::user());
     }
@@ -65,24 +65,18 @@ class LoginStandardTest extends TestStandardCase
     /** @test */
     public function already_auth_user_is_redirected_from_login()
     {
-        $user = TestStandardUserModel::create([
-            'email' => 'john@example.com',
-            'password' => bcrypt('testpass123')
-        ]);
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated');
 
-        $this->assertDatabaseHas('test_standard_user_models', [
-            'email' => 'john@example.com',
-        ]);
+        $user = $this->createTestUser();
 
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
         $response->assertRedirect('/admin/user');
 
         $this->assertNotEmpty(Auth::user());
 
-        $response = $this->json('POST', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
-        //TODO enable middleware
-        $response->assertRedirect('/home');
+        $response->assertRedirect($this->app['config']->get('admin-auth.login-redirect'));
     }
 }

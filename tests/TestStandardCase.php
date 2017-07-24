@@ -13,12 +13,14 @@ abstract class TestStandardCase extends Orchestra
 {
     use CreatesApplication;
 
+    protected $sendNotification;
+
     public function setUp()
     {
         parent::setUp();
         $this->getEnvironmentSetUp($this->app);
         $this->setUpDatabase($this->app);
-
+        $this->sendNotification = true;
     }
 
     /**
@@ -70,6 +72,13 @@ abstract class TestStandardCase extends Orchestra
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
+
+        $app['db']->connection()->getSchemaBuilder()->create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
+
         $this->artisan('migrate');
     }
 
