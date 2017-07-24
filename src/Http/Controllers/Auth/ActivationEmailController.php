@@ -57,9 +57,7 @@ class ActivationEmailController extends Controller {
             $this->credentials($request)
         );
 
-        return $response == Activation::ACTIVATION_LINK_SENT
-            ? $this->sendActivationLinkResponse($response)
-            : $this->sendActivationLinkFailedResponse($request, $response);
+        return $this->sendActivationLinkResponse(Activation::ACTIVATION_LINK_SENT);
     }
 
     /**
