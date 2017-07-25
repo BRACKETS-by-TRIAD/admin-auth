@@ -47,8 +47,8 @@ class GenerateUser extends Command {
 
         if($force) {
             //remove all files
-            $this->files->delete(app_path('Http/Controllers/Admin/UsersController.php'));
             $this->files->delete(app_path('Models/User.php'));
+            $this->files->delete(app_path('Http/Controllers/Admin/UsersController.php'));
             $this->files->deleteDirectory(resource_path('assets/js/admin/user'));
             $this->files->deleteDirectory(resource_path('views/admin/user'));
         }
@@ -58,6 +58,7 @@ class GenerateUser extends Command {
                 'table_name' => $tableNameArgument,
                 '--model' => $modelOption,
                 '--template' => 'user',
+                '--belongsToMany' => 'roles',
             ]);
 
             //TODO change config/auth.php to use our user model for auth
@@ -67,6 +68,7 @@ class GenerateUser extends Command {
             'table_name' => $tableNameArgument,
             '--model' => $modelOption,
             '--controller' => $controllerOption,
+            '--belongsToMany' => 'roles',
         ]);
 
 
@@ -84,6 +86,7 @@ class GenerateUser extends Command {
         $this->call('admin:generate:form', [
             'table_name' => $tableNameArgument,
             '--model' => $modelOption,
+            '--belongsToMany' => 'roles',
         ]);
 
         $this->call('admin:generate:factory', [
