@@ -55,6 +55,8 @@ return [
 
     'activation-required' => env('ACTIVATION_REQUIRED', false),
 
+    'activation-form-visible' => true,
+
     'activation-redirect' => '/admin/login',
 
     /*

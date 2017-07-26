@@ -17,5 +17,6 @@ return [
     'activated' => 'Your account has been activated!',
     'token' => 'This activation token is invalid.',
     'user' => "We can't find a user with provided credential. User might be already activated.",
+    'disabled' => "Activation is disabled.",
 
 ];

@@ -2,7 +2,7 @@
 
 namespace Brackets\AdminAuth\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Brackets\AdminAuth\Http\Controllers\Controller;
 use Brackets\AdminAuth\Facades\Activation;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Support\Facades\Config;
@@ -47,6 +47,10 @@ class ActivationController extends Controller {
      */
     public function activate(Request $request, $token)
     {
+        if(!Config::get('admin-auth.activation-required')) {
+            return $this->sendActivationFailedResponse($request, Activation::ACTIVATION_DISABLED);
+        }
+
         $this->validate($request, $this->rules(), $this->validationErrorMessages());
 
         // Here we will attempt to activate the user's account. If it is successful we

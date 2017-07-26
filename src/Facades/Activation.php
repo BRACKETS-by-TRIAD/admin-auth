@@ -38,6 +38,13 @@ class Activation extends Facade
     const INVALID_TOKEN = 'admin-auth::activations.token';
 
     /**
+     * Constant representing a successfully sent reminder.
+     *
+     * @var string
+     */
+    const ACTIVATION_DISABLED = 'admin-auth::activations.disabled';
+
+    /**
      * Get the registered name of the component.
      *
      * @return string

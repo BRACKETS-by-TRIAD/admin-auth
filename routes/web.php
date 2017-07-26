@@ -23,8 +23,6 @@ Route::middleware(['web'])->group(function () {
         Route::get('/admin/password/{token}',           'ResetPasswordController@showResetForm')->name('brackets/admin-auth:admin/password/showResetForm');
         Route::post('/admin/password/reset',            'ResetPasswordController@reset')->name('brackets/admin-auth:admin/password/reset');
 
-//        Route::get('/admin/activation',                 'ActivationEmailController@showLinkRequestForm')->name('brackets/admin-auth:admin/activation/showLinkRequestForm');
-//        Route::post('/admin/activation/send',           'ActivationEmailController@sendActivationEmail')->name('brackets/admin-auth:admin/activation/sendActivationEmail');
         Route::get('/admin/activation/{token}',         'ActivationController@activate')->name('brackets/admin-auth:admin/activation/activate');
     });
 });

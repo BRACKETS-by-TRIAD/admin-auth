@@ -19,8 +19,13 @@ class ActivationService
      */
     public function handle(CanActivateContract $user)
     {
-        if(!Config::get('admin-auth.activation-required') && Schema::hasTable('activations') && Schema::hasColumn('users', 'activated')) {
+        $userClass = $this->broker()->getUserModelClass();
+        if(!Config::get('admin-auth.activation-required') || !Schema::hasTable('activations') || !Schema::hasColumn((new $userClass)->getTable(), 'activated')) {
             return false;
+        }
+
+        if($user->activated) {
+            return true;
         }
 
         // We will send the activation link to this user. Once we have attempted

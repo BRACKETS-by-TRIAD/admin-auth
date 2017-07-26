@@ -36,7 +36,7 @@ class ResetPasswordTest extends TestStandardCase
             'email' => 'john@example.com',
         ]);
 
-        //TODO create also password reset
+        //create also password reset
         $this->app['db']->connection()->table('password_resets')->insert([
             'email' => $user->email,
             'token' => bcrypt($this->token),

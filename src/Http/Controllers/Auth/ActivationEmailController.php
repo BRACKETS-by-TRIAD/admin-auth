@@ -2,9 +2,10 @@
 
 namespace Brackets\AdminAuth\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Brackets\AdminAuth\Http\Controllers\Controller;
 use Brackets\AdminAuth\Facades\Activation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 
 class ActivationEmailController extends Controller {
@@ -48,14 +49,16 @@ class ActivationEmailController extends Controller {
      */
     public function sendActivationEmail(Request $request)
     {
-        $this->validateEmail($request);
+        if(Config::get('admin-auth.activation-required')) {
+            $this->validateEmail($request);
 
-        // We will send the activation link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $response = $this->broker()->sendActivationLink(
-            $this->credentials($request)
-        );
+            // We will send the activation link to this user. Once we have attempted
+            // to send the link, we will examine the response then see the message we
+            // need to show to the user. Finally, we'll send out a proper response.
+            $response = $this->broker()->sendActivationLink(
+                $this->credentials($request)
+            );
+        }
 
         return $this->sendActivationLinkResponse(Activation::ACTIVATION_LINK_SENT);
     }

@@ -43,15 +43,6 @@ class ForgotPasswordTest extends TestStandardCase
     }
 
     /** @test */
-    public function send_forgot_password_email_after_user_created()
-    {
-        //TODO need to change listener to listen also for TestStandardUserModel
-        $user = $this->createTestUser();
-
-        //TODO finish
-    }
-
-    /** @test */
     public function send_forgot_password_email_after_form_filled()
     {
         Notification::fake();
@@ -68,7 +59,7 @@ class ForgotPasswordTest extends TestStandardCase
     }
 
     /** @test */
-    public function do_not_send_activation_email_if_email_not_found()
+    public function do_not_send_password_email_if_email_not_found()
     {
         Notification::fake();
 
