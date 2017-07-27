@@ -47,10 +47,14 @@ class GenerateUser extends Command {
 
         if($force) {
             //remove all files
-            $this->files->delete(app_path('Models/User.php'));
+            if($withModelOption) {
+                $this->files->delete(app_path('Models/User.php'));
+            }
             $this->files->delete(app_path('Http/Controllers/Admin/UsersController.php'));
             $this->files->deleteDirectory(resource_path('assets/js/admin/user'));
             $this->files->deleteDirectory(resource_path('views/admin/user'));
+
+            $this->info('Deleting previous files finished.');
         }
 
         if($withModelOption) {
@@ -68,6 +72,7 @@ class GenerateUser extends Command {
             'table_name' => $tableNameArgument,
             '--model' => $modelOption,
             '--controller' => $controllerOption,
+            '--template' => 'user',
             '--belongsToMany' => 'roles',
         ]);
 
@@ -75,11 +80,13 @@ class GenerateUser extends Command {
         $this->call('admin:generate:routes', [
             'table_name' => $tableNameArgument,
             '--model' => $modelOption,
+            '--template' => 'user',
             '--controller' => $controllerOption,
         ]);
 
         $this->call('admin:generate:index', [
             'table_name' => $tableNameArgument,
+            '--template' => 'user',
             '--model' => $modelOption,
         ]);
 

@@ -41,7 +41,7 @@ class ActivationService
             Log::error('Sending activation e-mail has failed: '. trans($response));
         }
 
-        return true;
+        return $response;
     }
 
     /**
