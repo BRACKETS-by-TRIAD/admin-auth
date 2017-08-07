@@ -11,14 +11,14 @@ class GenerateUser extends Command {
      *
      * @var string
      */
-    protected $name = 'admin-auth:generate-user';
+    protected $name = 'admin:generate:auth:user';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Scaffold complete CRUD admin user interface';
+    protected $description = 'Scaffold complete admin CRUD for specified user model. This differs from admin:generate command in many additional features (password handling, roles, ...).';
 
     /**
      * Create a new controller creator command instance.
@@ -60,9 +60,9 @@ class GenerateUser extends Command {
         if($withModelOption) {
             $this->call('admin:generate:model', [
                 'table_name' => $tableNameArgument,
-                '--model' => $modelOption,
+                '--model-name' => $modelOption,
                 '--template' => 'user',
-                '--belongsToMany' => 'roles',
+                '--belongs-to-many' => 'roles',
             ]);
 
             //TODO change config/auth.php to use our user model for auth
@@ -70,35 +70,35 @@ class GenerateUser extends Command {
 
         $this->call('admin:generate:controller', [
             'table_name' => $tableNameArgument,
-            '--model' => $modelOption,
-            '--controller' => $controllerOption,
+            'class_name' => $controllerOption,
+            '--model-name' => $modelOption,
             '--template' => 'user',
-            '--belongsToMany' => 'roles',
+            '--belongs-to-many' => 'roles',
         ]);
 
 
         $this->call('admin:generate:routes', [
             'table_name' => $tableNameArgument,
-            '--model' => $modelOption,
+            '--model-name' => $modelOption,
             '--template' => 'user',
-            '--controller' => $controllerOption,
+            '--controller-name' => $controllerOption,
         ]);
 
         $this->call('admin:generate:index', [
             'table_name' => $tableNameArgument,
             '--template' => 'user',
-            '--model' => $modelOption,
+            '--model-name' => $modelOption,
         ]);
 
         $this->call('admin:generate:form', [
             'table_name' => $tableNameArgument,
-            '--model' => $modelOption,
-            '--belongsToMany' => 'roles',
+            '--model-name' => $modelOption,
+            '--belongs-to-many' => 'roles',
         ]);
 
         $this->call('admin:generate:factory', [
             'table_name' => $tableNameArgument,
-            '--model' => $modelOption,
+            '--model-name' => $modelOption,
         ]);
 
         if ($this->option('seed')) {
@@ -117,9 +117,11 @@ class GenerateUser extends Command {
 
     protected function getOptions() {
         return [
+            // TODO model-name, controller-name, with-model + copy description from other commands
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Specify custom model name'],
             ['controller', 'c', InputOption::VALUE_OPTIONAL, 'Specify custom controller name'],
-            ['withModel', 'w', InputOption::VALUE_NONE, 'Specify if generating also model'],
+            // TODO maybe change to generate-model
+            ['withModel', 'w', InputOption::VALUE_NONE, 'Generates model'],
             ['force', 'f', InputOption::VALUE_NONE, 'Force will delete files before regenerating admin user'],
             ['seed', 's', InputOption::VALUE_NONE, 'Seeds table with fake data'],
         ];

@@ -11,14 +11,14 @@ class GenerateProfile extends Command {
      *
      * @var string
      */
-    protected $name = 'admin-auth:generate-profile';
+    protected $name = 'admin:generate:auth:profile';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Scaffold admin profile';
+    protected $description = 'Scaffold admin "My Profile" feature (controller, views, routes)';
 
     /**
      * Create a new controller creator command instance.
@@ -64,6 +64,7 @@ class GenerateProfile extends Command {
             '--controller' => $controllerOption,
             '--template' => 'profile',
         ]);
+        // TODO add this route to the dropdown user-menu
 
         $this->call('admin:generate:full-form', [
             'table_name' => $tableNameArgument,
