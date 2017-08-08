@@ -47,11 +47,6 @@ class AdminAuthProvider extends ServiceProvider
             $this->loadViewsFrom(__DIR__ . '/../../tests/resources', 'brackets/admin');
         }
 
-        $this->commands([
-            GenerateUser::class,
-            GenerateProfile::class,
-        ]);
-
         $this->app->register(ActivationServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
     }
