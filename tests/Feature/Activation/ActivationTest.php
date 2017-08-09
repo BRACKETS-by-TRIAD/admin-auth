@@ -32,6 +32,7 @@ class ActivationTest extends TestBracketsCase
      */
     protected function createTestUser($activated = true, $forbidden = false, $used = false, Carbon $activationCreatedAt = null)
     {
+        // TODO maybe we can Mock sending an email to speed up a test?
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
             'password' => bcrypt('testpass123'),
