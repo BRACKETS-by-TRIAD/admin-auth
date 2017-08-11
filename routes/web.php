@@ -18,10 +18,10 @@ Route::middleware(['web'])->group(function () {
 
         Route::any('/admin/logout',                     'LoginController@logout')->name('brackets/admin-auth:admin/logout');
 
-        Route::get('/admin/password',                   'ForgotPasswordController@showLinkRequestForm')->name('brackets/admin-auth:admin/password/showLinkRequestForm');
-        Route::post('/admin/password/send',             'ForgotPasswordController@sendResetLinkEmail')->name('brackets/admin-auth:admin/password/sendResetLinkEmail');
-        Route::get('/admin/password/{token}',           'ResetPasswordController@showResetForm')->name('brackets/admin-auth:admin/password/showResetForm');
-        Route::post('/admin/password/reset',            'ResetPasswordController@reset')->name('brackets/admin-auth:admin/password/reset');
+        Route::get('/admin/password-reset',                   'ForgotPasswordController@showLinkRequestForm')->name('brackets/admin-auth:admin/password/showLinkRequestForm');
+        Route::post('/admin/password-reset/send',             'ForgotPasswordController@sendResetLinkEmail')->name('brackets/admin-auth:admin/password/sendResetLinkEmail');
+        Route::get('/admin/password-reset/{token}',           'ResetPasswordController@showResetForm')->name('brackets/admin-auth:admin/password/showResetForm');
+        Route::post('/admin/password-reset/reset',            'ResetPasswordController@reset')->name('brackets/admin-auth:admin/password/reset');
 
         Route::get('/admin/activation/{token}',         'ActivationController@activate')->name('brackets/admin-auth:admin/activation/activate');
     });
