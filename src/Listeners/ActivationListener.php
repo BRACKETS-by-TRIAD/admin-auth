@@ -6,6 +6,8 @@ use Brackets\AdminAuth\Contracts\Auth\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Facades\Activation;
 use Brackets\AdminAuth\Services\ActivationService;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
 
 class ActivationListener
 {
@@ -13,14 +15,16 @@ class ActivationListener
      * Register the listeners for the subscriber.
      *
      * @param Illuminate\Events\Dispatcher|Dispatcher $events
-     * @param CanActivateContract $user
      */
     public function subscribe(Dispatcher $events)
     {
-        $events->listen(
-            'eloquent.created: ' . Activation::broker()->getUserModelClass(),
-            ActivationService::class
-        );
+        $userClass = Activation::broker()->getUserModelClass();
+        if(!Config::get('admin-auth.activation-required') || !Schema::hasTable('activations') || !Schema::hasColumn((new $userClass)->getTable(), 'activated')) {
+            $events->listen(
+                'eloquent.created: ' . Activation::broker()->getUserModelClass(),
+                ActivationService::class
+            );
+        }
 
         //TODO listen on user edit and if email has changed, deactivate user and send email again
     }
