@@ -22,7 +22,6 @@
         "brackets/admin": "dev-master"
     },
     "require-dev": {
-        "brackets/admin-generator": "dev-master",
         "orchestra/testbench": "~3.0",
         "phpunit/phpunit": "~6.3"
     },
@@ -43,12 +42,8 @@
             "url": "git@bitbucket.org:TRIAD-Advertising/admin.git"
         },
         {
-            "type": "vcs",
-            "url": "git@bitbucket.org:TRIAD-Advertising/admingenerator.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:TRIAD-Advertising/simpleweb5.git"
+            "type": "path",
+            "url": "../Admin"
         }
     ],
     "extra": {
