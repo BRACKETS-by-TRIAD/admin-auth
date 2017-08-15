@@ -8,6 +8,7 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orchestra\Testbench\Traits\CreatesApplication;
+use File;
 
 abstract class TestBracketsCase extends Orchestra
 {
@@ -21,6 +22,8 @@ abstract class TestBracketsCase extends Orchestra
         $this->getEnvironmentSetUp($this->app);
         $this->setUpDatabase($this->app);
         $this->sendNotification = false;
+
+        File::copyDirectory(__DIR__.'/fixtures/resources/views', resource_path('views'));
     }
 
     /**
