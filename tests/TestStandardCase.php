@@ -47,6 +47,7 @@ abstract class TestStandardCase extends Orchestra
             'database' => ':memory:',
             'prefix' => '',
         ]);
+
         $app['config']->set('app.key', '6rE9Nz59bGRbeMATftriyQjrpF7DcOQm');
 
         //Set test user model as auth provider
@@ -79,7 +80,7 @@ abstract class TestStandardCase extends Orchestra
             $table->timestamp('created_at')->nullable();
         });
 
-        $this->artisan('migrate');
+//        $this->artisan('migrate');
     }
 
     protected function disableExceptionHandling()

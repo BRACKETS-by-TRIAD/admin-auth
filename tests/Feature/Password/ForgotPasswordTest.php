@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Notification;
 class ForgotPasswordTest extends TestStandardCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     public function setUp()
     {

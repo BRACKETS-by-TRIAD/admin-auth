@@ -11,7 +11,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class LoginStandardTest extends TestStandardCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     public function setUp()
     {

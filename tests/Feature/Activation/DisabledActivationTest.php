@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Notification;
 class DisabledActivationTest extends TestBracketsCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     protected $token;
 

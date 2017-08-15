@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Notification;
 class ActivationEmailTest extends TestBracketsCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     public function setUp()
     {

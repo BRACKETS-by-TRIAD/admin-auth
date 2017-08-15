@@ -11,7 +11,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class ActivationTest extends TestBracketsCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     protected $token;
 

@@ -47,6 +47,7 @@ abstract class TestBracketsCase extends Orchestra
             'database' => ':memory:',
             'prefix' => '',
         ]);
+
         $app['config']->set('app.key', '6rE9Nz59bGRbeMATftriyQjrpF7DcOQm');
 
         //Set test user model as auth provider
@@ -77,7 +78,7 @@ abstract class TestBracketsCase extends Orchestra
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
-        $this->artisan('migrate');
+//        $this->artisan('migrate');
     }
 
     protected function disableExceptionHandling()

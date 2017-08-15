@@ -9,7 +9,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class DisabledActivationFormTest extends TestBracketsCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     public function setUp()
     {

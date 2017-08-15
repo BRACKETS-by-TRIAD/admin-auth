@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Hash;
 class ResetPasswordTest extends TestStandardCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     protected $token;
 
