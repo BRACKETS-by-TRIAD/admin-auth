@@ -19,9 +19,9 @@ class ActivationListener
     public function subscribe(Dispatcher $events)
     {
         $userClass = Activation::broker()->getUserModelClass();
-        if(!Config::get('admin-auth.activation-required') || !Schema::hasTable('activations') || !Schema::hasColumn((new $userClass)->getTable(), 'activated')) {
+        if((!Config::get('admin-auth.activation-required') || !Schema::hasTable('activations') || !Schema::hasColumn((new $userClass)->getTable(), 'activated')) && $userClass instanceof CanActivateContract) {
             $events->listen(
-                'eloquent.created: ' . Activation::broker()->getUserModelClass(),
+                'eloquent.created: ' . $userClass,
                 ActivationService::class
             );
         }
