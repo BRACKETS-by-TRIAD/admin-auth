@@ -53,11 +53,11 @@ return [
     |
     */
 
-    'activation-required' => env('ACTIVATION_REQUIRED', false),
+    'activation-required' => env('ACTIVATION_REQUIRED', false), //enabled
 
-    'activation-form-visible' => true,
+    'activation-form-visible' => true, //self-activation-form-enabled
 
-    'activation-redirect' => '/admin/login',
+    'activation-redirect' => '/admin/login', //redirect
 
     /*
     |
