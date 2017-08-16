@@ -2,7 +2,6 @@
 
 namespace Brackets\AdminAuth\Listeners;
 
-use Brackets\AdminAuth\Contracts\Auth\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Facades\Activation;
 use Brackets\AdminAuth\Services\ActivationService;
 use Illuminate\Events\Dispatcher;
@@ -19,7 +18,8 @@ class ActivationListener
     public function subscribe(Dispatcher $events)
     {
         $userClass = Activation::broker()->getUserModelClass();
-        if((!Config::get('admin-auth.activations.enabled') || !Schema::hasTable('activations') || !Schema::hasColumn((new $userClass)->getTable(), 'activated')) && $userClass instanceof CanActivateContract) {
+        $interfaces = class_implements($userClass);
+        if((!Config::get('admin-auth.activations.enabled') || !Schema::hasTable('activations') || !Schema::hasColumn((new $userClass)->getTable(), 'activated')) && ($interfaces && in_array(\Brackets\AdminAuth\Contracts\Auth\CanActivate::class, $interfaces))) {
             $events->listen(
                 'eloquent.created: ' . $userClass,
                 ActivationService::class
