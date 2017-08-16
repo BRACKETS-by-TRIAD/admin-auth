@@ -83,7 +83,7 @@ class LoginBracketsTest extends TestBracketsCase
     {
         $user = $this->createTestUser(false);
 
-        $this->app['config']->set('admin-auth.activation-required', false);
+        $this->app['config']->set('admin-auth.activations.enabled', false);
 
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);

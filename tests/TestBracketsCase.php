@@ -60,7 +60,7 @@ abstract class TestBracketsCase extends Orchestra
         $app['config']->set('admin-auth.check-forbidden', true);
 
         //Sets the activation check
-        $app['config']->set('admin-auth.activation-required', true);
+        $app['config']->set('admin-auth.activations.enabled', true);
     }
 
     /**

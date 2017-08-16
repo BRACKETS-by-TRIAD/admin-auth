@@ -35,7 +35,7 @@ class ActivationController extends Controller {
      */
     public function __construct()
     {
-        $this->redirectTo = Config::get('admin-auth.activation-redirect');
+        $this->redirectTo = Config::get('admin-auth.activations.redirect');
         $this->middleware('guest');
     }
 
@@ -47,7 +47,7 @@ class ActivationController extends Controller {
      */
     public function activate(Request $request, $token)
     {
-        if(!Config::get('admin-auth.activation-required')) {
+        if(!Config::get('admin-auth.activations.enabled')) {
             return $this->sendActivationFailedResponse($request, Activation::ACTIVATION_DISABLED);
         }
 

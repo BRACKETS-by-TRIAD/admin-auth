@@ -49,7 +49,7 @@ class ActivationEmailController extends Controller {
      */
     public function sendActivationEmail(Request $request)
     {
-        if(Config::get('admin-auth.activation-required')) {
+        if(Config::get('admin-auth.activations.enabled')) {
             $this->validateEmail($request);
 
             // We will send the activation link to this user. Once we have attempted

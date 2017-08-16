@@ -17,7 +17,7 @@ class ActivationTest extends TestBracketsCase
     public function setUp()
     {
         parent::setUp();
-        $this->app['config']->set('admin-auth.activation-required', true);
+        $this->app['config']->set('admin-auth.activations.enabled', true);
         $this->disableExceptionHandling();
         $this->token = '123456aabbcc';
     }

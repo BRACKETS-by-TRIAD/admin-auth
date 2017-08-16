@@ -106,7 +106,7 @@ class ActivationBrokerManager implements FactoryContract
      */
     protected function getConfig($name)
     {
-        return $this->app['config']["admin-auth.activations.{$name}"];
+        return $this->app['config']["admin-auth.activations.configuration.{$name}"];
     }
 
     /**

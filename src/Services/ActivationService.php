@@ -20,7 +20,7 @@ class ActivationService
     public function handle(CanActivateContract $user)
     {
         $userClass = $this->broker()->getUserModelClass();
-        if(!Config::get('admin-auth.activation-required') || !Schema::hasTable('activations') || !Schema::hasColumn((new $userClass)->getTable(), 'activated')) {
+        if(!Config::get('admin-auth.activations.enabled') || !Schema::hasTable('activations') || !Schema::hasColumn((new $userClass)->getTable(), 'activated')) {
             return false;
         }
 

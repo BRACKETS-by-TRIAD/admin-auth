@@ -87,7 +87,7 @@ class LoginController extends Controller
         if(config('admin-auth.check-forbidden')) {
             $conditions['forbidden'] = false;
         }
-        if(config('admin-auth.activation-required')) {
+        if(config('admin-auth.activations.enabled')) {
             $conditions['activated'] = true;
         }
         return array_merge($request->only($this->username(), 'password'), $conditions);

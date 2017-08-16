@@ -60,7 +60,7 @@ abstract class TestStandardCase extends Orchestra
         $app['config']->set('admin-auth.check-forbidden', false);
 
         //Sets the activation check
-        $app['config']->set('admin-auth.activation-required', false);
+        $app['config']->set('admin-auth.activations.enabled', false);
     }
 
     /**

@@ -72,7 +72,7 @@ class AdminAuthProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
         }
 
-        if(config('admin-auth.use-routes', true) && config('admin-auth.activation-form-visible', true)) {
+        if(config('admin-auth.use-routes', true) && config('admin-auth.activations.self-activation-form-enabled', true)) {
             $this->loadRoutesFrom(__DIR__.'/../../routes/activation-form.php');
         }
 

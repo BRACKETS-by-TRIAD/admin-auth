@@ -12,7 +12,7 @@
                             inline-template>
                             <form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/login') }}">
                                 {{ csrf_field() }}
-                                <h1>Login</h1>
+                                <h1>{{ trans('brackets/admin-auth::auth.login') }}</h1>
                                 @if (session('status'))
                                     <div class="alert alert-success">
                                         {{ session('status') }}
