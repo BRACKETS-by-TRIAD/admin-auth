@@ -4,6 +4,7 @@ use Brackets\AdminAuth\Auth\Activations\ActivationServiceProvider;
 use Brackets\AdminAuth\Console\Generate\GenerateProfile;
 use Brackets\AdminAuth\Console\Generate\GenerateUser;
 use Brackets\AdminAuth\Facades\Activation;
+use Brackets\AdminAuth\Http\Middleware\ApplyUserLocale;
 use Illuminate\Support\ServiceProvider;
 
 class AdminAuthProvider extends ServiceProvider
@@ -78,5 +79,8 @@ class AdminAuthProvider extends ServiceProvider
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Activation', Activation::class);
+
+        app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('web', ApplyUserLocale::class);
+            
     }
 }
