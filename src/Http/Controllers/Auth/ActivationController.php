@@ -78,7 +78,6 @@ class ActivationController extends Controller {
     protected function rules()
     {
         return [
-//            'token' => 'required',
         ];
     }
 

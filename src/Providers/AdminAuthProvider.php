@@ -17,7 +17,7 @@ class AdminAuthProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../../install-stubs/config/admin-auth.php' => config_path('admin-auth.php'),
-        ]);
+        ], 'config');
 
         //TODO publish or load?
         if (! class_exists('ModifyUsersTable')) {
@@ -30,15 +30,7 @@ class AdminAuthProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../../install-stubs/resources/lang' => resource_path('lang/vendor/admin-auth'),
-        ]);
-
-//        $this->publishes([
-//            __DIR__.'/../../install-stubs/resources/assets' => resource_path('assets')
-//        ], 'assets');
-//
-//        $this->publishes([
-//            __DIR__.'/../../install-stubs/resources/views' => resource_path('views')
-//        ], 'views');
+        ], 'lang');
 
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'admin-auth');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
