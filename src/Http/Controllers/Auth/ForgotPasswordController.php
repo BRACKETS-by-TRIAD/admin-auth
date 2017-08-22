@@ -61,4 +61,19 @@ class ForgotPasswordController extends Controller
 
         return $this->sendResetLinkResponse(Password::RESET_LINK_SENT);
     }
+
+    /**
+     * Get the response for a successful password reset link.
+     *
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendResetLinkResponse($response)
+    {
+        $message = trans($response);
+        if($response == Password::RESET_LINK_SENT) {
+            $message = trans('brackets/admin-auth::admin.passwords.sent');
+        }
+        return back()->with('status', $message);
+    }
 }

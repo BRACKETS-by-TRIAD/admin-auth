@@ -97,10 +97,9 @@ class ActivationEmailController extends Controller {
      */
     protected function sendActivationLinkFailedResponse(Request $request, $response)
     {
+        $message = trans($response);
         if($response == Activation::ACTIVATION_DISABLED) {
             $message = trans('brackets/admin-auth::admin.activations.disabled');
-        } else {
-            $message = trans($response);
         }
         return back()->withErrors(
             ['email' => $message]

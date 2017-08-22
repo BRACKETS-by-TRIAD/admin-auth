@@ -38,6 +38,13 @@ class Activation extends Facade
     const INVALID_TOKEN = 'invalid-token';
 
     /**
+     * Constant representing a disabled activation.
+     *
+     * @var string
+     */
+    const ACTIVATION_DISABLED = 'disabled';
+
+    /**
      * Get the registered name of the component.
      *
      * @return string

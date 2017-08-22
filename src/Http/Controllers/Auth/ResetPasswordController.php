@@ -78,6 +78,44 @@ class ResetPasswordController extends Controller
     }
 
     /**
+     * Get the response for a successful password reset.
+     *
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendResetResponse($response)
+    {
+        $message = trans($response);
+        if($response == Password::PASSWORD_RESET) {
+            $message = trans('brackets/admin-auth::admin.passwords.reset');
+        }
+        return redirect($this->redirectPath())
+            ->with('status', $message);
+    }
+
+    /**
+     * Get the response for a failed password reset.
+     *
+     * @param  \Illuminate\Http\Request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        $message = trans($response);
+        if($response == Password::INVALID_TOKEN) {
+            $message = trans('brackets/admin-auth::admin.passwords.invalid-token');
+        } else if($response == Password::INVALID_USER) {
+            $message = trans('brackets/admin-auth::admin.passwords.invalid-user');
+        } else if($response == Password::INVALID_PASSWORD) {
+            $message = trans('brackets/admin-auth::admin.passwords.invalid-password');
+        }
+        return redirect()->back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => $message]);
+    }
+
+    /**
      * Get the password reset validation rules.
      *
      * @return array

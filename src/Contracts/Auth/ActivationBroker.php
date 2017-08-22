@@ -35,6 +35,13 @@ interface ActivationBroker
     const INVALID_TOKEN = 'invalid-token';
 
     /**
+     * Constant representing a disabled activation.
+     *
+     * @var string
+     */
+    const ACTIVATION_DISABLED = 'disabled';
+
+    /**
      * Send a password reset link to a user.
      *
      * @param  array  $credentials
