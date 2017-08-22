@@ -12,8 +12,8 @@
                             inline-template>
                             <form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/activation/sendActivationEmail') }}">
                                 {{ csrf_field() }}
-                                <h1>Activate account</h1>
-                                <p class="text-muted">Send activation link to e-mail.</p>
+                                <h1>{{ trans('brackets/admin-auth::admin.activation.title') }}</h1>
+                                <p class="text-muted">{{ trans('brackets/admin-auth::admin.activation.note') }}</p>
                                 @if (session('status'))
                                     <div class="alert alert-success">
                                         {{ session('status') }}
@@ -30,16 +30,16 @@
                                     </div>
                                 @endif
                                 <div class="form-group row" :class="{'has-danger': errors.has('email'), 'has-success': this.fields.email && this.fields.email.valid }">
-                                    <label for="email" class="col-md-3 col-form-label text-md-right">Email</label>
+                                    <label for="email" class="col-md-3 col-form-label text-md-right">{{ trans('brackets/admin-auth::admin.auth-global.email') }}</label>
                                     <div class="col-md-9 col-xl-8 input-group">
-                                        <input type="text" v-model="form.email" v-validate="'required|email'" class="form-control" :class="{'form-control-danger': errors.has('email'), 'form-control-success': this.fields.email && this.fields.email.valid}" id="email" name="email" placeholder="Email">
+                                        <input type="text" v-model="form.email" v-validate="'required|email'" class="form-control" :class="{'form-control-danger': errors.has('email'), 'form-control-success': this.fields.email && this.fields.email.valid}" id="email" name="email" placeholder="{{ trans('brackets/admin-auth::admin.auth-global.email') }}">
                                         <div v-if="errors.has('email')" class="form-control-feedback" v-cloak>@{{ errors.first('email') }}</div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <input type="hidden" name="remember" value="1">
-                                        <button type="submit" class="btn btn-primary p-x-2">Send Activation Link</button>
+                                        <button type="submit" class="btn btn-primary p-x-2">{{ trans('brackets/admin-auth::admin.activation.button') }}</button>
                                     </div>
                                 </div>
                             </form>

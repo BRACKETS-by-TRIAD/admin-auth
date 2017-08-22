@@ -18,18 +18,18 @@
                                         {{ session('status') }}
                                     </div>
                                 @endif
-                                <p class="text-muted">{{ trans('brackets/admin-auth::admin.login.signInText') }}</p>
+                                <p class="text-muted">{{ trans('brackets/admin-auth::admin.auth-global.login.signInText') }}</p>
                                 <div class="form-group row" :class="{'has-danger': errors.has('email'), 'has-success': this.fields.email && this.fields.email.valid }">
-                                    <label for="email" class="col-md-3 col-form-label text-md-right">{{ trans('brackets/admin-auth::admin.login.email') }}</label>
+                                    <label for="email" class="col-md-3 col-form-label text-md-right">{{ trans('brackets/admin-auth::admin.email') }}</label>
                                     <div class="col-md-9 col-xl-8">
-                                        <input type="text" v-model="form.email" v-validate="'required|email'" class="form-control" :class="{'form-control-danger': errors.has('email'), 'form-control-success': this.fields.email && this.fields.email.valid}" id="email" name="email" placeholder="{{ trans('brackets/admin-auth::admin.login.email') }}">
+                                        <input type="text" v-model="form.email" v-validate="'required|email'" class="form-control" :class="{'form-control-danger': errors.has('email'), 'form-control-success': this.fields.email && this.fields.email.valid}" id="email" name="email" placeholder="{{ trans('brackets/admin-auth::admin.auth-global.email') }}">
                                         <div v-if="errors.has('email')" class="form-control-feedback" v-cloak>@{{ errors.first('email') }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group row" :class="{'has-danger': errors.has('password'), 'has-success': this.fields.password && this.fields.password.valid }">
-                                    <label for="password" class="col-md-3 col-form-label text-md-right">{{ trans('brackets/admin-auth::admin.login.password') }}</label>
+                                    <label for="password" class="col-md-3 col-form-label text-md-right">{{ trans('brackets/admin-auth::admin.auth-global.password') }}</label>
                                     <div class="col-md-9 col-xl-8">
-                                        <input type="password" v-model="form.password" v-validate="''" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="{{ trans('brackets/admin-auth::admin.login.password') }}">
+                                        <input type="password" v-model="form.password" v-validate="''" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="{{ trans('brackets/admin-auth::admin.auth-global.password') }}">
                                         <div v-if="errors.has('password')" class="form-control-feedback" v-cloak>@{{ errors.first('password') }}</div>
                                     </div>
                                 </div>
