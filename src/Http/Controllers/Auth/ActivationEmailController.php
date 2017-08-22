@@ -49,18 +49,20 @@ class ActivationEmailController extends Controller {
      */
     public function sendActivationEmail(Request $request)
     {
-        if(Config::get('admin-auth.activations.enabled')) {
-            $this->validateEmail($request);
-
-            // We will send the activation link to this user. Once we have attempted
-            // to send the link, we will examine the response then see the message we
-            // need to show to the user. Finally, we'll send out a proper response.
-            $response = $this->broker()->sendActivationLink(
-                $this->credentials($request)
-            );
+        if(!Config::get('admin-auth.activations.enabled')) {
+            return $this->sendActivationLinkFailedResponse($request, Activation::ACTIVATION_DISABLED);
         }
 
-        return $this->sendActivationLinkResponse(Activation::ACTIVATION_LINK_SENT);
+        $this->validateEmail($request);
+
+        // We will send the activation link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+        $response = $this->broker()->sendActivationLink(
+            $this->credentials($request)
+        );
+
+        return $this->sendActivationLinkResponse($response);
     }
 
     /**
@@ -82,7 +84,8 @@ class ActivationEmailController extends Controller {
      */
     protected function sendActivationLinkResponse($response)
     {
-        return back()->with('status', trans($response));
+        $message = trans('brackets/admin-auth::admin.activations.sent');
+        return back()->with('status', $message);
     }
 
     /**
@@ -94,8 +97,13 @@ class ActivationEmailController extends Controller {
      */
     protected function sendActivationLinkFailedResponse(Request $request, $response)
     {
+        if($response == Activation::ACTIVATION_DISABLED) {
+            $message = trans('brackets/admin-auth::admin.activations.disabled');
+        } else {
+            $message = trans($response);
+        }
         return back()->withErrors(
-            ['email' => trans($response)]
+            ['email' => $message]
         );
     }
 

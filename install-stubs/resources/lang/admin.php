@@ -26,16 +26,9 @@ return [
         'button' => 'Send Password Reset Link',
     ],
 
-    'activation-form' => [
+    'activation' => [
         'title' => 'Activate account',
         'note' => 'Send activation link to e-mail.',
         'button' => 'Send Activation Link',
-    ],
-
-    'activations' => [
-        'sent' => 'We have e-mailed your activation link!',
-        'activated' => 'Your account has been activated!',
-        'invalid-request' => 'The request failed.',
-        'disabled' => "Activation is disabled.",
     ],
 ];

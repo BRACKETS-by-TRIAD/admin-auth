@@ -12,8 +12,8 @@
                             inline-template>
                             <form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/activation/sendActivationEmail') }}">
                                 {{ csrf_field() }}
-                                <h1>{{ trans('brackets/admin-auth::admin.activation.title') }}</h1>
-                                <p class="text-muted">{{ trans('brackets/admin-auth::admin.activation.note') }}</p>
+                                <h1>{{ trans('brackets/admin-auth::admin.activation-form.title') }}</h1>
+                                <p class="text-muted">{{ trans('brackets/admin-auth::admin.activation-form.note') }}</p>
                                 @if (session('status'))
                                     <div class="alert alert-success">
                                         {{ session('status') }}
@@ -39,7 +39,7 @@
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <input type="hidden" name="remember" value="1">
-                                        <button type="submit" class="btn btn-primary p-x-2">{{ trans('brackets/admin-auth::admin.activation.button') }}</button>
+                                        <button type="submit" class="btn btn-primary p-x-2">{{ trans('brackets/admin-auth::admin.activation-form.button') }}</button>
                                     </div>
                                 </div>
                             </form>

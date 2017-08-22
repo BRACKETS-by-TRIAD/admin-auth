@@ -124,8 +124,13 @@ class ActivationController extends Controller {
      */
     protected function sendActivationResponse($response)
     {
+        if($response == Activation::ACTIVATED) {
+            $message = trans('brackets/admin-auth::admin.activations.activated');
+        } else {
+            $message = trans($response);
+        }
         return redirect($this->redirectPath())
-            ->with('status', trans($response));
+            ->with('status', $message);
     }
 
     /**
@@ -137,9 +142,16 @@ class ActivationController extends Controller {
      */
     protected function sendActivationFailedResponse(Request $request, $response)
     {
+        if($response == Activation::INVALID_USER || $response == Activation::INVALID_TOKEN) {
+            $message = trans('brackets/admin-auth::admin.activations.invalid-request');
+        } else if(Activation::ACTIVATION_DISABLED) {
+            $message = trans('brackets/admin-auth::admin.activations.disabled');
+        } else {
+            $message = trans($response);
+        }
         return redirect(route('brackets/admin-auth:admin/activation/showLinkRequestForm'))
             ->withInput($request->only('email'))
-            ->withErrors(['token' => trans($response)]);
+            ->withErrors(['token' => $message]);
     }
 
     /**

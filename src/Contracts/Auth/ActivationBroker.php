@@ -11,28 +11,28 @@ interface ActivationBroker
      *
      * @var string
      */
-    const ACTIVATION_LINK_SENT = 'admin-auth::activations.sent';
+    const ACTIVATION_LINK_SENT = 'sent';
 
     /**
      * Constant representing a successfully reset password.
      *
      * @var string
      */
-    const ACTIVATED = 'admin-auth::activations.activated';
+    const ACTIVATED = 'activated';
 
     /**
      * Constant representing the user not found response.
      *
      * @var string
      */
-    const INVALID_USER = 'admin-auth::activations.user';
+    const INVALID_USER = 'invalid-user';
 
     /**
      * Constant representing an invalid token.
      *
      * @var string
      */
-    const INVALID_TOKEN = 'admin-auth::activations.token';
+    const INVALID_TOKEN = 'invalid-token';
 
     /**
      * Send a password reset link to a user.
