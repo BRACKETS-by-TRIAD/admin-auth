@@ -54,7 +54,7 @@ return [
     */
 
     'activations' => [
-        'enabled' => env('ACTIVATION_REQUIRED', false),
+        'enabled' => env('ACTIVATION_ENABLED', false),
 
         'self-activation-form-enabled' => true,
 

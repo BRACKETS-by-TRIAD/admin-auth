@@ -1,8 +1,6 @@
 <?php namespace Brackets\AdminAuth\Providers;
 
 use Brackets\AdminAuth\Auth\Activations\ActivationServiceProvider;
-use Brackets\AdminAuth\Console\Generate\GenerateProfile;
-use Brackets\AdminAuth\Console\Generate\GenerateUser;
 use Brackets\AdminAuth\Facades\Activation;
 use Brackets\AdminAuth\Http\Middleware\ApplyUserLocale;
 use Illuminate\Support\ServiceProvider;
@@ -33,7 +31,7 @@ class AdminAuthProvider extends ServiceProvider
             __DIR__.'/../../install-stubs/resources/lang' => resource_path('lang/vendor/admin-auth'),
         ], 'lang');
 
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'admin-auth');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'brackets/admin-auth');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'brackets/admin-auth');
         $this->app->register(ActivationServiceProvider::class);

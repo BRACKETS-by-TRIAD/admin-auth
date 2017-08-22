@@ -12,34 +12,34 @@
                             inline-template>
                             <form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/login') }}">
                                 {{ csrf_field() }}
-                                <h1>{{ trans('brackets/admin-auth::auth.login') }}</h1>
+                                <h1>{{ trans('brackets/admin-auth::admin.login.title') }}</h1>
                                 @if (session('status'))
                                     <div class="alert alert-success">
                                         {{ session('status') }}
                                     </div>
                                 @endif
-                                <p class="text-muted">Sign In to your account</p>
+                                <p class="text-muted">{{ trans('brackets/admin-auth::admin.login.signInText') }}</p>
                                 <div class="form-group row" :class="{'has-danger': errors.has('email'), 'has-success': this.fields.email && this.fields.email.valid }">
-                                    <label for="email" class="col-md-3 col-form-label text-md-right">Email</label>
+                                    <label for="email" class="col-md-3 col-form-label text-md-right">{{ trans('brackets/admin-auth::admin.login.email') }}</label>
                                     <div class="col-md-9 col-xl-8">
-                                        <input type="text" v-model="form.email" v-validate="'required|email'" class="form-control" :class="{'form-control-danger': errors.has('email'), 'form-control-success': this.fields.email && this.fields.email.valid}" id="email" name="email" placeholder="Email">
+                                        <input type="text" v-model="form.email" v-validate="'required|email'" class="form-control" :class="{'form-control-danger': errors.has('email'), 'form-control-success': this.fields.email && this.fields.email.valid}" id="email" name="email" placeholder="{{ trans('brackets/admin-auth::admin.login.email') }}">
                                         <div v-if="errors.has('email')" class="form-control-feedback" v-cloak>@{{ errors.first('email') }}</div>
                                     </div>
                                 </div>
                                 <div class="form-group row" :class="{'has-danger': errors.has('password'), 'has-success': this.fields.password && this.fields.password.valid }">
-                                    <label for="password" class="col-md-3 col-form-label text-md-right">Password</label>
+                                    <label for="password" class="col-md-3 col-form-label text-md-right">{{ trans('brackets/admin-auth::admin.login.password') }}</label>
                                     <div class="col-md-9 col-xl-8">
-                                        <input type="password" v-model="form.password" v-validate="''" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="Password">
+                                        <input type="password" v-model="form.password" v-validate="''" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="{{ trans('brackets/admin-auth::admin.login.password') }}">
                                         <div v-if="errors.has('password')" class="form-control-feedback" v-cloak>@{{ errors.first('password') }}</div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <input type="hidden" name="remember" value="1">
-                                        <button type="submit" class="btn btn-primary p-x-2">Login</button>
+                                        <button type="submit" class="btn btn-primary p-x-2">{{ trans('brackets/admin-auth::admin.login.button') }}</button>
                                     </div>
                                     <div class="col-xs-6 text-xs-right">
-                                        <a href="{{ route('brackets/admin-auth:admin/password/showLinkRequestForm') }}" class="btn btn-link p-x-0">Forgot password?</a>
+                                        <a href="{{ route('brackets/admin-auth:admin/password/showLinkRequestForm') }}" class="btn btn-link p-x-0">{{ trans('brackets/admin-auth::admin.login.forgotPassword') }}</a>
                                     </div>
                                 </div>
                             </form>
