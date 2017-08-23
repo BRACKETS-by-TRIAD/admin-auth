@@ -2,6 +2,7 @@
 
 use Brackets\AdminAuth\Auth\Activations\ActivationServiceProvider;
 use Brackets\AdminAuth\Facades\Activation;
+use Brackets\AdminAuth\Http\Middleware\Admin;
 use Brackets\AdminAuth\Http\Middleware\ApplyUserLocale;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +37,7 @@ class AdminAuthProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'brackets/admin-auth');
         $this->app->register(ActivationServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
+        app(\Illuminate\Routing\Router::class)->aliasMiddleware('admin', Admin::class);
     }
 
     /**
@@ -71,6 +73,5 @@ class AdminAuthProvider extends ServiceProvider
         $loader->alias('Activation', Activation::class);
 
         app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('web', ApplyUserLocale::class);
-            
     }
 }
