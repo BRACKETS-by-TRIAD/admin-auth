@@ -26,3 +26,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/admin/activation/{token}',         'ActivationController@activate')->name('brackets/admin-auth:admin/activation/activate');
     });
 });
+
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin', 'Brackets\AdminAuth\Http\Controllers\AdminHomepageController@index');
+});

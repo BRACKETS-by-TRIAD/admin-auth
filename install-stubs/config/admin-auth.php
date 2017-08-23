@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'login-redirect' => '/admin/user',
+    'login-redirect' => '/admin',
 
     /*
     |

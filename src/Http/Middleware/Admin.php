@@ -23,7 +23,7 @@ class Admin
             return $next($request);
         }
 
-        //TODO maybe return to login with not authorized message
-        throw new AuthenticationException('Unauthenticated.');
+        redirect()->route('brackets/admin-auth:admin/showLoginForm');
+
     }
 }
