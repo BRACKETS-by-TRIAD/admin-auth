@@ -8,7 +8,7 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orchestra\Testbench\Traits\CreatesApplication;
-use File;
+use Illuminate\Support\Facades\File;
 
 abstract class TestBracketsCase extends Orchestra
 {
