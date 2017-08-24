@@ -34,7 +34,7 @@ abstract class TestStandardCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            \Brackets\AdminAuth\Providers\AdminAuthServiceProvider::class,
+            \Brackets\AdminAuth\AdminAuthServiceProvider::class,
             \Brackets\Admin\AdminServiceProvider::class,
         ];
     }
