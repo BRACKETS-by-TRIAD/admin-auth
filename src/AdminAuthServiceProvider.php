@@ -26,10 +26,8 @@ class AdminAuthServiceProvider extends ServiceProvider
             ], 'config');
 
             if (! class_exists('ModifyUsersTable')) {
-                $timestamp = date('Y_m_d_His', time());
-
                 $this->publishes([
-                    __DIR__ . '/../install-stubs/database/migrations/modify_users_table.php' => database_path('migrations').'/'.$timestamp.'_modify_users_table.php',
+                    __DIR__ . '/../install-stubs/database/migrations/modify_users_table.php' => database_path('migrations').'/2017_08_24_000000_modify_users_table.php',
                 ], 'migrations');
             }
 
