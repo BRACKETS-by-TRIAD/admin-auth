@@ -3,8 +3,10 @@
 namespace  Brackets\AdminAuth\Http\Middleware;
 
 use Closure;
+use Gate;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\UnauthorizedException;
 
 class Admin
 {
@@ -23,7 +25,10 @@ class Admin
             return $next($request);
         }
 
-        //TODO maybe return to login with not authorized message
-        throw new AuthenticationException('Unauthenticated.');
+        if (!Auth::check()) {
+            return redirect()->route('brackets/admin-auth:admin/showLoginForm');
+        } else {
+            throw new UnauthorizedException('Unathorized');
+        }
     }
 }
