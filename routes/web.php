@@ -27,6 +27,6 @@ Route::middleware(['web'])->group(function () {
     });
 });
 
-Route::middleware(['admin'])->group(function () {
+Route::middleware(['web',  'admin'])->group(function () {
     Route::get('/admin', 'Brackets\AdminAuth\Http\Controllers\AdminHomepageController@index');
 });
