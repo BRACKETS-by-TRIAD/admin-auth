@@ -2,10 +2,15 @@
 
 @section('body')
 
-    <div class="container">
+    <div class="welcome-quote">
 
-        <h1 class="display-4">{{ $inspiration }}</h1>
-        
+	    <blockquote>
+		    {{ explode(" - ", $inspiration)[0] }}
+		    <cite>
+			    {{ explode(" - ", $inspiration)[1] }}
+		    </cite>
+	    </blockquote>
+
     </div>
 
 @endsection
