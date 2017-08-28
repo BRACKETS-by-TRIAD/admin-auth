@@ -3,7 +3,6 @@
 namespace  Brackets\AdminAuth\Http\Middleware;
 
 use Closure;
-use Gate;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;

@@ -38,7 +38,6 @@ class AdminAuthServiceProvider extends ServiceProvider
 
         $this->app->register(ActivationServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
-        app(\Illuminate\Routing\Router::class)->aliasMiddleware('admin', Admin::class);
     }
 
     /**
@@ -74,5 +73,6 @@ class AdminAuthServiceProvider extends ServiceProvider
         $loader->alias('Activation', Activation::class);
 
         app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('web', ApplyUserLocale::class);
+        app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('admin', Admin::class);
     }
 }
