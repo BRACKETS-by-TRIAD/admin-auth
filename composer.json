@@ -49,7 +49,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Brackets\\AdminAuth\\Providers\\AdminAuthServiceProvider"
+                "Brackets\\AdminAuth\\AdminAuthServiceProvider"
             ]
         }
     }
