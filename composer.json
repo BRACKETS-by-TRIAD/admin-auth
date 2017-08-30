@@ -22,8 +22,8 @@
         "brackets/admin": "dev-master"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.0",
-        "phpunit/phpunit": "~5.7"
+        "orchestra/testbench": "~3.5",
+        "phpunit/phpunit": "~6.3"
     },
     "autoload": {
         "classmap": [],
