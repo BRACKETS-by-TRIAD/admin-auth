@@ -15,7 +15,6 @@ class LoginStandardTest extends TestStandardCase
     public function setUp()
     {
         parent::setUp();
-        $this->disableExceptionHandling();
     }
 
     protected function createTestUser()
@@ -55,7 +54,7 @@ class LoginStandardTest extends TestStandardCase
     {
         $user = $this->createTestUser();
 
-        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass1231']);
+        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'incorrect password']);
         $response->assertStatus(302);
 
         $this->assertEmpty(Auth::user());
