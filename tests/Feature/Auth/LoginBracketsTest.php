@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Validation\ValidationException;
 
 class LoginBracketsTest extends TestBracketsCase
 {
@@ -16,7 +17,7 @@ class LoginBracketsTest extends TestBracketsCase
     public function setUp()
     {
         parent::setUp();
-        $this->disableExceptionHandling();
+//        $this->disableExceptionHandling();
     }
 
     protected function createTestUser($activated = true, $forbidden = false)
@@ -60,8 +61,8 @@ class LoginBracketsTest extends TestBracketsCase
     {
         $user = $this->createTestUser();
 
-        $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass1231']);
-        $response->assertStatus(302);
+        $response = $this->json('post', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass1231']);
+        $response->assertStatus(422);
 
         $this->assertEmpty(Auth::user());
     }
