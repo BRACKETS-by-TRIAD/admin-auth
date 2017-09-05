@@ -8,7 +8,7 @@
 	        <div class="col-md-6 col-lg-5">
 				<div class="card">
 					<div class="card-block">
-						<user-form
+						<auth-form
 								:action="'{{ route('brackets/admin-auth:admin/login') }}'"
 								:data="{}"
 								inline-template>
@@ -51,7 +51,7 @@
 									</div>
 								</div>
 							</form>
-						</user-form>
+						</auth-form>
 					</div>
 				</div>
 	        </div>
