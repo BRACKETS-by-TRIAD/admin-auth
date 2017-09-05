@@ -20,11 +20,7 @@
                                     <p class="auth-subtitle">{{ trans('brackets/admin-auth::admin.password-reset.note') }}</p>
                                 </div>
                                 <div class="auth-body">
-                                    @if (session('status'))
-                                        <div class="alert alert-success">
-                                            {{ session('status') }}
-                                        </div>
-                                    @endif
+                                    @include('brackets/admin-auth::admin.auth.includes.messages')
                                     <input type="hidden" name="token" value="{{ $token }}">
 
                                     <div class="form-group"
@@ -42,10 +38,6 @@
                                         <div v-if="errors.has('email')" class="form-control-feedback" v-cloak>@{{
                                             errors.first('email') }}
                                         </div>
-                                        @if ($errors->has('email'))
-                                            <div class="form-control-feedback"
-                                                 v-cloak>{{ $errors->first('email') }}</div>
-                                        @endif
                                     </div>
 
                                     <div class="form-group"

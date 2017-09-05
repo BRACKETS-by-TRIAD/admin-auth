@@ -21,21 +21,7 @@
                                     <p class="auth-subtitle">{{ trans('brackets/admin-auth::admin.activation-form.note') }}</p>
                                 </div>
                                 <div class="auth-body">
-                                    @if (session('status'))
-                                        <div class="alert alert-success">
-                                            {{ session('status') }}
-                                        </div>
-                                    @endif
-                                    @if ($errors->has('email') || $errors->has('token'))
-                                        <div class="alert alert-danger">
-                                            @if ($errors->has('token'))
-                                                {{ $errors->first('token') }}<br/>
-                                            @endif
-                                            @if ($errors->has('email'))
-                                                {{ $errors->first('email') }}<br/>
-                                            @endif
-                                        </div>
-                                    @endif
+                                    @include('brackets/admin-auth::admin.auth.includes.messages')
                                     <div class="form-group"
                                          :class="{'has-danger': errors.has('email'), 'has-success': this.fields.email && this.fields.email.valid }">
                                         <label for="email">{{ trans('brackets/admin-auth::admin.auth-global.email') }}</label>

@@ -19,11 +19,7 @@
 									<p class="auth-subtitle">{{ trans('brackets/admin-auth::admin.login.signInText') }}</p>
 								</div>
 								<div class="auth-body">
-									@if (session('status'))
-										<div class="alert alert-success">
-											{{ session('status') }}
-										</div>
-									@endif
+									@include('brackets/admin-auth::admin.auth.includes.messages')
 									<div class="form-group" :class="{'has-danger': errors.has('email'), 'has-success': this.fields.email && this.fields.email.valid }">
 										<label for="email">{{ trans('brackets/admin-auth::admin.auth-global.email') }}</label>
 										<div class="input-group input-group--custom">
