@@ -19,7 +19,7 @@ return [
     |
     */
 
-    'check-forbidden' => true,
+    'check-forbidden' => env('FORBIDDEN_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
