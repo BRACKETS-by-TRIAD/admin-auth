@@ -36,6 +36,13 @@ class AdminAuthInstall extends Command
 
         $this->frontendAdjustments();
 
+        $this->strReplaceInFile(
+            resource_path('views/admin/layout/profile-dropdown.blade.php'),
+            '|url\(\'admin\/logout\'\)|',
+            '{{-- Do not delete me :) I\'m used for auto-generation menu items --}}',
+            '{{-- Do not delete me :) I\'m used for auto-generation menu items --}}
+    <a href="{{ url(\'admin/logout\') }}" class="dropdown-item"><i class="fa fa-lock"></i> Logout</a>');
+
         $this->call('migrate');
 
         $this->info('Package brackets/admin-auth installed');
