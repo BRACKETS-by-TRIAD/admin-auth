@@ -1,6 +1,7 @@
 <?php namespace Brackets\AdminAuth;
 
 use Brackets\AdminAuth\Auth\Activations\ActivationServiceProvider;
+use Brackets\AdminAuth\Console\Commands\AdminAuthInstall;
 use Brackets\AdminAuth\Facades\Activation;
 use Brackets\AdminAuth\Http\Middleware\Admin;
 use Brackets\AdminAuth\Http\Middleware\ApplyUserLocale;
@@ -16,6 +17,10 @@ class AdminAuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->commands([
+            AdminAuthInstall::class,
+        ]);
+
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'brackets/admin-auth');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'brackets/admin-auth');
@@ -25,7 +30,7 @@ class AdminAuthServiceProvider extends ServiceProvider
                 __DIR__ . '/../install-stubs/config/admin-auth.php' => config_path('admin-auth.php'),
             ], 'config');
 
-            if (! class_exists('ModifyUsersTable')) {
+            if (!glob(base_path('database/migrations/*_modify_users_table.php'))) {
                 $this->publishes([
                     __DIR__ . '/../install-stubs/database/migrations/modify_users_table.php' => database_path('migrations').'/2017_08_24_000000_modify_users_table.php',
                 ], 'migrations');
