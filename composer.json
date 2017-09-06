@@ -1,25 +1,34 @@
 {
     "name": "brackets/admin-auth",
-    "description": "Admin Authentification ",
-    "keywords": ["simpleweb", "admin", "administration", "auth", "user" ],
+    "description": "Authentication interface for brackets/admin-ui",
+    "keywords": [
+        "auth",
+        "authentication",
+        "login",
+        "user",
+        "admin",
+        "cms",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "authors": [
         {
             "name": "Pavol Perdík",
-            "email": "palypster@gmail.com",
+            "email": "pavol.perdik@brackets.sk",
             "homepage": "https://www.brackets.sk/en",
             "role": "Developer"
         },
         {
             "name": "David Běhal",
-            "email": "behal.david@gmail.com",
+            "email": "david.behal@brackets.sk",
+            "homepage": "https://www.brackets.sk/en",
             "role": "Developer"
         }
     ],
     "require": {
         "php": ">=7.0.0",
-        "brackets/admin": "dev-master"
+        "brackets/admin-ui": "dev-master"
     },
     "require-dev": {
         "orchestra/testbench": "~3.5",
@@ -36,21 +45,13 @@
             "Brackets\\AdminAuth\\Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:TRIAD-Advertising/admin.git"
-        },
-        {
-            "type": "path",
-            "url": "../Admin"
-        }
-    ],
     "extra": {
         "laravel": {
             "providers": [
                 "Brackets\\AdminAuth\\AdminAuthServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
