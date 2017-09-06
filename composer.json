@@ -28,7 +28,7 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "brackets/admin-ui": "dev-master"
+        "brackets/admin-ui": "@beta"
     },
     "require-dev": {
         "orchestra/testbench": "~3.5",
@@ -51,7 +51,5 @@
                 "Brackets\\AdminAuth\\AdminAuthServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
