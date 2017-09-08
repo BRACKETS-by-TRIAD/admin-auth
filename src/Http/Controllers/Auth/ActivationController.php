@@ -143,7 +143,7 @@ class ActivationController extends Controller {
     {
         $message = trans($response);
         if($response == Activation::INVALID_USER || $response == Activation::INVALID_TOKEN) {
-            $message = trans('brackets/admin-auth::admin.activations.invalid-request');
+            $message = trans('brackets/admin-auth::admin.activations.invalid_request');
         } else if(Activation::ACTIVATION_DISABLED) {
             $message = trans('brackets/admin-auth::admin.activations.disabled');
         }

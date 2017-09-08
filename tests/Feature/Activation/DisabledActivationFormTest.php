@@ -13,8 +13,8 @@ class DisabledActivationFormTest extends TestBracketsCase
     public function setUp()
     {
         parent::setUp();
+        $this->app['config']->set('admin-auth.activations.self-activation-form-enabled', false);
         $this->app['config']->set('admin-auth.activations.enabled', true);
-        $this->disableExceptionHandling();
     }
 
     /**
@@ -23,14 +23,12 @@ class DisabledActivationFormTest extends TestBracketsCase
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
-        $app['config']->set('admin-auth.activations.self-activation-form-enabled', false);
     }
 
-//    /** @test */
+    /** @test */
     public function can_not_see_activation_form_if_disabled()
     {
-        //TODO fix, not working yet
         $response = $this->get(route('brackets/admin-auth:admin/activation/showLinkRequestForm'));
-//        $response->assertStatus(404);
+        $response->assertStatus(404);
     }
 }

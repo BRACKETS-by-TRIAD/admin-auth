@@ -38,7 +38,11 @@ class ActivationEmailController extends Controller {
      */
     public function showLinkRequestForm()
     {
-        return view('brackets/admin-auth::admin.auth.activation.email');
+        if(config('admin-auth.activations.self-activation-form-enabled')) {
+            return view('brackets/admin-auth::admin.auth.activation.email');
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -49,20 +53,24 @@ class ActivationEmailController extends Controller {
      */
     public function sendActivationEmail(Request $request)
     {
-        if(!Config::get('admin-auth.activations.enabled')) {
-            return $this->sendActivationLinkFailedResponse($request, Activation::ACTIVATION_DISABLED);
+        if(config('admin-auth.activations.self-activation-form-enabled')) {
+            if(!Config::get('admin-auth.activations.enabled')) {
+                return $this->sendActivationLinkFailedResponse($request, Activation::ACTIVATION_DISABLED);
+            }
+
+            $this->validateEmail($request);
+
+            // We will send the activation link to this user. Once we have attempted
+            // to send the link, we will examine the response then see the message we
+            // need to show to the user. Finally, we'll send out a proper response.
+            $response = $this->broker()->sendActivationLink(
+                $this->credentials($request)
+            );
+
+            return $this->sendActivationLinkResponse($response);
+        } else {
+            abort(404);
         }
-
-        $this->validateEmail($request);
-
-        // We will send the activation link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $response = $this->broker()->sendActivationLink(
-            $this->credentials($request)
-        );
-
-        return $this->sendActivationLinkResponse($response);
     }
 
     /**

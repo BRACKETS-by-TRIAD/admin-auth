@@ -104,11 +104,11 @@ class ResetPasswordController extends Controller
     {
         $message = trans($response);
         if($response == Password::INVALID_TOKEN) {
-            $message = trans('brackets/admin-auth::admin.passwords.invalid-token');
+            $message = trans('brackets/admin-auth::admin.passwords.invalid_token');
         } else if($response == Password::INVALID_USER) {
-            $message = trans('brackets/admin-auth::admin.passwords.invalid-user');
+            $message = trans('brackets/admin-auth::admin.passwords.invalid_user');
         } else if($response == Password::INVALID_PASSWORD) {
-            $message = trans('brackets/admin-auth::admin.passwords.invalid-password');
+            $message = trans('brackets/admin-auth::admin.passwords.invalid_password');
         }
         return redirect()->back()
             ->withInput($request->only('email'))
