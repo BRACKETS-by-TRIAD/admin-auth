@@ -1,4 +1,4 @@
-@extends('brackets/admin::admin.layout.master')
+@extends('brackets/admin-ui::admin.layout.master')
 
 @section('title', trans('brackets/admin-auth::admin.login.title'))
 
