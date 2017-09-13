@@ -1,1 +1,0 @@
-Motivacia pre generovanie admina pre userov - nakolko kazdy project ma iny case pre userov, generator je lepsi ako package, ktory by vychadzal s konkretnej datovejstruktury pre userov.
