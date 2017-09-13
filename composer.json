@@ -28,7 +28,7 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "brackets/admin-ui": "@beta"
+        "brackets/admin-ui": "@dev"
     },
     "require-dev": {
         "orchestra/testbench": "~3.5",
