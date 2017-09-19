@@ -35,7 +35,7 @@ abstract class TestStandardCase extends Orchestra
     {
         return [
             \Brackets\AdminAuth\AdminAuthServiceProvider::class,
-            \Brackets\Admin\AdminServiceProvider::class,
+            \Brackets\AdminUI\AdminUIServiceProvider::class,
         ];
     }
 
