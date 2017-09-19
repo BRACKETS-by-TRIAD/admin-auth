@@ -92,7 +92,13 @@ class ModifyUsersTable extends Migration
 
             Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('activated');
+            });
+
+            Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('forbidden');
+            });
+
+            Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('deleted_at');
             });
 
@@ -111,6 +117,9 @@ class ModifyUsersTable extends Migration
 
             Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('first_name');
+            });
+
+            Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('last_name');
             });
         });
