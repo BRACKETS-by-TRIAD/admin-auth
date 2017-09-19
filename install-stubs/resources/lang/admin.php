@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'auth_global' => [
+    'auth-global' => [
         'email' => 'Your e-mail',
         'password' => 'Password',
         'password-confirm' => 'Password confirmation',
@@ -9,24 +9,24 @@ return [
 
     'login' => [
         'title' => 'Login',
-        'sign_in_text' => 'Sign In to your account',
+        'signInText' => 'Sign In to your account',
         'button' => 'Login',
-        'forgot_password' => 'Forgot password?',
+        'forgotPassword' => 'Forgot password?',
     ],
 
-    'password_reset' => [
+    'password-reset' => [
         'title' => 'Reset Password',
         'note' => 'Reset forgotten password',
         'button' => 'Reset password',
     ],
 
-    'forgot_password' => [
+    'forgot-password' => [
         'title' => 'Reset Password',
         'note' => 'Send password reset e-mail',
         'button' => 'Send Password Reset Link',
     ],
 
-    'activation_form' => [
+    'activation-form' => [
         'title' => 'Activate account',
         'note' => 'Send activation link to e-mail',
         'button' => 'Send Activation Link',
