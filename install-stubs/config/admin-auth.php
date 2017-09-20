@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'login-redirect' => '/admin',
+    'login_redirect' => '/admin',
 
     /*
     |
@@ -19,7 +19,7 @@ return [
     |
     */
 
-    'check-forbidden' => env('FORBIDDEN_ENABLED', false),
+    'check_forbidden' => env('FORBIDDEN_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logout-redirect' => '/admin/login',
+    'logout_redirect' => '/admin/login',
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'password-reset-redirect' => '/admin/login',
+    'password_reset_redirect' => '/admin/login',
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     'activations' => [
         'enabled' => env('ACTIVATION_ENABLED', false),
 
-        'self-activation-form-enabled' => true,
+        'self_activation_form_enabled' => true,
 
         'redirect' => '/admin/login',
 
@@ -93,5 +93,5 @@ return [
     |
     */
 
-    'use-routes' => true,
+    'use_routes' => true,
 ];

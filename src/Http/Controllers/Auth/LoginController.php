@@ -43,8 +43,8 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->redirectTo = Config::get('admin-auth.login-redirect');
-        $this->redirectToAfterLogout = Config::get('admin-auth.logout-redirect');
+        $this->redirectTo = Config::get('admin-auth.login_redirect');
+        $this->redirectToAfterLogout = Config::get('admin-auth.logout_redirect');
         $this->middleware('guest')->except('logout');
     }
 
@@ -84,7 +84,7 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         $conditions = [];
-        if(config('admin-auth.check-forbidden')) {
+        if(config('admin-auth.check_forbidden')) {
             $conditions['forbidden'] = false;
         }
         if(config('admin-auth.activations.enabled')) {

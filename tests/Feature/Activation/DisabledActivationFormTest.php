@@ -13,7 +13,7 @@ class DisabledActivationFormTest extends TestBracketsCase
     public function setUp()
     {
         parent::setUp();
-        $this->app['config']->set('admin-auth.activations.self-activation-form-enabled', false);
+        $this->app['config']->set('admin-auth.activations.self_activation_form_enabled', false);
         $this->app['config']->set('admin-auth.activations.enabled', true);
     }
 

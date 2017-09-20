@@ -66,11 +66,11 @@ class AdminAuthServiceProvider extends ServiceProvider
             __DIR__ . '/../install-stubs/config/admin-auth.php', 'admin-auth'
         );
 
-        if(config('admin-auth.use-routes', true)) {
+        if(config('admin-auth.use_routes', true)) {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         }
 
-        if(config('admin-auth.use-routes', true) && config('admin-auth.activations.self-activation-form-enabled', true)) {
+        if(config('admin-auth.use_routes', true) && config('admin-auth.activations.self_activation_form_enabled', true)) {
             $this->loadRoutesFrom(__DIR__ . '/../routes/activation-form.php');
         }
 

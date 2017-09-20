@@ -38,7 +38,7 @@ class ActivationEmailController extends Controller {
      */
     public function showLinkRequestForm()
     {
-        if(config('admin-auth.activations.self-activation-form-enabled')) {
+        if(config('admin-auth.activations.self_activation_form_enabled')) {
             return view('brackets/admin-auth::admin.auth.activation.email');
         } else {
             abort(404);
@@ -53,7 +53,7 @@ class ActivationEmailController extends Controller {
      */
     public function sendActivationEmail(Request $request)
     {
-        if(config('admin-auth.activations.self-activation-form-enabled')) {
+        if(config('admin-auth.activations.self_activation_form_enabled')) {
             if(!Config::get('admin-auth.activations.enabled')) {
                 return $this->sendActivationLinkFailedResponse($request, Activation::ACTIVATION_DISABLED);
             }

@@ -57,7 +57,7 @@ abstract class TestBracketsCase extends Orchestra
         $app['config']->set('auth.providers.users.model', TestBracketsUserModel::class);
 
         //Sets the forbidden check
-        $app['config']->set('admin-auth.check-forbidden', true);
+        $app['config']->set('admin-auth.check_forbidden', true);
 
         //Sets the activation check
         $app['config']->set('admin-auth.activations.enabled', true);
