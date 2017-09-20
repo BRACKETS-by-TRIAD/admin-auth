@@ -28,7 +28,7 @@ class DisabledActivationFormTest extends TestBracketsCase
     /** @test */
     public function can_not_see_activation_form_if_disabled()
     {
-        $response = $this->get(route('brackets/admin-auth:admin/activation/showLinkRequestForm'));
+        $response = $this->get(url('/admin/activation'));
         $response->assertStatus(404);
     }
 }

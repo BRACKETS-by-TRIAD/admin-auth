@@ -9,10 +9,10 @@
 				<div class="card">
 					<div class="card-block">
 						<auth-form
-								:action="'{{ route('brackets/admin-auth:admin/login') }}'"
+								:action="'{{ url('/admin/login') }}'"
 								:data="{}"
 								inline-template>
-							<form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/login') }}" novalidate>
+							<form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/login') }}" novalidate>
 								{{ csrf_field() }}
 								<div class="auth-header">
 									<h1 class="auth-title">{{ trans('brackets/admin-auth::admin.login.title') }}</h1>
@@ -43,7 +43,7 @@
 										<button type="submit" class="btn btn-primary btn-block btn-spinner"><i class="fa"></i> {{ trans('brackets/admin-auth::admin.login.button') }}</button>
 									</div>
 									<div class="form-group text-center">
-										<a href="{{ route('brackets/admin-auth:admin/password/showLinkRequestForm') }}" class="auth-ghost-link">{{ trans('brackets/admin-auth::admin.login.forgot_password') }}</a>
+										<a href="{{ url('/admin/password-reset') }}" class="auth-ghost-link">{{ trans('brackets/admin-auth::admin.login.forgot_password') }}</a>
 									</div>
 								</div>
 							</form>

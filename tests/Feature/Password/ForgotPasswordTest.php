@@ -37,7 +37,7 @@ class ForgotPasswordTest extends TestStandardCase
     /** @test */
     public function can_see_forgot_password_form()
     {
-        $response = $this->get(route('brackets/admin-auth:admin/password/showLinkRequestForm'));
+        $response = $this->get(url('/admin/password-reset'));
         $response->assertStatus(200);
     }
 
@@ -48,7 +48,7 @@ class ForgotPasswordTest extends TestStandardCase
 
         $user = $this->createTestUser();
 
-        $response = $this->post(route('brackets/admin-auth:admin/password/sendResetLinkEmail'), ['email' => 'john@example.com']);
+        $response = $this->post(url('/admin/password-reset/send'), ['email' => 'john@example.com']);
         $response->assertStatus(302);
 
         Notification::assertSentTo(
@@ -64,7 +64,7 @@ class ForgotPasswordTest extends TestStandardCase
 
         $user = $this->createTestUser();
 
-        $response = $this->post(route('brackets/admin-auth:admin/password/sendResetLinkEmail'), ['email' => 'john1@example.com']);
+        $response = $this->post(url('/admin/password-reset/send'), ['email' => 'john1@example.com']);
         $response->assertStatus(302);
 
         Notification::assertNotSentTo(

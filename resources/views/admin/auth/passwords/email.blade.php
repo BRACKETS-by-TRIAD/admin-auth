@@ -9,10 +9,10 @@
 				<div class="card">
 					<div class="card-block">
 							<auth-form
-									:action="'{{ route('brackets/admin-auth:admin/password/sendResetLinkEmail') }}'"
+									:action="'{{ url('/admin/password-reset/send') }}'"
 									:data="{ 'email': '{{ old('email', '') }}' }"
 									inline-template>
-								<form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/password/sendResetLinkEmail') }}" novalidate>
+								<form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/password-reset/send') }}" novalidate>
 									{{ csrf_field() }}
 									<div class="auth-header">
 										<h1 class="auth-title">{{ trans('brackets/admin-auth::admin.forgot_password.title') }}</h1>

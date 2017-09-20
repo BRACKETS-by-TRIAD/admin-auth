@@ -76,7 +76,7 @@ class DisabledActivationTest extends TestBracketsCase
 
         $user = $this->createTestUser(false);
 
-        $response = $this->post(route('brackets/admin-auth:admin/activation/sendActivationEmail'), ['email' => 'john@example.com']);
+        $response = $this->post(url('/admin/activation/send'), ['email' => 'john@example.com']);
         $response->assertStatus(302);
 
         Notification::assertNotSentTo(
@@ -90,7 +90,7 @@ class DisabledActivationTest extends TestBracketsCase
     {
         $user = $this->createTestUser(false);
 
-        $response = $this->get(route('brackets/admin-auth:admin/activation/activate', ['token' => $this->token]));
+        $response = $this->get(route('brackets/admin-auth::admin/activation/activate', ['token' => $this->token]));
         $response->assertStatus(302);
 
         $userNew = TestBracketsUserModel::where('email', 'john@example.com')->first();

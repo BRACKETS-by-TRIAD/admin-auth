@@ -25,7 +25,7 @@ class Admin
         }
 
         if (!Auth::check()) {
-            return redirect()->route('brackets/admin-auth:admin/showLoginForm');
+            return redirect()->url('/admin/login');
         } else {
             throw new UnauthorizedException('Unathorized');
         }

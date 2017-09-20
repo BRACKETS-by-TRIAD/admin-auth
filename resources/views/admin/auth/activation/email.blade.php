@@ -9,11 +9,11 @@
                 <div class="card">
                     <div class="card-block">
                         <auth-form
-                                :action="'{{ route('brackets/admin-auth:admin/activation/sendActivationEmail') }}'"
+                                :action="'{{ url('/admin/activation/send') }}'"
                                 :data="{ 'email': '{{ old('email', '') }}' }"
                                 inline-template>
                             <form class="form-horizontal" role="form" method="POST"
-                                  action="{{ route('brackets/admin-auth:admin/activation/sendActivationEmail') }}"
+                                  action="{{ url('/admin/activation/send') }}"
                                   novalidate>
                                 {{ csrf_field() }}
                                 <div class="auth-header">
