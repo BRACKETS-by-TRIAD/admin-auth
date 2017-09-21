@@ -25,7 +25,7 @@ class Admin
         }
 
         if (!Auth::check()) {
-            return redirect()->url('/admin/login');
+            return redirect('/admin/login');
         } else {
             throw new UnauthorizedException('Unathorized');
         }
