@@ -1,6 +1,6 @@
 # Admin Auth
 
-This package handles authentication into Admin UI interface. It provides these features:
+This package handles authentication into Admin UI interface for our [Craftable](https://github.com/BRACKETS-by-TRIAD/craftable) (`brackets/craftable`) package. It provides these features:
 - User authentication
 - Reset password
 - Account activation
