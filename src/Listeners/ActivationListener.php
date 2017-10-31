@@ -19,11 +19,7 @@ class ActivationListener
     {
         $userClass = Activation::broker()->getUserModelClass();
         $interfaces = class_implements($userClass);
-        if(Config::get('admin-auth.activations.enabled') &&
-            Schema::hasTable('activations') &&
-            Schema::hasColumn((new $userClass)->getTable(), 'activated') &&
-            ($interfaces && in_array(\Brackets\AdminAuth\Contracts\Auth\CanActivate::class, $interfaces))
-        ) {
+        if(($interfaces && in_array(\Brackets\AdminAuth\Contracts\Auth\CanActivate::class, $interfaces))) {
             $events->listen(
                 'eloquent.created: ' . $userClass,
                 ActivationService::class
