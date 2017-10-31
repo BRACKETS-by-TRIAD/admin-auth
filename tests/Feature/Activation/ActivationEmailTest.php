@@ -6,7 +6,6 @@ use Brackets\AdminAuth\Notifications\ActivationNotification;
 use Brackets\AdminAuth\Tests\TestBracketsCase;
 use Brackets\AdminAuth\Tests\TestBracketsUserModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Notification;
 
 class ActivationEmailTest extends TestBracketsCase
