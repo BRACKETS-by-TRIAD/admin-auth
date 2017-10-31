@@ -33,7 +33,7 @@
 										<label for="password">{{ trans('brackets/admin-auth::admin.auth_global.password') }}</label>
 										<div class="input-group input-group--custom">
 											<div class="input-group-addon"><i class="input-icon input-icon--lock"></i></div>
-											<input type="password" v-model="form.password" v-validate="''" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}">
+											<input type="password" v-model="form.password"  class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}">
 										</div>
 										<div v-if="errors.has('password')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('password') }}</div>
 									</div>
@@ -53,4 +53,14 @@
 	        </div>
 	    </div>
 	</div>
+   
+@endsection
+
+
+@section('bottom-scripts')
+<script type="text/javascript">
+    // fix chrome password autofill
+    // https://github.com/vuejs/vue/issues/1331
+    document.getElementById('password').dispatchEvent(new Event('input'));
+</script>
 @endsection
