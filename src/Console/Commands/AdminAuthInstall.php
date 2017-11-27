@@ -75,9 +75,6 @@ class AdminAuthInstall extends Command
             'path.resolve(__dirname, \'vendor/brackets/admin-auth/resources/assets/js\'),
 				// Do not delete this comment, it\'s used for auto-generation :)');
 
-        // register auth assets
-        $this->appendIfNotExists(resource_path('assets/admin/js/index.js'), '|import \'auth\'|', "\nimport 'auth';\n");
-
         $this->info('Admin Auth assets registered');
     }
 }
