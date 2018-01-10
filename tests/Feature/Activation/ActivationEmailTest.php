@@ -6,7 +6,6 @@ use Brackets\AdminAuth\Notifications\ActivationNotification;
 use Brackets\AdminAuth\Tests\TestBracketsCase;
 use Brackets\AdminAuth\Tests\TestBracketsUserModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Notification;
 
 class ActivationEmailTest extends TestBracketsCase
@@ -41,7 +40,7 @@ class ActivationEmailTest extends TestBracketsCase
     /** @test */
     public function can_see_activation_form()
     {
-        $response = $this->get(route('brackets/admin-auth:admin/activation/showLinkRequestForm'));
+        $response = $this->get(url('/admin/activation'));
         $response->assertStatus(200);
     }
 
@@ -65,7 +64,7 @@ class ActivationEmailTest extends TestBracketsCase
 
         $user = $this->createTestUser(false);
 
-        $response = $this->post(route('brackets/admin-auth:admin/activation/sendActivationEmail'), ['email' => 'john@example.com']);
+        $response = $this->post(url('/admin/activation/send'), ['email' => 'john@example.com']);
         $response->assertStatus(302);
 
         Notification::assertSentTo(
@@ -79,7 +78,7 @@ class ActivationEmailTest extends TestBracketsCase
     {
         Notification::fake();
 
-        $response = $this->post(route('brackets/admin-auth:admin/activation/sendActivationEmail'), ['email' => 'user@example.com']);
+        $response = $this->post(url('/admin/activation/send'), ['email' => 'user@example.com']);
         $response->assertStatus(302);
 
         $user = new TestBracketsUserModel([
@@ -102,7 +101,7 @@ class ActivationEmailTest extends TestBracketsCase
 
         $user = $this->createTestUser(true);
 
-        $response = $this->post(route('brackets/admin-auth:admin/activation/sendActivationEmail'), ['email' => 'john@example.com']);
+        $response = $this->post(url('/admin/activation/send'), ['email' => 'john@example.com']);
         $response->assertStatus(302);
 
         Notification::assertNotSentTo(

@@ -147,7 +147,7 @@ class ActivationController extends Controller {
         } else if(Activation::ACTIVATION_DISABLED) {
             $message = trans('brackets/admin-auth::admin.activations.disabled');
         }
-        return redirect(route('brackets/admin-auth:admin/activation/showLinkRequestForm'))
+        return redirect(url('/admin/activation'))
             ->withInput($request->only('email'))
             ->withErrors(['token' => $message]);
     }

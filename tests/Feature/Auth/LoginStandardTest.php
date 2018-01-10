@@ -75,6 +75,6 @@ class LoginStandardTest extends TestStandardCase
 
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
-        $response->assertRedirect($this->app['config']->get('admin-auth.login-redirect'));
+        $response->assertRedirect($this->app['config']->get('admin-auth.login_redirect'));
     }
 }

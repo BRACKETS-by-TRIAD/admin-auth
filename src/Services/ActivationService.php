@@ -27,7 +27,7 @@ class ActivationService
         if($user->activated) {
             return true;
         }
-
+        
         // We will send the activation link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.

@@ -4,7 +4,7 @@ return [
     'auth_global' => [
         'email' => 'Your e-mail',
         'password' => 'Password',
-        'password-confirm' => 'Password confirmation',
+        'password_confirm' => 'Password confirmation',
     ],
 
     'login' => [
@@ -35,15 +35,15 @@ return [
     'activations' => [
         'sent' => 'We have sent you an activation link!',
         'activated' => 'Your account was activated!',
-        'invalid-request' => 'The request failed.',
+        'invalid_request' => 'The request failed.',
         'disabled' => "Activation is disabled.",
     ],
 
     'passwords' => [
         'reset' => 'Your password has been reset!',
         'sent' => 'We have sent you a password reset link!',
-        'invalid-password' => 'Password must be at least six characters long and match the confirmation.',
-        'invalid-token' => 'The password reset token is invalid.',
-        'invalid-user' => "We can't find a user with this e-mail address.",
+        'invalid_password' => 'Password must be at least six characters long and match the confirmation.',
+        'invalid_token' => 'The password reset token is invalid.',
+        'invalid_user' => "We can't find a user with this e-mail address.",
     ]
 ];

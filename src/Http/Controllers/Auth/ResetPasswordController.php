@@ -38,7 +38,7 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->redirectTo = Config::get('admin-auth.password-reset-redirect');
+        $this->redirectTo = Config::get('admin-auth.password_reset_redirect');
         $this->middleware('guest');
     }
 

@@ -52,7 +52,7 @@ class ResetPasswordTest extends TestStandardCase
     /** @test */
     public function can_see_reset_password_form()
     {
-        $response = $this->get(route('brackets/admin-auth:admin/password/showResetForm', ['token' => $this->token]));
+        $response = $this->get(route('brackets/admin-auth::admin/password/showResetForm', ['token' => $this->token]));
         $response->assertStatus(200);
     }
 
@@ -61,7 +61,7 @@ class ResetPasswordTest extends TestStandardCase
     {
         $user = $this->createTestUser();
 
-        $response = $this->post(route('brackets/admin-auth:admin/password/reset'),
+        $response = $this->post(url('/admin/password-reset/reset'),
             [
                 'email' => 'john@example.com',
                 'password' => 'testpass123new',
@@ -80,7 +80,7 @@ class ResetPasswordTest extends TestStandardCase
     {
         $user = $this->createTestUser();
 
-        $response = $this->post(route('brackets/admin-auth:admin/password/reset'),
+        $response = $this->post(url('/admin/password-reset/reset'),
             [
                 'email' => 'john1@example.com',
                 'password' => 'testpass123new',
@@ -100,7 +100,7 @@ class ResetPasswordTest extends TestStandardCase
     {
         $user = $this->createTestUser();
 
-        $response = $this->post(route('brackets/admin-auth:admin/password/reset'),
+        $response = $this->post(url('/admin/password-reset/reset'),
             [
                 'email' => 'john@example.com',
                 'password' => 'testpass123new',
@@ -140,7 +140,7 @@ class ResetPasswordTest extends TestStandardCase
             'email' => 'john2@example.com',
         ]);
 
-        $response = $this->post(route('brackets/admin-auth:admin/password/reset'),
+        $response = $this->post(url('/admin/password-reset/reset'),
             [
                 'email' => 'john2@example.com',
                 'password' => 'testpass123new',
@@ -154,7 +154,7 @@ class ResetPasswordTest extends TestStandardCase
         $this->assertNotEquals(true, Hash::check('testpass123new', $userNew2->password));
         $this->assertEquals(true, Hash::check('testpass123', $userNew2->password));
 
-        $response = $this->post(route('brackets/admin-auth:admin/password/reset'),
+        $response = $this->post(url('/admin/password-reset/reset'),
             [
                 'email' => 'john@example.com',
                 'password' => 'testpass123new',
@@ -175,7 +175,7 @@ class ResetPasswordTest extends TestStandardCase
         $user = $this->createTestUser();
 
         //Fixme not working getting error instead of exception
-//        $response = $this->post(route('brackets/admin-auth:admin/password/reset'),
+//        $response = $this->post(url('/admin/password-reset/reset'),
 //            [
 //                'email' => 'john@example.com',
 //                'password' => 'testpass',

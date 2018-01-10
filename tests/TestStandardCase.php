@@ -35,7 +35,7 @@ abstract class TestStandardCase extends Orchestra
     {
         return [
             \Brackets\AdminAuth\AdminAuthServiceProvider::class,
-            \Brackets\Admin\AdminServiceProvider::class,
+            \Brackets\AdminUI\AdminUIServiceProvider::class,
         ];
     }
 
@@ -57,7 +57,7 @@ abstract class TestStandardCase extends Orchestra
         $app['config']->set('auth.providers.users.model', TestStandardUserModel::class);
 
         //Sets the forbidden check
-        $app['config']->set('admin-auth.check-forbidden', false);
+        $app['config']->set('admin-auth.check_forbidden', false);
 
         //Sets the activation check
         $app['config']->set('admin-auth.activations.enabled', false);

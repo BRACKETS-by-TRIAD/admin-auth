@@ -13,7 +13,7 @@ class DisabledActivationFormTest extends TestBracketsCase
     public function setUp()
     {
         parent::setUp();
-        $this->app['config']->set('admin-auth.activations.self-activation-form-enabled', false);
+        $this->app['config']->set('admin-auth.activations.self_activation_form_enabled', false);
         $this->app['config']->set('admin-auth.activations.enabled', true);
     }
 
@@ -28,7 +28,7 @@ class DisabledActivationFormTest extends TestBracketsCase
     /** @test */
     public function can_not_see_activation_form_if_disabled()
     {
-        $response = $this->get(route('brackets/admin-auth:admin/activation/showLinkRequestForm'));
+        $response = $this->get(url('/admin/activation'));
         $response->assertStatus(404);
     }
 }

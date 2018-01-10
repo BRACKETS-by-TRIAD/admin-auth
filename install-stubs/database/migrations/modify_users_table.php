@@ -52,9 +52,13 @@ class ModifyUsersTable extends Migration
                 $table->unique(['email', 'deleted_at']);
             });
 
-            Schema::table('users', function (Blueprint $table) {
-                DB::statement('CREATE UNIQUE INDEX users_email_null_deleted_at ON users (email) WHERE deleted_at IS NULL;');
-            });
+            $connection = config('database.default');
+            $driver = config("database.connections.{$connection}.driver");
+            if($driver == 'pgsql') {
+                Schema::table('users', function (Blueprint $table) {
+                    DB::statement('CREATE UNIQUE INDEX users_email_null_deleted_at ON users (email) WHERE deleted_at IS NULL;');
+                });
+            }
 
             Schema::table('users', function (Blueprint $table) {
                 $table->string('language', 2)->default('en');
@@ -88,7 +92,13 @@ class ModifyUsersTable extends Migration
 
             Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('activated');
+            });
+
+            Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('forbidden');
+            });
+
+            Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('deleted_at');
             });
 
@@ -107,6 +117,9 @@ class ModifyUsersTable extends Migration
 
             Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('first_name');
+            });
+
+            Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('last_name');
             });
         });

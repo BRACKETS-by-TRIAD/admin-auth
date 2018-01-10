@@ -9,10 +9,10 @@
 				<div class="card">
 					<div class="card-block">
 						<auth-form
-								:action="'{{ route('brackets/admin-auth:admin/login') }}'"
+								:action="'{{ url('/admin/login') }}'"
 								:data="{}"
 								inline-template>
-							<form class="form-horizontal" role="form" method="POST" action="{{ route('brackets/admin-auth:admin/login') }}" novalidate>
+							<form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/login') }}" novalidate>
 								{{ csrf_field() }}
 								<div class="auth-header">
 									<h1 class="auth-title">{{ trans('brackets/admin-auth::admin.login.title') }}</h1>
@@ -33,7 +33,7 @@
 										<label for="password">{{ trans('brackets/admin-auth::admin.auth_global.password') }}</label>
 										<div class="input-group input-group--custom">
 											<div class="input-group-addon"><i class="input-icon input-icon--lock"></i></div>
-											<input type="password" v-model="form.password" v-validate="''" class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}">
+											<input type="password" v-model="form.password"  class="form-control" :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}" id="password" name="password" placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}">
 										</div>
 										<div v-if="errors.has('password')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('password') }}</div>
 									</div>
@@ -43,7 +43,7 @@
 										<button type="submit" class="btn btn-primary btn-block btn-spinner"><i class="fa"></i> {{ trans('brackets/admin-auth::admin.login.button') }}</button>
 									</div>
 									<div class="form-group text-center">
-										<a href="{{ route('brackets/admin-auth:admin/password/showLinkRequestForm') }}" class="auth-ghost-link">{{ trans('brackets/admin-auth::admin.login.forgot_password') }}</a>
+										<a href="{{ url('/admin/password-reset') }}" class="auth-ghost-link">{{ trans('brackets/admin-auth::admin.login.forgot_password') }}</a>
 									</div>
 								</div>
 							</form>
@@ -53,4 +53,14 @@
 	        </div>
 	    </div>
 	</div>
+   
+@endsection
+
+
+@section('bottom-scripts')
+<script type="text/javascript">
+    // fix chrome password autofill
+    // https://github.com/vuejs/vue/issues/1331
+    document.getElementById('password').dispatchEvent(new Event('input'));
+</script>
 @endsection
