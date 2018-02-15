@@ -25,7 +25,7 @@ class Admin
         }
 
         if (!Auth::check()) {
-            return redirect('/admin/login');
+            return redirect()->guest('/admin/login');
         } else {
             throw new UnauthorizedException('Unathorized');
         }
