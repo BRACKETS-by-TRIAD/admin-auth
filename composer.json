@@ -31,8 +31,8 @@
         "brackets/admin-ui": "^2.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.5",
-        "phpunit/phpunit": "~6.3"
+        "orchestra/testbench": "~3.5|~3.6",
+        "phpunit/phpunit": "~6.3|~7.0"
     },
     "autoload": {
         "classmap": [],
