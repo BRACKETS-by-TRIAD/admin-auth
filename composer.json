@@ -28,7 +28,8 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "brackets/admin-ui": "dev-upgrade-57 as 2.0.x-dev"
+        "brackets/admin-ui": "dev-upgrade-57 as 2.0.x-dev",
+        "illuminate/support": "5.7.*"
     },
     "require-dev": {
         "orchestra/testbench": "~3.5|~3.6|~3.7",

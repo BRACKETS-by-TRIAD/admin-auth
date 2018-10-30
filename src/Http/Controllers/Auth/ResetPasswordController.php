@@ -80,10 +80,11 @@ class ResetPasswordController extends Controller
     /**
      * Get the response for a successful password reset.
      *
-     * @param  string  $response
+     * @param Request $request
+     * @param  string $response
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function sendResetResponse($response)
+    protected function sendResetResponse(Request $request, $response)
     {
         $message = trans($response);
         if($response == Password::PASSWORD_RESET) {
