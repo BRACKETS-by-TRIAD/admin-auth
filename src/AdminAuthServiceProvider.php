@@ -30,9 +30,21 @@ class AdminAuthServiceProvider extends ServiceProvider
                 __DIR__ . '/../install-stubs/config/admin-auth.php' => config_path('admin-auth.php'),
             ], 'config');
 
-            if (!glob(base_path('database/migrations/*_modify_users_table.php'))) {
+            if (!glob(base_path('database/migrations/*_create_admin_activations_table.php'))) {
                 $this->publishes([
-                    __DIR__ . '/../install-stubs/database/migrations/modify_users_table.php' => database_path('migrations').'/2017_08_24_000000_modify_users_table.php',
+                    __DIR__ . '/../install-stubs/database/migrations/create_admin_activations_table.php' => database_path('migrations').'/2017_08_24_000000_create_admin_activations_table.php',
+                ], 'migrations');
+            }
+
+            if (!glob(base_path('database/migrations/*_create_admin_password_resets_table.php'))) {
+                $this->publishes([
+                    __DIR__ . '/../install-stubs/database/migrations/create_admin_password_resets_table.php' => database_path('migrations').'/2017_08_24_000000_create_admin_password_resets_table.php',
+                ], 'migrations');
+            }
+
+            if (!glob(base_path('database/migrations/*_create_admin_users_table.php'))) {
+                $this->publishes([
+                    __DIR__ . '/../install-stubs/database/migrations/create_admin_users_table.php' => database_path('migrations').'/2017_08_24_000000_create_admin_users_table.php',
                 ], 'migrations');
             }
 

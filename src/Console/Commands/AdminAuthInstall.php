@@ -34,8 +34,6 @@ class AdminAuthInstall extends Command
             '--provider' => "Brackets\\AdminAuth\\AdminAuthServiceProvider",
         ]);
 
-        $this->frontendAdjustments();
-
         $this->strReplaceInFile(
             resource_path('views/admin/layout/profile-dropdown.blade.php'),
             '|url\(\'admin\/logout\'\)|',
@@ -64,17 +62,5 @@ class AdminAuthInstall extends Command
         }
 
         return File::put($fileName, $content.$append);
-    }
-
-    private function frontendAdjustments() {
-        // webpack
-        $this->strReplaceInFile(
-            'webpack.mix.js',
-            '|vendor/brackets/admin-auth|',
-            '// Do not delete this comment, it\'s used for auto-generation :)',
-            'path.resolve(__dirname, \'vendor/brackets/admin-auth/resources/assets/js\'),
-				// Do not delete this comment, it\'s used for auto-generation :)');
-
-        $this->info('Admin Auth assets registered');
     }
 }

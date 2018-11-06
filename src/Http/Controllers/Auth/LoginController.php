@@ -5,6 +5,7 @@ namespace Brackets\AdminAuth\Http\Controllers\Auth;
 use Brackets\AdminAuth\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class LoginController extends Controller
@@ -27,14 +28,14 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin';
 
     /**
      * Where to redirect users after logout.
      *
      * @var string
      */
-    protected $redirectToAfterLogout = '/';
+    protected $redirectToAfterLogout = '/admin/login';
 
     /**
      * Create a new controller instance.
@@ -105,5 +106,15 @@ class LoginController extends Controller
         }
 
         return property_exists($this, 'redirectToAfterLogout') ? $this->redirectToAfterLogout : '/';
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('admin');
     }
 }

@@ -28,7 +28,8 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "brackets/admin-ui": "^2.0"
+        "brackets/admin-ui": "^2.0",
+        "spatie/laravel-permission": "^2.5"
     },
     "require-dev": {
         "orchestra/testbench": "~3.5|~3.6",

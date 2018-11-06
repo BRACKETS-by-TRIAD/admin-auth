@@ -1,10 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
 
-class CreateActivationsTable extends Migration
+class CreateAdminPasswordResetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateActivationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('activations', function (Blueprint $table) {
+        Schema::create('admin_password_resets', function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('token');
-            $table->boolean('used')->default(false);
             $table->timestamp('created_at')->nullable();
         });
     }
@@ -28,6 +27,6 @@ class CreateActivationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activations');
+        Schema::dropIfExists('admin_password_resets');
     }
 }
