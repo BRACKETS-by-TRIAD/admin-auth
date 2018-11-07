@@ -1,7 +1,8 @@
 <?php
 
-namespace Brackets\AdminAuth\Auth\Activations;
+namespace Brackets\AdminAuth\Activation\Providers;
 
+use Brackets\AdminAuth\Activation\Brokers\ActivationBrokerManager;
 use Illuminate\Support\ServiceProvider;
 
 class ActivationServiceProvider extends ServiceProvider

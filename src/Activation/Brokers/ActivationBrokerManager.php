@@ -1,10 +1,11 @@
 <?php
 
-namespace Brackets\AdminAuth\Auth\Activations;
+namespace Brackets\AdminAuth\Activation\Brokers;
 
+use Brackets\AdminAuth\Activation\Repositories\DatabaseTokenRepository;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Brackets\AdminAuth\Contracts\Auth\ActivationBrokerFactory as FactoryContract;
+use Brackets\AdminAuth\Activation\Contracts\ActivationBrokerFactory as FactoryContract;
 
 class ActivationBrokerManager implements FactoryContract
 {
@@ -106,7 +107,7 @@ class ActivationBrokerManager implements FactoryContract
      */
     protected function getConfig($name)
     {
-        return $this->app['config']["admin-auth.activations.configuration.{$name}"];
+        return $this->app['config']["activation.activations.{$name}"];
     }
 
     /**
@@ -116,7 +117,7 @@ class ActivationBrokerManager implements FactoryContract
      */
     public function getDefaultDriver()
     {
-        return $this->app['config']['admin-auth.defaults.activations'];
+        return $this->app['config']['activation.defaults.activations'];
     }
 
     /**
@@ -127,7 +128,7 @@ class ActivationBrokerManager implements FactoryContract
      */
     public function setDefaultDriver($name)
     {
-        $this->app['config']['admin-auth.defaults.activations'] = $name;
+        $this->app['config']['activation.defaults.activations'] = $name;
     }
 
     /**

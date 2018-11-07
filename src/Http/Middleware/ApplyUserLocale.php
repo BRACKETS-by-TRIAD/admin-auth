@@ -1,26 +1,30 @@
 <?php
 
-namespace  Brackets\AdminAuth\Http\Middleware;
+namespace Brackets\AdminAuth\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 
 class ApplyUserLocale
 {
+    /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'admin';
+
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure $next
      * @return mixed
-     * @throws AuthenticationException
      */
     public function handle($request, Closure $next)
     {
-        if ( Auth::check() && isset(Auth::user()->language))
-        {
-            app()->setLocale(Auth::user()->language);
+        if (Auth::guard($this->guard)->check() && isset(Auth::guard($this->guard)->user()->language)) {
+            app()->setLocale(Auth::guard($this->guard)->user()->language);
         }
 
         return $next($request);

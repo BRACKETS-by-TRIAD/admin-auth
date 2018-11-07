@@ -13,7 +13,7 @@
 
 Route::middleware(['web'])->group(function () {
     Route::namespace('Brackets\AdminAuth\Http\Controllers\Auth')->group(function () {
-        Route::get('/admin/activation',                 'ActivationEmailController@showLinkRequestForm');
+        Route::get('/admin/activation',                 'ActivationEmailController@showLinkRequestForm')->name('brackets/admin-auth::admin/activation');
         Route::post('/admin/activation/send',           'ActivationEmailController@sendActivationEmail');
     });
 });

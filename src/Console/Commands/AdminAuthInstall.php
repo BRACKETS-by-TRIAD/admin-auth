@@ -54,13 +54,4 @@ class AdminAuthInstall extends Command
 
         return File::put($fileName, str_replace($find, $replaceWith, $content));
     }
-
-    private function appendIfNotExists($fileName, $ifExistsRegex, $append) {
-        $content = File::get($fileName);
-        if (preg_match($ifExistsRegex, $content)) {
-            return;
-        }
-
-        return File::put($fileName, $content.$append);
-    }
 }

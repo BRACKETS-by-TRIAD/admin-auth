@@ -1,13 +1,14 @@
 <?php
 
-namespace Brackets\AdminAuth\Auth\Activations;
+namespace Brackets\AdminAuth\Activation\Brokers;
 
+use Brackets\AdminAuth\Activation\Contracts\ActivationBroker as ActivationBrokerContract;
+use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
+use Brackets\AdminAuth\Activation\Repositories\TokenRepositoryInterface;
 use Closure;
+use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Arr;
 use UnexpectedValueException;
-use Illuminate\Contracts\Auth\UserProvider;
-use Brackets\AdminAuth\Contracts\Auth\ActivationBroker as ActivationBrokerContract;
-use Brackets\AdminAuth\Contracts\Auth\CanActivate as CanActivateContract;
 
 class ActivationBroker implements ActivationBrokerContract
 {
@@ -28,13 +29,13 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Create a new password broker instance.
      *
-     * @param  \Brackets\AdminAuth\Auth\Activations\TokenRepositoryInterface  $tokens
-     * @param  \Illuminate\Contracts\Auth\UserProvider  $users
-     * @return void
+     * @param TokenRepositoryInterface $tokens
+     * @param  \Illuminate\Contracts\Auth\UserProvider $users
      */
-    public function __construct(TokenRepositoryInterface $tokens,
-                                UserProvider $users)
-    {
+    public function __construct(
+        TokenRepositoryInterface $tokens,
+        UserProvider $users
+    ) {
         $this->users = $users;
         $this->tokens = $tokens;
     }
@@ -42,7 +43,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Send a activation link to a user.
      *
-     * @param  array  $credentials
+     * @param  array $credentials
      * @return string
      */
     public function sendActivationLink(array $credentials)
@@ -69,8 +70,8 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Activate account for the given token.
      *
-     * @param  array  $credentials
-     * @param  \Closure  $callback
+     * @param  array $credentials
+     * @param  \Closure $callback
      * @return mixed
      */
     public function activate(array $credentials, Closure $callback)
@@ -80,7 +81,7 @@ class ActivationBroker implements ActivationBrokerContract
         // the user is properly redirected having an error message on the post.
         $user = $this->validateActivation($credentials);
 
-        if (! $user instanceof CanActivateContract) {
+        if (!$user instanceof CanActivateContract) {
             return $user;
         }
 
@@ -97,7 +98,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Validate an activation for the given credentials.
      *
-     * @param  array  $credentials
+     * @param  array $credentials
      * @return CanActivateContract|string
      */
     protected function validateActivation(array $credentials)
@@ -116,7 +117,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Get the user for the given credentials.
      *
-     * @param  array  $credentials
+     * @param  array $credentials
      * @return \Brackets\AdminAuth\Contracts\Auth\CanActivate
      *
      * @throws \UnexpectedValueException
@@ -127,7 +128,7 @@ class ActivationBroker implements ActivationBrokerContract
 
         $user = $this->users->retrieveByCredentials($credentials);
 
-        if ($user && ! $user instanceof CanActivateContract) {
+        if ($user && !$user instanceof CanActivateContract) {
             throw new UnexpectedValueException('User must implement CanActivateContract interface.');
         }
 
@@ -137,7 +138,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Create a new password reset token for the given user.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate $user
+     * @param CanActivateContract $user
      * @return string
      */
     public function createToken(CanActivateContract $user)
@@ -148,7 +149,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Delete password reset tokens of the given user.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate $user
+     * @param CanActivateContract $user
      * @return void
      */
     public function deleteToken(CanActivateContract $user)
@@ -159,7 +160,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Validate the given password reset token.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate $user
+     * @param CanActivateContract $user
      * @param  string $token
      * @return bool
      */

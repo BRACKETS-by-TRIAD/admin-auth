@@ -23,13 +23,27 @@ class ForgotPasswordController extends Controller
     use SendsPasswordResetEmails;
 
     /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'admin';
+
+    /**
+     * Password broker used for admin user
+     *
+     * @var string
+     */
+    protected $passwordBroker = 'admin_users';
+
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('guest:admin');
+        $this->middleware('guest:' . $this->guard);
     }
 
     /**
@@ -45,7 +59,7 @@ class ForgotPasswordController extends Controller
     /**
      * Send a reset link to the given user.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function sendResetLinkEmail(Request $request)
@@ -65,13 +79,13 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a successful password reset link.
      *
-     * @param  string  $response
+     * @param  string $response
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendResetLinkResponse($response)
     {
         $message = trans($response);
-        if($response == Password::RESET_LINK_SENT) {
+        if ($response == Password::RESET_LINK_SENT) {
             $message = trans('brackets/admin-auth::admin.passwords.sent');
         }
         return back()->with('status', $message);
@@ -84,6 +98,6 @@ class ForgotPasswordController extends Controller
      */
     public function broker()
     {
-        return Password::broker('admin_users');
+        return Password::broker($this->passwordBroker);
     }
 }

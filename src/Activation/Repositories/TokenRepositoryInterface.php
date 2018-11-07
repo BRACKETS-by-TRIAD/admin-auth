@@ -1,15 +1,15 @@
 <?php
 
-namespace Brackets\AdminAuth\Auth\Activations;
+namespace Brackets\AdminAuth\Activation\Repositories;
 
-use Brackets\AdminAuth\Contracts\Auth\CanActivate as CanActivateContract;
+use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 
 interface TokenRepositoryInterface
 {
     /**
      * Get a token record by user if exists and is valid.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate  $user
+     * @param CanActivateContract $user
      * @return array|null
      */
     public function getByUser(CanActivateContract $user);
@@ -17,7 +17,7 @@ interface TokenRepositoryInterface
     /**
      * Get a token record by token if exists and is valid.
      *
-     * @param  string  $token
+     * @param  string $token
      * @return array|null
      */
     public function getByToken($token);
@@ -25,7 +25,7 @@ interface TokenRepositoryInterface
     /**
      * Create a new token.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate  $user
+     * @param CanActivateContract $user
      * @return string
      */
     public function create(CanActivateContract $user);
@@ -33,7 +33,7 @@ interface TokenRepositoryInterface
     /**
      * Create a new token or get existing not expired and not used.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate  $user
+     * @param CanActivateContract $user
      * @return string
      */
     public function createOrGet(CanActivateContract $user);
@@ -41,7 +41,7 @@ interface TokenRepositoryInterface
     /**
      * Mark all token records as used by user.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate $user
+     * @param CanActivateContract $user
      * @param $token
      * @return void
      */
@@ -50,8 +50,8 @@ interface TokenRepositoryInterface
     /**
      * Determine if a token record exists and is valid.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate  $user
-     * @param  string  $token
+     * @param CanActivateContract $user
+     * @param  string $token
      * @return bool
      */
     public function exists(CanActivateContract $user, $token);
@@ -59,7 +59,7 @@ interface TokenRepositoryInterface
     /**
      * Delete a token record.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate  $user
+     * @param CanActivateContract $user
      * @return void
      */
     public function delete(CanActivateContract $user);

@@ -2,14 +2,13 @@
 
 namespace Brackets\AdminAuth\Http\Controllers\Auth;
 
+use Brackets\AdminAuth\Activation\Facades\Activation;
 use Brackets\AdminAuth\Http\Controllers\Controller;
-use Brackets\AdminAuth\Facades\Activation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
-
-class ActivationEmailController extends Controller {
-
+class ActivationEmailController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Activation Email Controller
@@ -20,6 +19,13 @@ class ActivationEmailController extends Controller {
     | your application to your users.
     |
     */
+
+    /**
+     * Activation broker used for admin user
+     *
+     * @var string
+     */
+    protected $activationBroker = 'admin_users';
 
     /**
      * Create a new controller instance.
@@ -38,7 +44,7 @@ class ActivationEmailController extends Controller {
      */
     public function showLinkRequestForm()
     {
-        if(config('admin-auth.activations.self_activation_form_enabled')) {
+        if (config('admin-auth.self_activation_form_enabled')) {
             return view('brackets/admin-auth::admin.auth.activation.email');
         } else {
             abort(404);
@@ -48,13 +54,13 @@ class ActivationEmailController extends Controller {
     /**
      * Send an activation link to the given user.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function sendActivationEmail(Request $request)
     {
-        if(config('admin-auth.activations.self_activation_form_enabled')) {
-            if(!Config::get('admin-auth.activations.enabled')) {
+        if (config('admin-auth.self_activation_form_enabled')) {
+            if (!Config::get('admin-auth.activation_enabled')) {
                 return $this->sendActivationLinkFailedResponse($request, Activation::ACTIVATION_DISABLED);
             }
 
@@ -67,7 +73,7 @@ class ActivationEmailController extends Controller {
                 $this->credentials($request)
             );
 
-            return $this->sendActivationLinkResponse($response);
+            return $this->sendActivationLinkResponse($request, $response);
         } else {
             abort(404);
         }
@@ -76,7 +82,7 @@ class ActivationEmailController extends Controller {
     /**
      * Validate the email for the given request.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return void
      */
     protected function validateEmail(Request $request)
@@ -87,10 +93,11 @@ class ActivationEmailController extends Controller {
     /**
      * Get the response for a successful activation link.
      *
-     * @param  string  $response
+     * @param Request $request
+     * @param  string $response
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function sendActivationLinkResponse($response)
+    protected function sendActivationLinkResponse(Request $request, $response)
     {
         $message = trans('brackets/admin-auth::admin.activations.sent');
         return back()->with('status', $message);
@@ -100,13 +107,13 @@ class ActivationEmailController extends Controller {
      * Get the response for a failed activation link.
      *
      * @param  \Illuminate\Http\Request
-     * @param  string  $response
+     * @param  string $response
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendActivationLinkFailedResponse(Request $request, $response)
     {
         $message = trans($response);
-        if($response == Activation::ACTIVATION_DISABLED) {
+        if ($response == Activation::ACTIVATION_DISABLED) {
             $message = trans('brackets/admin-auth::admin.activations.disabled');
         }
         return back()->withErrors(
@@ -117,21 +124,22 @@ class ActivationEmailController extends Controller {
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     protected function credentials(Request $request)
     {
-        return array_merge($request->only('email'), ['activated' => false, 'deleted_at' => null]);
+        $conditions = ['activated' => false];
+        return array_merge($request->only('email'), $conditions);
     }
 
     /**
      * Get the broker to be used during activation.
      *
-     * @return \Brackets\AdminAuth\Contracts\Auth\ActivationBroker
+     * @return \Brackets\AdminAuth\Activation\Contracts\ActivationBroker
      */
     public function broker()
     {
-        return Activation::broker();
+        return Activation::broker($this->activationBroker);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Brackets\AdminAuth\Auth\Activations;
+namespace Brackets\AdminAuth\Activation\Traits;
 
-use Brackets\AdminAuth\Notifications\ActivationNotification;
+use Brackets\AdminAuth\Activation\Notifications\ActivationNotification;
 
 trait CanActivate
 {
@@ -19,7 +19,7 @@ trait CanActivate
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param  string $token
      * @return void
      */
     public function sendActivationNotification($token)

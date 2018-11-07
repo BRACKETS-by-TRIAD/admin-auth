@@ -1,10 +1,13 @@
 <?php
 
-namespace Brackets\AdminAuth\Contracts\Auth;
+namespace Brackets\AdminAuth\Activation\Facades;
 
-use Closure;
+use Illuminate\Support\Facades\Facade;
 
-interface ActivationBroker
+/**
+ * @see \Brackets\AdminAuth\Activation\Brokers\ActivationBroker
+ */
+class Activation extends Facade
 {
     /**
      * Constant representing a successfully sent reminder.
@@ -42,19 +45,12 @@ interface ActivationBroker
     const ACTIVATION_DISABLED = 'disabled';
 
     /**
-     * Send a password reset link to a user.
+     * Get the registered name of the component.
      *
-     * @param  array  $credentials
      * @return string
      */
-    public function sendActivationLink(array $credentials);
-
-    /**
-     * Reset the password for the given token.
-     *
-     * @param  array     $credentials
-     * @param  \Closure  $callback
-     * @return mixed
-     */
-    public function activate(array $credentials, Closure $callback);
+    protected static function getFacadeAccessor()
+    {
+        return 'auth.activation';
+    }
 }

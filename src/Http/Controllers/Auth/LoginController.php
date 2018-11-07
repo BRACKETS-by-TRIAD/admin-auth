@@ -38,6 +38,13 @@ class LoginController extends Controller
     protected $redirectToAfterLogout = '/admin/login';
 
     /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'admin';
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -46,7 +53,7 @@ class LoginController extends Controller
     {
         $this->redirectTo = Config::get('admin-auth.login_redirect');
         $this->redirectToAfterLogout = Config::get('admin-auth.logout_redirect');
-        $this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:' . $this->guard)->except('logout');
     }
 
     /**
@@ -62,7 +69,7 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
@@ -79,16 +86,16 @@ class LoginController extends Controller
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     protected function credentials(Request $request)
     {
         $conditions = [];
-        if(config('admin-auth.check_forbidden')) {
+        if (config('admin-auth.check_forbidden')) {
             $conditions['forbidden'] = false;
         }
-        if(config('admin-auth.activations.enabled')) {
+        if (config('admin-auth.activation_enabled')) {
             $conditions['activated'] = true;
         }
         return array_merge($request->only($this->username(), 'password'), $conditions);
@@ -115,6 +122,6 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Auth::guard($this->guard);
     }
 }

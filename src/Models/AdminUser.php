@@ -1,7 +1,7 @@
 <?php namespace Brackets\AdminAuth\Models;
 
-use Brackets\AdminAuth\Auth\Activations\CanActivate;
-use Brackets\AdminAuth\Contracts\Auth\CanActivate as CanActivateContract;
+use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
+use Brackets\AdminAuth\Activation\Traits\CanActivate;
 use Brackets\AdminAuth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Brackets\AdminAuth\Contracts\Auth;
+namespace Brackets\AdminAuth\Activation\Contracts;
 
 interface CanActivate
 {
@@ -14,7 +14,7 @@ interface CanActivate
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param  string $token
      * @return void
      */
     public function sendActivationNotification($token);
