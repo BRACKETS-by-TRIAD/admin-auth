@@ -29,7 +29,7 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:admin');
     }
 
     /**
@@ -75,5 +75,15 @@ class ForgotPasswordController extends Controller
             $message = trans('brackets/admin-auth::admin.passwords.sent');
         }
         return back()->with('status', $message);
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker('admin_users');
     }
 }

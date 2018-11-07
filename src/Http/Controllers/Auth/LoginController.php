@@ -46,7 +46,7 @@ class LoginController extends Controller
     {
         $this->redirectTo = Config::get('admin-auth.login_redirect');
         $this->redirectToAfterLogout = Config::get('admin-auth.logout_redirect');
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:admin')->except('logout');
     }
 
     /**

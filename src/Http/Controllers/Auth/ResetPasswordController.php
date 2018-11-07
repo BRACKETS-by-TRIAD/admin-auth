@@ -5,6 +5,7 @@ namespace Brackets\AdminAuth\Http\Controllers\Auth;
 use Brackets\AdminAuth\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -39,7 +40,7 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->redirectTo = Config::get('admin-auth.password_reset_redirect');
-        $this->middleware('guest');
+        $this->middleware('guest:admin');
     }
 
     /**
@@ -137,5 +138,25 @@ class ResetPasswordController extends Controller
      */
     protected function loginCheck($user) {
         return (!property_exists($user, 'activated') || $user->activated) && (!property_exists($user, 'forbidden') || !$user->forbidden);
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker('admin_users');
+    }
+
+    /**
+     * Get the guard to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('admin');
     }
 }

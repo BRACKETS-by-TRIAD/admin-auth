@@ -47,11 +47,12 @@
                                             <div class="input-group-addon"><i class="input-icon input-icon--lock"></i>
                                             </div>
                                             <input type="password" v-model="form.password"
-                                                   v-validate="'required|confirmed:password_confirmation|min:7'"
+                                                   v-validate="'required|min:7'"
                                                    class="form-control"
                                                    :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}"
                                                    id="password" name="password"
-                                                   placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}">
+                                                   placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}"
+                                                   ref="password">
                                         </div>
                                         <div v-if="errors.has('password')" class="form-control-feedback" v-cloak>@{{
                                             errors.first('password') }}
@@ -69,14 +70,15 @@
                                             <div class="input-group-addon"><i class="input-icon input-icon--lock"></i>
                                             </div>
                                             <input type="password" v-model="form.password_confirmation"
-                                                   v-validate="'required|confirmed:password_confirmation|min:7'"
+                                                   v-validate="'required|confirmed:password|min:7'"
                                                    class="form-control"
                                                    :class="{'form-control-danger': errors.has('password_confirmation'), 'form-control-success': this.fields.password_confirmation && this.fields.password_confirmation.valid}"
                                                    id="password_confirmation" name="password_confirmation"
-                                                   placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}">
+                                                   placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}"
+                                                   data-vv-as="password">
                                         </div>
                                         <div v-if="errors.has('password_confirmation')" class="form-control-feedback"
-                                             v-cloak>@{{ errors.first('password') }}
+                                             v-cloak>@{{ errors.first('password_confirmation') }}
                                         </div>
                                         @if ($errors->has('password_confirmation'))
                                             <div class="form-control-feedback"
