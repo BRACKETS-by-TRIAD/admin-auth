@@ -3,6 +3,7 @@
 namespace Brackets\AdminAuth\Activation\Providers;
 
 use Brackets\AdminAuth\Activation\Brokers\ActivationBrokerManager;
+use Brackets\AdminAuth\Facades\Activation;
 use Illuminate\Support\ServiceProvider;
 
 class ActivationServiceProvider extends ServiceProvider
@@ -15,13 +16,40 @@ class ActivationServiceProvider extends ServiceProvider
     protected $defer = true;
 
     /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../../../install-stubs/config/activation.php' => config_path('activation.php'),
+            ], 'config');
+
+            if (!glob(base_path('database/migrations/*_create_activations_table.php'))) {
+                $this->publishes([
+                    __DIR__ . '/../../../install-stubs/database/migrations/create_activations_table.php' => database_path('migrations') . '/2017_08_24_000000_create_activations_table.php',
+                ], 'migrations');
+            }
+        }
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../../install-stubs/config/activation.php', 'activation'
+        );
+
         $this->registerActivationBroker();
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Activation', Activation::class);
     }
 
     /**

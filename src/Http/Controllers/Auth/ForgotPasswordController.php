@@ -43,7 +43,7 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:' . $this->guard);
+        $this->middleware('guest.admin:' . $this->guard);
     }
 
     /**

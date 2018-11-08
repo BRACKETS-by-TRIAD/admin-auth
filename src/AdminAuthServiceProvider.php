@@ -2,9 +2,9 @@
 
 use Brackets\AdminAuth\Activation\Providers\ActivationServiceProvider;
 use Brackets\AdminAuth\Console\Commands\AdminAuthInstall;
-use Brackets\AdminAuth\Facades\Activation;
-use Brackets\AdminAuth\Http\Middleware\Admin;
+use Brackets\AdminAuth\Http\Middleware\CanAdmin;
 use Brackets\AdminAuth\Http\Middleware\ApplyUserLocale;
+use Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated;
 use Brackets\AdminAuth\Providers\EventServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,16 +22,14 @@ class AdminAuthServiceProvider extends ServiceProvider
         ]);
 
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'brackets/admin-auth');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'brackets/admin-auth');
+
+        $this->app->register(ActivationServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../install-stubs/config/admin-auth.php' => config_path('admin-auth.php'),
-            ], 'config');
-
-            $this->publishes([
-                __DIR__ . '/../install-stubs/config/activation.php' => config_path('activation.php'),
             ], 'config');
 
             if (!glob(base_path('database/migrations/*_create_admin_activations_table.php'))) {
@@ -57,8 +55,10 @@ class AdminAuthServiceProvider extends ServiceProvider
             ], 'lang');
         }
 
-        $this->app->register(ActivationServiceProvider::class);
-        $this->app->register(EventServiceProvider::class);
+        $this->app->bind(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+            \Brackets\AdminAuth\Exceptions\Handler::class
+        );
     }
 
     /**
@@ -68,22 +68,8 @@ class AdminAuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            'App\Http\Middleware\RedirectIfAuthenticated',
-            'Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated'
-        );
-
-        $this->app->bind(
-            'Illuminate\Auth\Notifications\ResetPassword',
-            'Brackets\AdminAuth\Notifications\ResetPassword'
-        );
-
         $this->mergeConfigFrom(
             __DIR__ . '/../install-stubs/config/admin-auth.php', 'admin-auth'
-        );
-
-        $this->mergeConfigFrom(
-            __DIR__ . '/../install-stubs/config/activation.php', 'activation'
         );
 
         if (config('admin-auth.use_routes', true)) {
@@ -95,10 +81,8 @@ class AdminAuthServiceProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__ . '/../routes/activation-form.php');
         }
 
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('Activation', Activation::class);
-
-        app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('web', ApplyUserLocale::class);
-        app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('admin', Admin::class);
+        app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('admin', CanAdmin::class);
+        app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('admin', ApplyUserLocale::class);
+        app(\Illuminate\Routing\Router::class)->aliasMiddleware('guest.admin', RedirectIfAuthenticated::class);
     }
 }

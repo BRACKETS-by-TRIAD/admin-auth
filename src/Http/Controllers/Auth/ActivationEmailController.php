@@ -21,6 +21,13 @@ class ActivationEmailController extends Controller
     */
 
     /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'admin';
+
+    /**
      * Activation broker used for admin user
      *
      * @var string
@@ -34,7 +41,7 @@ class ActivationEmailController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest.admin:' . $this->guard);
     }
 
     /**

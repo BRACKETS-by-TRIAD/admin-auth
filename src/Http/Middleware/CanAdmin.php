@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;
 
-class Admin
+class CanAdmin
 {
     /**
      * Guard used for admin user

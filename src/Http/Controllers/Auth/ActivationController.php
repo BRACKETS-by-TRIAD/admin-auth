@@ -23,6 +23,13 @@ class ActivationController extends Controller
     */
 
     /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'admin';
+
+    /**
      * Where to redirect users after activating their accounts.
      *
      * @var string
@@ -44,7 +51,7 @@ class ActivationController extends Controller
     public function __construct()
     {
         $this->redirectTo = Config::get('admin-auth.activation_redirect');
-        $this->middleware('guest');
+        $this->middleware('guest.admin:' . $this->guard);
     }
 
     /**
@@ -157,7 +164,7 @@ class ActivationController extends Controller
                 $message = trans('brackets/admin-auth::admin.activations.disabled');
             }
         }
-        if(Config::get('admin-auth.self_activation_form_enabled')) {
+        if (Config::get('admin-auth.self_activation_form_enabled')) {
             return redirect(route('brackets/admin-auth::admin/activation'))
                 ->withInput($request->only('email'))
                 ->withErrors(['token' => $message]);

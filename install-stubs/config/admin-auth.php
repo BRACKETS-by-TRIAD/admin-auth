@@ -4,6 +4,14 @@ return [
 
     /*
     |
+    | This option controls which model is used to create admin users
+    |
+    */
+
+    'model' => Brackets\AdminAuth\Models\AdminUser::class,
+
+    /*
+    |
     | This option controls if Login should check also forbidden key
     |
     */
