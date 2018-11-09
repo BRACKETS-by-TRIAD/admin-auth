@@ -15,6 +15,14 @@ class ApplyUserLocale
     protected $guard = 'admin';
 
     /**
+     * ApplyUserLocale constructor.
+     */
+    public function __construct()
+    {
+        $this->guard = config('admin-auth.defaults.guard');
+    }
+
+    /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request $request

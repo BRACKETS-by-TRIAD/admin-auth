@@ -6,7 +6,6 @@ use Brackets\AdminAuth\Activation\Facades\Activation;
 use Brackets\AdminAuth\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 
 class ActivationController extends Controller
 {
@@ -50,7 +49,9 @@ class ActivationController extends Controller
      */
     public function __construct()
     {
-        $this->redirectTo = Config::get('admin-auth.activation_redirect');
+        $this->guard = config('admin-auth.defaults.guard');
+        $this->activationBroker = config('admin-auth.defaults.activations');
+        $this->redirectTo = config('admin-auth.activation_redirect');
         $this->middleware('guest.admin:' . $this->guard);
     }
 
@@ -62,7 +63,7 @@ class ActivationController extends Controller
      */
     public function activate(Request $request, $token)
     {
-        if (!Config::get('admin-auth.activation_enabled')) {
+        if (!config('admin-auth.activation_enabled')) {
             return $this->sendActivationFailedResponse($request, Activation::ACTIVATION_DISABLED);
         }
 
@@ -164,7 +165,7 @@ class ActivationController extends Controller
                 $message = trans('brackets/admin-auth::admin.activations.disabled');
             }
         }
-        if (Config::get('admin-auth.self_activation_form_enabled')) {
+        if (config('admin-auth.self_activation_form_enabled')) {
             return redirect(route('brackets/admin-auth::admin/activation'))
                 ->withInput($request->only('email'))
                 ->withErrors(['token' => $message]);

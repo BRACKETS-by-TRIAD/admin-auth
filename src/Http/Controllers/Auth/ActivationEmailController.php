@@ -5,7 +5,6 @@ namespace Brackets\AdminAuth\Http\Controllers\Auth;
 use Brackets\AdminAuth\Activation\Facades\Activation;
 use Brackets\AdminAuth\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 
 class ActivationEmailController extends Controller
 {
@@ -41,6 +40,8 @@ class ActivationEmailController extends Controller
      */
     public function __construct()
     {
+        $this->guard = config('admin-auth.defaults.guard');
+        $this->activationBroker = config('admin-auth.defaults.activations');
         $this->middleware('guest.admin:' . $this->guard);
     }
 
@@ -67,7 +68,7 @@ class ActivationEmailController extends Controller
     public function sendActivationEmail(Request $request)
     {
         if (config('admin-auth.self_activation_form_enabled')) {
-            if (!Config::get('admin-auth.activation_enabled')) {
+            if (!config('admin-auth.activation_enabled')) {
                 return $this->sendActivationLinkFailedResponse($request, Activation::ACTIVATION_DISABLED);
             }
 

@@ -6,6 +6,11 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;
 
+/**
+ * Class CanAdmin
+ *
+ * @package Brackets\AdminAuth\Http\Middleware
+ */
 class CanAdmin
 {
     /**
@@ -14,6 +19,14 @@ class CanAdmin
      * @var string
      */
     protected $guard = 'admin';
+
+    /**
+     * CanAdmin constructor.
+     */
+    public function __construct()
+    {
+        $this->guard = config('admin-auth.defaults.guard');
+    }
 
     /**
      * Handle an incoming request.

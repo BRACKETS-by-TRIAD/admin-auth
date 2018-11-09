@@ -4,11 +4,15 @@ return [
 
     /*
     |
-    | This option controls which model is used to create admin users
+    | This option controls which defaults are used for admin users
     |
     */
 
-    'model' => Brackets\AdminAuth\Models\AdminUser::class,
+    'defaults' => [
+        'guard' => 'admin',
+        'passwords' => 'admin_users',
+        'activations' => 'admin_users',
+    ],
 
     /*
     |

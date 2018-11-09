@@ -6,7 +6,6 @@ use Brackets\AdminAuth\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 
 class LoginController extends Controller
 {
@@ -51,8 +50,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->redirectTo = Config::get('admin-auth.login_redirect');
-        $this->redirectToAfterLogout = Config::get('admin-auth.logout_redirect');
+        $this->guard = config('admin-auth.defaults.guard');
+        $this->redirectTo = config('admin-auth.login_redirect');
+        $this->redirectToAfterLogout = config('admin-auth.logout_redirect');
         $this->middleware('guest.admin:' . $this->guard)->except('logout');
     }
 

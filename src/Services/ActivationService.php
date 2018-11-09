@@ -4,7 +4,6 @@ namespace Brackets\AdminAuth\Services;
 
 use Brackets\AdminAuth\Contracts\Auth\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Facades\Activation;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class ActivationService
@@ -24,7 +23,7 @@ class ActivationService
      */
     public function handle(CanActivateContract $user)
     {
-        if (!Config::get('admin-auth.activation_enabled')) {
+        if (!config('admin-auth.activation_enabled')) {
             Log::info('Activation disabled.');
             return false;
         }

@@ -4,8 +4,12 @@ namespace Brackets\AdminAuth\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 
+/**
+ * Class RedirectIfAuthenticated
+ *
+ * @package Brackets\AdminAuth\Http\Middleware
+ */
 class RedirectIfAuthenticated
 {
     /**
@@ -14,6 +18,14 @@ class RedirectIfAuthenticated
      * @var string
      */
     protected $guard = 'admin';
+
+    /**
+     * RedirectIfAuthenticated constructor.
+     */
+    public function __construct()
+    {
+        $this->guard = config('admin-auth.defaults.guard');
+    }
 
     /**
      * Handle an incoming request.
@@ -27,7 +39,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             if ($guard === $this->guard) {
-                return redirect(Config::get('admin-auth.login_redirect'));
+                return redirect(config('admin-auth.login_redirect'));
             } else {
                 return redirect('/home');
             }

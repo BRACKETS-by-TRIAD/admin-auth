@@ -6,7 +6,6 @@ use Brackets\AdminAuth\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -53,7 +52,9 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->redirectTo = Config::get('admin-auth.password_reset_redirect');
+        $this->guard = config('admin-auth.defaults.guard');
+        $this->passwordBroker = config('admin-auth.defaults.passwords');
+        $this->redirectTo = config('admin-auth.password_reset_redirect');
         $this->middleware('guest.admin:' . $this->guard);
     }
 

@@ -43,6 +43,8 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
+        $this->guard = config('admin-auth.defaults.guard');
+        $this->passwordBroker = config('admin-auth.defaults.passwords');
         $this->middleware('guest.admin:' . $this->guard);
     }
 
