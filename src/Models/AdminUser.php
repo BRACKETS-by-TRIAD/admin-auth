@@ -47,7 +47,7 @@ class AdminUser extends Authenticatable implements CanActivateContract
      */
     public function getResourceUrlAttribute()
     {
-        return url('/admin/users/' . $this->getKey());
+        return url('/admin/admin-users/' . $this->getKey());
     }
 
     /**
