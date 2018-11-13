@@ -1,21 +1,20 @@
 <?php
 
-namespace Brackets\AdminAuth\Tests\Feaure\Auth;
+namespace Brackets\AdminAuth\Tests\Feature\AdminUser\Auth;
 
-use Brackets\AdminAuth\Tests\TestBracketsCase;
-use Brackets\AdminAuth\Tests\TestBracketsUserModel;
+use Brackets\AdminAuth\Tests\BracketsTestCase;
+use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Auth;
 
-class LoginBracketsTest extends TestBracketsCase
+class LoginBracketsTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
     public function setUp()
     {
         parent::setUp();
-//        $this->disableExceptionHandling();
     }
 
     protected function createTestUser($activated = true, $forbidden = false)
@@ -51,7 +50,7 @@ class LoginBracketsTest extends TestBracketsCase
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
-        $this->assertNotEmpty(Auth::user());
+        $this->assertNotEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
@@ -62,7 +61,7 @@ class LoginBracketsTest extends TestBracketsCase
         $response = $this->json('post', '/admin/login', ['email' => 'john@example.com', 'password' => 'testpass1231']);
         $response->assertStatus(422);
 
-        $this->assertEmpty(Auth::user());
+        $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
@@ -73,7 +72,7 @@ class LoginBracketsTest extends TestBracketsCase
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
-        $this->assertEmpty(Auth::user());
+        $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
@@ -82,12 +81,12 @@ class LoginBracketsTest extends TestBracketsCase
     {
         $user = $this->createTestUser(false);
 
-        $this->app['config']->set('admin-auth.activations.enabled', false);
+        $this->app['config']->set('admin-auth.activation_enabled', false);
 
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
-        $this->assertNotEmpty(Auth::user());
+        $this->assertNotEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
@@ -98,7 +97,7 @@ class LoginBracketsTest extends TestBracketsCase
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
-        $this->assertEmpty(Auth::user());
+        $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
@@ -126,21 +125,19 @@ class LoginBracketsTest extends TestBracketsCase
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
-        $this->assertEmpty(Auth::user());
+        $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
     public function already_auth_user_is_redirected_from_login()
     {
-        $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated');
-
         $user = $this->createTestUser();
 
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
         $response->assertRedirect('/admin');
 
-        $this->assertNotEmpty(Auth::user());
+        $this->assertNotEmpty(Auth::guard($this->adminAuthGuard)->user());
 
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);

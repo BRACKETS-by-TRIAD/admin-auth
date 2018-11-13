@@ -1,15 +1,15 @@
 <?php
 
-namespace Brackets\AdminAuth\Tests\Auth;
+namespace Brackets\AdminAuth\Tests\Feature\AdminUser\Activation;
 
 use Brackets\AdminAuth\Notifications\ActivationNotification;
-use Brackets\AdminAuth\Tests\TestBracketsCase;
-use Brackets\AdminAuth\Tests\TestBracketsUserModel;
+use Brackets\AdminAuth\Tests\BracketsTestCase;
+use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
 
-class DisabledActivationTest extends TestBracketsCase
+class DisabledActivationTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
@@ -18,8 +18,7 @@ class DisabledActivationTest extends TestBracketsCase
     public function setUp()
     {
         parent::setUp();
-        $this->app['config']->set('admin-auth.activations.enabled', false);
-        $this->disableExceptionHandling();
+        $this->app['config']->set('admin-auth.activation_enabled', false);
         $this->token = '123456aabbcc';
     }
 
@@ -43,14 +42,14 @@ class DisabledActivationTest extends TestBracketsCase
         ]);
 
         //create also activation
-        $this->app['db']->connection()->table('activations')->insert([
+        $this->app['db']->connection()->table('admin_activations')->insert([
             'email' => $user->email,
             'token' => $this->token,
             'used' => $used,
             'created_at' => !is_null($activationCreatedAt) ? $activationCreatedAt : Carbon::now(),
         ]);
 
-        $this->assertDatabaseHas('activations', [
+        $this->assertDatabaseHas('admin_activations', [
             'email' => 'john@example.com',
             'token' => $this->token,
             'used' => $used,
@@ -99,7 +98,7 @@ class DisabledActivationTest extends TestBracketsCase
         $userNew = TestBracketsUserModel::where('email', 'john@example.com')->first();
         $this->assertEquals(0, $userNew->activated);
 
-        $this->assertDatabaseHas('activations', [
+        $this->assertDatabaseHas('admin_activations', [
             'email' => 'john@example.com',
             'token' => $this->token,
             'used' => false,

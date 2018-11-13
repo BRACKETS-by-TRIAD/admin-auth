@@ -1,31 +1,34 @@
 <?php
 
-namespace Brackets\AdminAuth\Tests\Unit;
+namespace Brackets\AdminAuth\Tests\Feature\AdminUser\Auth;
 
-use Brackets\AdminAuth\Tests\TestStandardCase;
-use Brackets\AdminAuth\Tests\TestStandardUserModel;
+use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
+use Brackets\AdminAuth\Tests\BracketsTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Auth;
 
-class LogoutTest extends TestStandardCase
+class LogoutTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
     public function setUp()
     {
         parent::setUp();
-        $this->disableExceptionHandling();
     }
 
     protected function createTestUser()
     {
-        $user = TestStandardUserModel::create([
+        $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
-            'password' => bcrypt('testpass123')
+            'password' => bcrypt('testpass123'),
+            'activated' => true,
+            'forbidden' => false,
         ]);
 
-        $this->assertDatabaseHas('test_standard_user_models', [
+        $this->assertDatabaseHas('test_brackets_user_models', [
             'email' => 'john@example.com',
+            'activated' => true,
+            'forbidden' => false,
         ]);
 
         return $user;
@@ -39,24 +42,24 @@ class LogoutTest extends TestStandardCase
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
-        $this->assertNotEmpty(Auth::user());
+        $this->assertNotEmpty(Auth::guard($this->adminAuthGuard)->user());
 
         $response = $this->get('/admin/logout');
         $response->assertStatus(302);
         $response->assertRedirect('/admin/login');
 
-        $this->assertEmpty(Auth::user());
+        $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
     public function not_auth_user_cannot_logout()
     {
-        $this->assertEmpty(Auth::user());
+        $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
 
         $response = $this->get('/admin/logout');
         $response->assertStatus(302);
         $response->assertRedirect('/admin/login');
 
-        $this->assertEmpty(Auth::user());
+        $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 }

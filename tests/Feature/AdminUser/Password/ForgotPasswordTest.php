@@ -1,31 +1,30 @@
 <?php
 
-namespace Brackets\AdminAuth\Tests\Auth;
+namespace Brackets\AdminAuth\Tests\Feature\AdminUser\Password;
 
 use Brackets\AdminAuth\Notifications\ResetPassword;
-use Brackets\AdminAuth\Tests\TestStandardCase;
-use Brackets\AdminAuth\Tests\TestStandardUserModel;
+use Brackets\AdminAuth\Tests\BracketsTestCase;
+use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
 
-class ForgotPasswordTest extends TestStandardCase
+class ForgotPasswordTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
     public function setUp()
     {
         parent::setUp();
-        $this->disableExceptionHandling();
     }
 
     protected function createTestUser()
     {
-        $user = TestStandardUserModel::create([
+        $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
             'password' => bcrypt('testpass123'),
         ]);
 
-        $this->assertDatabaseHas('test_standard_user_models', [
+        $this->assertDatabaseHas('test_brackets_user_models', [
             'email' => 'john@example.com',
         ]);
 

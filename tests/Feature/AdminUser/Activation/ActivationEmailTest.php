@@ -1,22 +1,20 @@
 <?php
 
-namespace Brackets\AdminAuth\Tests\Auth;
+namespace Brackets\AdminAuth\Tests\Feature\AdminUser\Activation;
 
 use Brackets\AdminAuth\Notifications\ActivationNotification;
-use Brackets\AdminAuth\Tests\TestBracketsCase;
-use Brackets\AdminAuth\Tests\TestBracketsUserModel;
+use Brackets\AdminAuth\Tests\BracketsTestCase;
+use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
 
-class ActivationEmailTest extends TestBracketsCase
+class ActivationEmailTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
     public function setUp()
     {
         parent::setUp();
-        $this->app['config']->set('admin-auth.activations.enabled', true);
-        $this->disableExceptionHandling();
     }
 
     protected function createTestUser($activated = true, $forbidden = false)

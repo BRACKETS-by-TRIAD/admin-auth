@@ -1,13 +1,13 @@
 <?php
 
-namespace Brackets\AdminAuth\Tests\Feaure\Auth;
+namespace Brackets\AdminAuth\Tests\Feature\StandardUser\Auth;
 
-use Brackets\AdminAuth\Tests\TestStandardCase;
-use Brackets\AdminAuth\Tests\TestStandardUserModel;
+use Brackets\AdminAuth\Tests\Models\TestStandardUserModel;
+use Brackets\AdminAuth\Tests\StandardTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Auth;
 
-class LoginStandardTest extends TestStandardCase
+class LoginStandardTest extends StandardTestCase
 {
     use DatabaseMigrations;
 
@@ -45,7 +45,7 @@ class LoginStandardTest extends TestStandardCase
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
-        $this->assertNotEmpty(Auth::user());
+        $this->assertNotEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
@@ -56,21 +56,19 @@ class LoginStandardTest extends TestStandardCase
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'incorrect password']);
         $response->assertStatus(302);
 
-        $this->assertEmpty(Auth::user());
+        $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
     }
 
     /** @test */
     public function already_auth_user_is_redirected_from_login()
     {
-        $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated');
-
         $user = $this->createTestUser();
 
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
         $response->assertRedirect('/admin');
 
-        $this->assertNotEmpty(Auth::user());
+        $this->assertNotEmpty(Auth::guard($this->adminAuthGuard)->user());
 
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);

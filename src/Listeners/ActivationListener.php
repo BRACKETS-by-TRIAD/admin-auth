@@ -36,7 +36,7 @@ class ActivationListener
         if (!is_null(app('auth')->createUserProvider($activatinBrokerConfig['provider']))) {
             $userClass = Activation::broker($this->activationBroker)->getUserModelClass();
             $interfaces = class_implements($userClass);
-            if ($interfaces && in_array(\Brackets\AdminAuth\Contracts\Auth\CanActivate::class, $interfaces)) {
+            if ($interfaces && in_array(\Brackets\AdminAuth\Activation\Contracts\CanActivate::class, $interfaces)) {
                 $events->listen(
                     'eloquent.created: ' . $userClass,
                     ActivationService::class

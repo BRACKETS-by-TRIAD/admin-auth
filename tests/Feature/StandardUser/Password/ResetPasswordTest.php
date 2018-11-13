@@ -1,14 +1,15 @@
 <?php
 
-namespace Brackets\AdminAuth\Tests\Auth;
+namespace Brackets\AdminAuth\Tests\Feature\StandardUser\Password;
 
-use Brackets\AdminAuth\Tests\TestStandardCase;
-use Brackets\AdminAuth\Tests\TestStandardUserModel;
+use Brackets\AdminAuth\Tests\Models\TestStandardUserModel;
+use Brackets\AdminAuth\Tests\StandardTestCase;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
-class ResetPasswordTest extends TestStandardCase
+class ResetPasswordTest extends StandardTestCase
 {
     use DatabaseMigrations;
 
@@ -17,7 +18,6 @@ class ResetPasswordTest extends TestStandardCase
     public function setUp()
     {
         parent::setUp();
-        $this->disableExceptionHandling();
         $this->token = '123456aabbcc';
     }
 
@@ -172,14 +172,14 @@ class ResetPasswordTest extends TestStandardCase
         $user = $this->createTestUser();
 
         //Fixme not working getting error instead of exception
-//        $response = $this->post(url('/admin/password-reset/reset'),
-//            [
-//                'email' => 'john@example.com',
-//                'password' => 'testpass',
-//                'password_confirmation' => 'testpass',
-//                'token' => $this->token.'11'
-//            ]);
-//        $this->expectException(\Illuminate\Validation\ValidationException::class);
+        $response = $this->post(url('/admin/password-reset/reset'),
+            [
+                'email' => 'john@example.com',
+                'password' => 'testpass',
+                'password_confirmation' => 'testpass',
+                'token' => $this->token.'11'
+            ]);
+        $response->assertStatus(302);
 
         $userNew = TestStandardUserModel::where('email', 'john@example.com')->first();
 
