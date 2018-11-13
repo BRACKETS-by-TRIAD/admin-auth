@@ -40,15 +40,14 @@ class TestBracketsUserModel extends Authenticatable implements CanActivateContra
     ];
 
 
-
     /**
      * Send the password reset notification.
      *
-     * @param    string  $token
+     * @param    string $token
      * @return  void
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(app( ResetPassword::class, ['token' => $token]));
+        $this->notify(app(ResetPassword::class, ['token' => $token]));
     }
 }

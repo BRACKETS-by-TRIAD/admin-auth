@@ -5,10 +5,7 @@ namespace Brackets\AdminAuth\Tests\Auth;
 use Brackets\AdminAuth\Tests\TestStandardCase;
 use Brackets\AdminAuth\Tests\TestStandardUserModel;
 use Carbon\Carbon;
-use Illuminate\Support\Debug\Dumper;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordTest extends TestStandardCase
@@ -105,7 +102,7 @@ class ResetPasswordTest extends TestStandardCase
                 'email' => 'john@example.com',
                 'password' => 'testpass123new',
                 'password_confirmation' => 'testpass123new',
-                'token' => $this->token.'11'
+                'token' => $this->token . '11'
             ]);
         $response->assertStatus(302);
 
@@ -132,7 +129,7 @@ class ResetPasswordTest extends TestStandardCase
         //TODO create also password reset
         $this->app['db']->connection()->table('password_resets')->insert([
             'email' => $user2->email,
-            'token' => bcrypt($this->token.'2'),
+            'token' => bcrypt($this->token . '2'),
             'created_at' => Carbon::now()
         ]);
 
@@ -159,7 +156,7 @@ class ResetPasswordTest extends TestStandardCase
                 'email' => 'john@example.com',
                 'password' => 'testpass123new',
                 'password_confirmation' => 'testpass123new',
-                'token' => $this->token.'2'
+                'token' => $this->token . '2'
             ]);
         $response->assertStatus(302);
 

@@ -4,9 +4,8 @@ namespace Brackets\AdminAuth\Tests\Feaure\Auth;
 
 use Brackets\AdminAuth\Tests\TestStandardCase;
 use Brackets\AdminAuth\Tests\TestStandardUserModel;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Auth;
 
 class LoginStandardTest extends TestStandardCase
 {

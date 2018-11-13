@@ -5,10 +5,8 @@ namespace Brackets\AdminAuth\Tests\Feaure\Auth;
 use Brackets\AdminAuth\Tests\TestBracketsCase;
 use Brackets\AdminAuth\Tests\TestBracketsUserModel;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class LoginBracketsTest extends TestBracketsCase
 {

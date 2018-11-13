@@ -2,11 +2,10 @@
 
 namespace Brackets\AdminAuth\Tests\Unit;
 
-use Brackets\AdminAuth\Tests\TestStandardUserModel;
-use Illuminate\Support\Facades\Auth;
 use Brackets\AdminAuth\Tests\TestStandardCase;
+use Brackets\AdminAuth\Tests\TestStandardUserModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Auth;
 
 class LogoutTest extends TestStandardCase
 {

@@ -7,7 +7,6 @@ use Brackets\AdminAuth\Tests\TestBracketsCase;
 use Brackets\AdminAuth\Tests\TestBracketsUserModel;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Notification;
 
 class DisabledActivationTest extends TestBracketsCase
@@ -24,8 +23,12 @@ class DisabledActivationTest extends TestBracketsCase
         $this->token = '123456aabbcc';
     }
 
-    protected function createTestUser($activated = true, $forbidden = false, $used = false, Carbon $activationCreatedAt = null)
-    {
+    protected function createTestUser(
+        $activated = true,
+        $forbidden = false,
+        $used = false,
+        Carbon $activationCreatedAt = null
+    ) {
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
             'password' => bcrypt('testpass123'),

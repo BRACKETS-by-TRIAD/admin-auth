@@ -5,9 +5,7 @@ namespace Brackets\AdminAuth\Tests\Auth;
 use Brackets\AdminAuth\Notifications\ResetPassword;
 use Brackets\AdminAuth\Tests\TestStandardCase;
 use Brackets\AdminAuth\Tests\TestStandardUserModel;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Notification;
 
 class ForgotPasswordTest extends TestStandardCase

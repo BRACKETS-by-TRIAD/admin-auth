@@ -2,8 +2,8 @@
 
 use Brackets\AdminAuth\Activation\Providers\ActivationServiceProvider;
 use Brackets\AdminAuth\Console\Commands\AdminAuthInstall;
-use Brackets\AdminAuth\Http\Middleware\CanAdmin;
 use Brackets\AdminAuth\Http\Middleware\ApplyUserLocale;
+use Brackets\AdminAuth\Http\Middleware\CanAdmin;
 use Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated;
 use Brackets\AdminAuth\Providers\EventServiceProvider;
 use Illuminate\Support\ServiceProvider;

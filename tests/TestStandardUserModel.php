@@ -2,11 +2,11 @@
 
 namespace Brackets\AdminAuth\Tests;
 
-use Brackets\AdminAuth\Notifications\ResetPassword;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Brackets\AdminAuth\Auth\Activations\CanActivate;
 use Brackets\AdminAuth\Contracts\Auth\CanActivate as CanActivateContract;
+use Brackets\AdminAuth\Notifications\ResetPassword;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class TestStandardUserModel extends Authenticatable implements CanActivateContract
 {
@@ -19,7 +19,9 @@ class TestStandardUserModel extends Authenticatable implements CanActivateContra
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -28,18 +30,19 @@ class TestStandardUserModel extends Authenticatable implements CanActivateContra
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param  string $token
      * @return void
      */
     //TODO move to generator?
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(app( ResetPassword::class, ['token' => $token]));
+        $this->notify(app(ResetPassword::class, ['token' => $token]));
     }
 }

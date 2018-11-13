@@ -6,14 +6,11 @@ use Brackets\AdminAuth\Tests\Exceptions\Handler;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Database\Schema\Blueprint;
-use Orchestra\Testbench\TestCase as Orchestra;
-use Orchestra\Testbench\Traits\CreatesApplication;
 use Illuminate\Support\Facades\File;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestBracketsCase extends Orchestra
 {
-    use CreatesApplication;
-
     protected $sendNotification;
 
     public function setUp()
@@ -23,7 +20,7 @@ abstract class TestBracketsCase extends Orchestra
         $this->setUpDatabase($this->app);
         $this->sendNotification = false;
 
-        File::copyDirectory(__DIR__.'/fixtures/resources/views', resource_path('views'));
+        File::copyDirectory(__DIR__ . '/fixtures/resources/views', resource_path('views'));
     }
 
     /**
@@ -86,15 +83,19 @@ abstract class TestBracketsCase extends Orchestra
 
     protected function disableExceptionHandling()
     {
-        $this->app->instance(ExceptionHandler::class, new class extends Handler {
-            public function __construct() {}
+        $this->app->instance(ExceptionHandler::class, new class extends Handler
+        {
+            public function __construct()
+            {
+            }
 
             public function report(Exception $e)
             {
                 // no-op
             }
 
-            public function render($request, Exception $e) {
+            public function render($request, Exception $e)
+            {
                 throw $e;
             }
         });

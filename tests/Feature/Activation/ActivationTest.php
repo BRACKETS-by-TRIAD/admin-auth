@@ -6,7 +6,6 @@ use Brackets\AdminAuth\Tests\TestBracketsCase;
 use Brackets\AdminAuth\Tests\TestBracketsUserModel;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ActivationTest extends TestBracketsCase
 {
@@ -29,8 +28,12 @@ class ActivationTest extends TestBracketsCase
      * @param Carbon|null $activationCreatedAt
      * @return $this|\Illuminate\Database\Eloquent\Model
      */
-    protected function createTestUser($activated = true, $forbidden = false, $used = false, Carbon $activationCreatedAt = null)
-    {
+    protected function createTestUser(
+        $activated = true,
+        $forbidden = false,
+        $used = false,
+        Carbon $activationCreatedAt = null
+    ) {
         // TODO maybe we can Mock sending an email to speed up a test?
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
@@ -86,7 +89,8 @@ class ActivationTest extends TestBracketsCase
     {
         $user = $this->createTestUser(false);
 
-        $response = $this->get(route('brackets/admin-auth::admin/activation/activate', ['token' => $this->token.'11']));
+        $response = $this->get(route('brackets/admin-auth::admin/activation/activate',
+            ['token' => $this->token . '11']));
         $response->assertStatus(302);
 
         $userNew = TestBracketsUserModel::where('email', 'john@example.com')->first();

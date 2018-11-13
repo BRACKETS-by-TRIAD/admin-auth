@@ -33,7 +33,7 @@ class ActivationListener
     public function subscribe(Dispatcher $events)
     {
         $activatinBrokerConfig = config("activation.activations.{$this->activationBroker}");
-        if(!is_null(app('auth')->createUserProvider($activatinBrokerConfig['provider']))) {
+        if (!is_null(app('auth')->createUserProvider($activatinBrokerConfig['provider']))) {
             $userClass = Activation::broker($this->activationBroker)->getUserModelClass();
             $interfaces = class_implements($userClass);
             if ($interfaces && in_array(\Brackets\AdminAuth\Contracts\Auth\CanActivate::class, $interfaces)) {

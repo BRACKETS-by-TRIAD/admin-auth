@@ -4,7 +4,6 @@ namespace Brackets\AdminAuth\Tests\Auth;
 
 use Brackets\AdminAuth\Tests\TestBracketsCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class DisabledActivationFormTest extends TestBracketsCase
 {
