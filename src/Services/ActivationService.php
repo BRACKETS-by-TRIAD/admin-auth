@@ -2,8 +2,8 @@
 
 namespace Brackets\AdminAuth\Services;
 
-use Brackets\AdminAuth\Contracts\Auth\CanActivate as CanActivateContract;
-use Brackets\AdminAuth\Facades\Activation;
+use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
+use Brackets\AdminAuth\Activation\Facades\Activation;
 use Illuminate\Support\Facades\Log;
 
 class ActivationService
@@ -28,10 +28,11 @@ class ActivationService
             return false;
         }
 
-        if (!property_exists($user, 'activated')) {
-            Log::error('User does not have activated column.');
-            return false;
-        }
+        //TODO need to be changed or removed
+//        if (!property_exists($user, 'activated')) {
+//            Log::error('User does not have activated column.');
+//            return false;
+//        }
 
         if ($user->activated === true) {
             Log::info('User is alrady activated.');
