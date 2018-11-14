@@ -35,7 +35,7 @@ class ActivationService
 //        }
 
         if ($user->activated === true) {
-            Log::info('User is alrady activated.');
+            Log::info('User is already activated.');
             return true;
         }
 
