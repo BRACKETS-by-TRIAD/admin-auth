@@ -78,9 +78,13 @@ class ModifyUsersTable extends Migration
                 $table->dropColumn('language');
             });
 
-            Schema::table('users', function (Blueprint $table) {
-                $table->dropIndex('users_email_null_deleted_at');
-            });
+            $connection = config('database.default');
+            $driver = config("database.connections.{$connection}.driver");
+            if($driver == 'pgsql') {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->dropIndex('users_email_null_deleted_at');
+                });
+            }
 
             Schema::table('users', function (Blueprint $table) {
                 $table->dropUnique(['email', 'deleted_at']);
