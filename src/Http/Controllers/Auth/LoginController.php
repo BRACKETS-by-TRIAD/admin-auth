@@ -5,7 +5,7 @@ namespace Brackets\AdminAuth\Http\Controllers\Auth;
 use Brackets\AdminAuth\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -27,14 +27,21 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin';
 
     /**
      * Where to redirect users after logout.
      *
      * @var string
      */
-    protected $redirectToAfterLogout = '/';
+    protected $redirectToAfterLogout = '/admin/login';
+
+    /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'admin';
 
     /**
      * Create a new controller instance.
@@ -43,9 +50,10 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->redirectTo = Config::get('admin-auth.login_redirect');
-        $this->redirectToAfterLogout = Config::get('admin-auth.logout_redirect');
-        $this->middleware('guest')->except('logout');
+        $this->guard = config('admin-auth.defaults.guard');
+        $this->redirectTo = config('admin-auth.login_redirect');
+        $this->redirectToAfterLogout = config('admin-auth.logout_redirect');
+        $this->middleware('guest.admin:' . $this->guard)->except('logout');
     }
 
     /**
@@ -61,7 +69,7 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
@@ -78,16 +86,16 @@ class LoginController extends Controller
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     protected function credentials(Request $request)
     {
         $conditions = [];
-        if(config('admin-auth.check_forbidden')) {
+        if (config('admin-auth.check_forbidden')) {
             $conditions['forbidden'] = false;
         }
-        if(config('admin-auth.activations.enabled')) {
+        if (config('admin-auth.activation_enabled')) {
             $conditions['activated'] = true;
         }
         return array_merge($request->only($this->username(), 'password'), $conditions);
@@ -105,5 +113,15 @@ class LoginController extends Controller
         }
 
         return property_exists($this, 'redirectToAfterLogout') ? $this->redirectToAfterLogout : '/';
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard($this->guard);
     }
 }

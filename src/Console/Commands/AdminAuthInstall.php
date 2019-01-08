@@ -34,47 +34,87 @@ class AdminAuthInstall extends Command
             '--provider' => "Brackets\\AdminAuth\\AdminAuthServiceProvider",
         ]);
 
-        $this->frontendAdjustments();
+        $this->call('vendor:publish', [
+            '--provider' => "Brackets\\AdminAuth\\Activation\\Providers\\ActivationServiceProvider",
+        ]);
 
         $this->strReplaceInFile(
             resource_path('views/admin/layout/profile-dropdown.blade.php'),
             '|url\(\'admin\/logout\'\)|',
             '{{-- Do not delete me :) I\'m used for auto-generation menu items --}}',
             '{{-- Do not delete me :) I\'m used for auto-generation menu items --}}
-    <a href="{{ url(\'admin/logout\') }}" class="dropdown-item"><i class="fa fa-lock"></i> Logout</a>');
+    <a href="{{ url(\'admin/logout\') }}" class="dropdown-item"><i class="fa fa-lock"></i> {{ trans(\'brackets/admin-auth::admin.profile_dropdown.logout\') }}</a>');
+
+        $this->appendAdminAuthToAuthConfig();
 
         $this->call('migrate');
 
         $this->info('Package brackets/admin-auth installed');
     }
 
-    private function strReplaceInFile($fileName, $ifExistsRegex, $find, $replaceWith) {
+    /**
+     * Replace string in file
+     *
+     * @param string $fileName
+     * @param string $ifExistsRegex
+     * @param string $find
+     * @param string $replaceWith
+     * @return int|bool
+     */
+    private function strReplaceInFile($fileName, $ifExistsRegex, $find, $replaceWith)
+    {
         $content = File::get($fileName);
-        if (preg_match($ifExistsRegex, $content)) {
+        if (!is_null($ifExistsRegex) && preg_match($ifExistsRegex, $content)) {
             return;
         }
 
         return File::put($fileName, str_replace($find, $replaceWith, $content));
     }
 
-    private function appendIfNotExists($fileName, $ifExistsRegex, $append) {
-        $content = File::get($fileName);
-        if (preg_match($ifExistsRegex, $content)) {
-            return;
-        }
-
-        return File::put($fileName, $content.$append);
-    }
-
-    private function frontendAdjustments() {
-        // webpack
+    /**
+     * Append admin-auth config to auth config
+     *
+     * @return void
+     */
+    private function appendAdminAuthToAuthConfig(): void
+    {
         $this->strReplaceInFile(
-            'webpack.mix.js',
-            '|vendor/brackets/admin-auth|',
-            '// Do not delete this comment, it\'s used for auto-generation :)',
-            'path.resolve(__dirname, \'vendor/brackets/admin-auth/resources/assets/js\'),
-				// Do not delete this comment, it\'s used for auto-generation :)');
+            config_path('auth.php'),
+            '|\'admin\' => \[|',
+            '\'guards\' => [',
+            '\'guards\' => [
+        \'admin\' => [
+            \'driver\' => \'session\',
+            \'provider\' => \'admin_users\',
+        ],
+        '
+        );
 
-        $this->info('Admin Auth assets registered');
+        $this->strReplaceInFile(
+            config_path('auth.php'),
+            '|    \'providers\' => \[
+        \'admin_users\' => \[|',
+            '\'providers\' => [',
+            '\'providers\' => [
+        \'admin_users\' => [
+            \'driver\' => \'eloquent\',
+            \'model\' => Brackets\AdminAuth\Models\AdminUser::class,
+        ], 
+        '
+        );
+
+        $this->strReplaceInFile(
+            config_path('auth.php'),
+            '|\'passwords\' => \[
+        \'admin_users\' => \[|',
+            '\'passwords\' => [',
+            '\'passwords\' => [
+        \'admin_users\' => [
+            \'provider\' => \'admin_users\',
+            \'table\' => \'admin_password_resets\',
+            \'expire\' => 60,
+        ],
+        '
+        );
     }
 }

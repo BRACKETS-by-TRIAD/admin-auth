@@ -3,6 +3,36 @@
 return [
 
     /*
+    |
+    | This option controls which defaults are used for admin users
+    |
+    */
+
+    'defaults' => [
+        'guard' => 'admin',
+        'passwords' => 'admin_users',
+        'activations' => 'admin_users',
+    ],
+
+    /*
+    |
+    | This option controls if Login should check also forbidden key
+    |
+    */
+
+    //TODO maybe not in env
+    'check_forbidden' => env('FORBIDDEN_ENABLED', false),
+
+    /*
+    |
+    | This option controls if Login should check also enabled key
+    |
+    */
+
+    //TODO maybe not in env
+    'activation_enabled' => env('ACTIVATION_ENABLED', false),
+
+    /*
     |--------------------------------------------------------------------------
     | Login
     |--------------------------------------------------------------------------
@@ -12,14 +42,6 @@ return [
     */
 
     'login_redirect' => '/admin',
-
-    /*
-    |
-    | This option controls if Login should check also forbidden key
-    |
-    */
-
-    'check_forbidden' => env('FORBIDDEN_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,36 +75,15 @@ return [
     |
     */
 
-    'activations' => [
-        'enabled' => env('ACTIVATION_ENABLED', false),
+    'activation_redirect' => '/admin/login',
 
-        'self_activation_form_enabled' => true,
+    /*
+    |
+    | This option handles the self activation form accessibility.
+    |
+    */
 
-        'redirect' => '/admin/login',
-
-        /*
-        |
-        | You may specify multiple activation configurations if you have more
-        | than one user table or model in the application and you want to have
-        | separate activation settings based on the specific user types.
-        |
-        | The expire time is the number of minutes that the reset token should be
-        | considered valid. This security feature keeps tokens short-lived so
-        | they have less time to be guessed. You may change this as needed.
-        |
-        */
-        'configuration' => [
-            'users' => [
-                'provider' => 'users',
-                'table' => 'activations',
-                'expire' => 60 * 24,
-            ],
-        ],
-    ],
-
-    'defaults' => [
-        'activations' => 'users',
-    ],
+    'self_activation_form_enabled' => true,
 
     /*
     |--------------------------------------------------------------------------
