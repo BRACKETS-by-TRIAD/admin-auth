@@ -46,8 +46,8 @@ class ActivationNotification extends Notification
     {
         //TODO change to template?
         return (new MailMessage)
-            ->line('You are receiving this email because we received an activation request for your account.')
-            ->action('Activate your account', route('brackets/admin-auth::admin/activation/activate', $this->token))
-            ->line('If you did not request an activation, no further action is required.');
+            ->line(trans('brackets/admin-auth::activations.email.line'))
+            ->action(trans('brackets/admin-auth::activations.email.action'), route('brackets/admin-auth::admin/activation/activate', $this->token))
+            ->line(trans('brackets/admin-auth::activations.email.notRequested'));
     }
 }
