@@ -78,6 +78,8 @@ class AdminAuthInstall extends Command
      */
     private function appendAdminAuthToAuthConfig(): void
     {
+        $auth = Config::get('auth');
+
         $this->strReplaceInFile(
             config_path('auth.php'),
             '|\'admin\' => \[|',
@@ -89,6 +91,13 @@ class AdminAuthInstall extends Command
         ],
         '
         );
+        if(!isset($auth['guards'])) {
+            $auth['guards'] = [];
+        }
+        $auth['guards']['admin'] = [
+            'driver' => 'session',
+            'provider' => 'admin_users',
+        ];
 
         $this->strReplaceInFile(
             config_path('auth.php'),
@@ -102,6 +111,13 @@ class AdminAuthInstall extends Command
         ], 
         '
         );
+        if(!isset($auth['providers'])) {
+            $auth['providers'] = [];
+        }
+        $auth['providers']['admin_users'] = [
+            'driver' => 'eloquent',
+            'model' => Brackets\AdminAuth\Models\AdminUser::class,
+        ];
 
         $this->strReplaceInFile(
             config_path('auth.php'),
@@ -116,5 +132,15 @@ class AdminAuthInstall extends Command
         ],
         '
         );
+        if(!isset($auth['passwords'])) {
+            $auth['passwords'] = [];
+        }
+        $auth['passwords']['admin_users'] = [
+            'provider' => 'admin_users',
+            'table' => 'admin_password_resets',
+            'expire' => 60,
+        ];
+
+        Config::set('auth', $auth);
     }
 }
