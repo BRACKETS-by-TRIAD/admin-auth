@@ -2,8 +2,8 @@
 
 namespace Brackets\AdminAuth\Notifications;
 
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ActivationNotification extends Notification
 {
@@ -17,7 +17,7 @@ class ActivationNotification extends Notification
     /**
      * Create a notification instance.
      *
-     * @param  string  $token
+     * @param  string $token
      * @return void
      */
     public function __construct($token)
@@ -28,7 +28,7 @@ class ActivationNotification extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return array|string
      */
     public function via($notifiable)
@@ -39,7 +39,7 @@ class ActivationNotification extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)

@@ -19,4 +19,10 @@ return [
     'user' => "We can't find a user with submitted credentials. User might be already activated.",
     'disabled' => "Activation is disabled.",
 
+    'email' => [
+        'line' => "You are receiving this email because we received an activation request for your account.",
+        'action' => "Activate your account",
+        'notRequested' => "If you did not request an activation, no further action is required.",
+    ],
+
 ];

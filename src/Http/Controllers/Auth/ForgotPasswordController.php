@@ -23,13 +23,29 @@ class ForgotPasswordController extends Controller
     use SendsPasswordResetEmails;
 
     /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'admin';
+
+    /**
+     * Password broker used for admin user
+     *
+     * @var string
+     */
+    protected $passwordBroker = 'admin_users';
+
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->guard = config('admin-auth.defaults.guard');
+        $this->passwordBroker = config('admin-auth.defaults.passwords');
+        $this->middleware('guest.admin:' . $this->guard);
     }
 
     /**
@@ -45,7 +61,7 @@ class ForgotPasswordController extends Controller
     /**
      * Send a reset link to the given user.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function sendResetLinkEmail(Request $request)
@@ -74,7 +90,7 @@ class ForgotPasswordController extends Controller
     protected function sendResetLinkResponse(Request $request, $response)
     {
         $message = trans($response);
-        if($response == Password::RESET_LINK_SENT) {
+        if ($response == Password::RESET_LINK_SENT) {
             $message = trans('brackets/admin-auth::admin.passwords.sent');
         }
         return back()->with('status', $message);
@@ -83,8 +99,8 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a failed password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $response
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
@@ -92,9 +108,19 @@ class ForgotPasswordController extends Controller
         $message = trans($response);
 
         // TODO what should be here?
-        
+
         return back()
             ->withInput($request->only('email'))
             ->withErrors(['email' => $message]);
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker($this->passwordBroker);
     }
 }
