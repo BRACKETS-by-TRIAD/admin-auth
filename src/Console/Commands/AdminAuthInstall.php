@@ -117,7 +117,7 @@ class AdminAuthInstall extends Command
         }
         $auth['providers']['admin_users'] = [
             'driver' => 'eloquent',
-            'model' => Brackets\AdminAuth\Models\AdminUser::class,
+            'model' => \Brackets\AdminAuth\Models\AdminUser::class,
         ];
 
         $this->strReplaceInFile(
