@@ -186,8 +186,7 @@ class ResetPasswordController extends Controller
      */
     protected function loginCheck($user)
     {
-        return (!property_exists($user, 'activated') || $user->activated) && (!property_exists($user,
-                    'forbidden') || !$user->forbidden);
+        return (is_null($user->activated) || $user->activated) && (is_null($user->forbidden) || !$user->forbidden);
     }
 
     /**
