@@ -10,7 +10,7 @@
                     <div class="card-block">
                         <auth-form
                                 :action="'{{ url('/admin/password-reset/reset') }}'"
-                                :data="{ 'email': '{{ $email or old('email') }}' }"
+                                :data="{ 'email': '{{ old('email', $email) }}' }"
                                 inline-template>
                             <form class="form-horizontal" role="form" method="POST"
                                   action="{{ url('/admin/password-reset/reset') }}" novalidate>
