@@ -16,6 +16,14 @@ class ActivationService
     protected $activationBroker = 'admin_users';
 
     /**
+     * ActivationService constructor.
+     */
+    public function __construct()
+    {
+        $this->activationBroker = config('admin-auth.defaults.activations');
+    }
+
+    /**
      * Handles activation creation after user created
      *
      * @param CanActivateContract $user

@@ -3,7 +3,7 @@
 namespace Brackets\AdminAuth\Activation\Providers;
 
 use Brackets\AdminAuth\Activation\Brokers\ActivationBrokerManager;
-use Brackets\AdminAuth\Facades\Activation;
+use Brackets\AdminAuth\Activation\Facades\Activation;
 use Illuminate\Support\ServiceProvider;
 
 class ActivationServiceProvider extends ServiceProvider
