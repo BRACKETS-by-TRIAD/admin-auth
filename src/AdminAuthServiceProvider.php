@@ -6,6 +6,8 @@ use Brackets\AdminAuth\Http\Middleware\ApplyUserLocale;
 use Brackets\AdminAuth\Http\Middleware\CanAdmin;
 use Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated;
 use Brackets\AdminAuth\Providers\EventServiceProvider;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AdminAuthServiceProvider extends ServiceProvider
@@ -79,6 +81,12 @@ class AdminAuthServiceProvider extends ServiceProvider
         if (config('admin-auth.use_routes', true) && config('admin-auth.activations.self_activation_form_enabled',
                 true)) {
             $this->loadRoutesFrom(__DIR__ . '/../routes/activation-form.php');
+        }
+
+        if(!Route::has('login')) {
+            Route::get('/login', function () {
+                return Redirect::route('brackets/admin-auth::admin/login');
+            })->name('login');
         }
 
         app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('admin', CanAdmin::class);
