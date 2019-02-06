@@ -6,14 +6,20 @@ use Brackets\AdminAuth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasRoles;use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Spatie\MediaLibrary\Media;
+use Brackets\Media\HasMedia\HasMediaCollections;
+use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
+use Brackets\Media\HasMedia\HasMediaThumbsTrait;
 
-class AdminUser extends Authenticatable implements CanActivateContract
+class AdminUser extends Authenticatable implements CanActivateContract, HasMediaCollections, HasMediaConversions
 {
     use Notifiable;
     use CanActivate;
     use SoftDeletes;
     use HasRoles;
+    use HasMediaCollectionsTrait;
+    use HasMediaThumbsTrait;
 
     protected $fillable = [
         "email",
@@ -60,6 +66,16 @@ class AdminUser extends Authenticatable implements CanActivateContract
         return $this->first_name . " " . $this->last_name;
     }
 
+    public function getAbbrAttribute()
+    {
+        return mb_strtoupper(mb_substr($this->first_name, 0, 1)).mb_strtoupper(mb_substr($this->last_name, 0, 1));
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        return $this->getFirstMediaUrl('avatar', 'thumb_150') ?: false;
+    }
+
     /**
      * Send the password reset notification.
      *
@@ -69,6 +85,48 @@ class AdminUser extends Authenticatable implements CanActivateContract
     public function sendPasswordResetNotification($token)
     {
         $this->notify(app(ResetPassword::class, ['token' => $token]));
+    }
+
+    /* ************************ MEDIA ************************ */
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('avatar')
+            ->accepts('image/*');
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->autoRegisterThumb200();
+
+        $this->addMediaConversion('thumb_75')
+            ->width(75)
+            ->height(75)
+            ->fit('crop', 75, 75)
+            ->optimize()
+            ->performOnCollections('avatar')
+            ->nonQueued();
+
+        $this->addMediaConversion('thumb_150')
+            ->width(150)
+            ->height(150)
+            ->fit('crop', 150, 150)
+            ->optimize()
+            ->performOnCollections('avatar')
+            ->nonQueued();
+    }
+
+    public function autoRegisterThumb200()
+    {
+        $this->getMediaCollections()->filter->isImage()->each( function ( $mediaCollection ) {
+            $this->addMediaConversion( 'thumb_200' )
+                ->width( 200 )
+                ->height( 200 )
+                ->fit( 'crop', 200, 200 )
+                ->optimize()
+                ->performOnCollections( $mediaCollection->getName() )
+                ->nonQueued();;
+        } );
     }
 
     /* ************************ RELATIONS ************************ */
