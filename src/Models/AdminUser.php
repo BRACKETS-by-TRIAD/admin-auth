@@ -3,15 +3,15 @@
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Traits\CanActivate;
 use Brackets\AdminAuth\Notifications\ResetPassword;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
-use Spatie\MediaLibrary\Media;
 use Brackets\Media\HasMedia\HasMediaCollections;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Spatie\MediaLibrary\Media;
+use Spatie\Permission\Traits\HasRoles;
 
 class AdminUser extends Authenticatable implements CanActivateContract, HasMediaCollections, HasMediaConversions
 {
@@ -69,7 +69,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
 
     public function getAbbrAttribute()
     {
-        return mb_strtoupper(mb_substr($this->first_name, 0, 1)).mb_strtoupper(mb_substr($this->last_name, 0, 1));
+        return mb_strtoupper(mb_substr($this->first_name, 0, 1)) . mb_strtoupper(mb_substr($this->last_name, 0, 1));
     }
 
     public function getAvatarUrlAttribute()
@@ -119,15 +119,15 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
 
     public function autoRegisterThumb200()
     {
-        $this->getMediaCollections()->filter->isImage()->each( function ( $mediaCollection ) {
-            $this->addMediaConversion( 'thumb_200' )
-                ->width( 200 )
-                ->height( 200 )
-                ->fit( 'crop', 200, 200 )
+        $this->getMediaCollections()->filter->isImage()->each(function ($mediaCollection) {
+            $this->addMediaConversion('thumb_200')
+                ->width(200)
+                ->height(200)
+                ->fit('crop', 200, 200)
                 ->optimize()
-                ->performOnCollections( $mediaCollection->getName() )
+                ->performOnCollections($mediaCollection->getName())
                 ->nonQueued();;
-        } );
+        });
     }
 
     /* ************************ RELATIONS ************************ */
