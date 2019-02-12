@@ -67,12 +67,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
         return $this->first_name . " " . $this->last_name;
     }
 
-    public function getAbbrAttribute()
-    {
-        return mb_strtoupper(mb_substr($this->first_name, 0, 1)).mb_strtoupper(mb_substr($this->last_name, 0, 1));
-    }
-
-    public function getAvatarUrlAttribute()
+    public function getAvatarThumbUrlAttribute()
     {
         return $this->getFirstMediaUrl('avatar', 'thumb_150') ?: false;
     }
