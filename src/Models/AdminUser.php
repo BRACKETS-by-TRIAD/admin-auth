@@ -9,11 +9,10 @@ use Brackets\Media\HasMedia\HasMediaThumbsTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
-use Spatie\MediaLibrary\Media;
+use Spatie\MediaLibrary\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class AdminUser extends Authenticatable implements CanActivateContract, HasMediaCollections, HasMediaConversions
+class AdminUser extends Authenticatable implements CanActivateContract, HasMediaCollections
 {
     use Notifiable;
     use CanActivate;
