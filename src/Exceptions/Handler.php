@@ -3,7 +3,7 @@
 namespace Brackets\AdminAuth\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Foundation\Exceptions\Handler as ParentHandler;
+use App\Exceptions\Handler as ParentHandler;
 
 class Handler extends ParentHandler
 {
