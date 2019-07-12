@@ -4,7 +4,7 @@ namespace Brackets\AdminAuth\Tests;
 
 abstract class StandardTestCase extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->app['config']->set('admin-auth.defaults.guard', 'web');

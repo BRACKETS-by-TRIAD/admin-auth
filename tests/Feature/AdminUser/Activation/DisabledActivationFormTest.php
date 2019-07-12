@@ -9,7 +9,7 @@ class DisabledActivationFormTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->app['config']->set('admin-auth.self_activation_form_enabled', false);

@@ -12,11 +12,6 @@ class ForgotPasswordTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
     protected function createTestUser()
     {
         $user = TestBracketsUserModel::create([

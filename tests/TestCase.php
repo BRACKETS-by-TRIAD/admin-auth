@@ -18,7 +18,7 @@ abstract class TestCase extends Orchestra
 
     protected $adminAuthGuard;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->getEnvironmentSetUp($this->app);
