@@ -3,17 +3,18 @@
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Traits\CanActivate;
 use Brackets\AdminAuth\Notifications\ResetPassword;
-use Brackets\Media\HasMedia\HasMediaCollections;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
+use Brackets\Media\HasMedia\ProcessMediaTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
-use Spatie\MediaLibrary\Media;
+use Spatie\MediaLibrary\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class AdminUser extends Authenticatable implements CanActivateContract, HasMediaCollections, HasMediaConversions
+class AdminUser extends Authenticatable implements CanActivateContract, HasMediaConversions, HasMedia
 {
     use Notifiable;
     use CanActivate;
@@ -21,6 +22,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
     use HasRoles;
     use HasMediaCollectionsTrait;
     use HasMediaThumbsTrait;
+    use ProcessMediaTrait;
 
     protected $fillable = [
         "email",
