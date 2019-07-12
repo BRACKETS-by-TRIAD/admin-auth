@@ -185,5 +185,21 @@ class ResetPasswordTest extends StandardTestCase
 
         $this->assertNotEquals(true, Hash::check('testpass', $userNew->password));
         $this->assertEquals(true, Hash::check('testpass123', $userNew->password));
+
+        //Fixme not working getting error instead of exception
+        // validation for changed password length
+        $response = $this->post(url('/admin/password-reset/reset'),
+            [
+                'email' => 'john@example.com',
+                'password' => 'test777',
+                'password_confirmation' => 'test777',
+                'token' => $this->token
+            ]);
+        $response->assertStatus(302);
+
+        $userNew = TestStandardUserModel::where('email', 'john@example.com')->first();
+
+        $this->assertNotEquals(true, Hash::check('test777', $userNew->password));
+        $this->assertEquals(true, Hash::check('testpass123', $userNew->password));
     }
 }
