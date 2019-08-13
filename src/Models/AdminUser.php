@@ -122,7 +122,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
                 ->fit('crop', 200, 200)
                 ->optimize()
                 ->performOnCollections($mediaCollection->getName())
-                ->nonQueued();;
+                ->nonQueued();
         });
     }
 
