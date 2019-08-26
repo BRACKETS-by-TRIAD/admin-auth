@@ -44,7 +44,7 @@ interface ActivationBroker
     /**
      * Send a password reset link to a user.
      *
-     * @param  array $credentials
+     * @param array $credentials
      * @return string
      */
     public function sendActivationLink(array $credentials);
@@ -52,8 +52,8 @@ interface ActivationBroker
     /**
      * Reset the password for the given token.
      *
-     * @param  array $credentials
-     * @param  \Closure $callback
+     * @param array $credentials
+     * @param \Closure $callback
      * @return mixed
      */
     public function activate(array $credentials, Closure $callback);

@@ -45,6 +45,5 @@ class ActivationListener
 
             //TODO listen on user edit and if email has changed, deactivate user and send email again
         }
-
     }
 }

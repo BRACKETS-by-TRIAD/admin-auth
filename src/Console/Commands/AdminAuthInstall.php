@@ -1,8 +1,10 @@
-<?php namespace Brackets\AdminAuth\Console\Commands;
+<?php
+
+namespace Brackets\AdminAuth\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
 
 class AdminAuthInstall extends Command
 {
@@ -44,7 +46,8 @@ class AdminAuthInstall extends Command
             '|url\(\'admin\/logout\'\)|',
             '{{-- Do not delete me :) I\'m used for auto-generation menu items --}}',
             '{{-- Do not delete me :) I\'m used for auto-generation menu items --}}
-    <a href="{{ url(\'admin/logout\') }}" class="dropdown-item"><i class="fa fa-lock"></i> {{ trans(\'brackets/admin-auth::admin.profile_dropdown.logout\') }}</a>');
+    <a href="{{ url(\'admin/logout\') }}" class="dropdown-item"><i class="fa fa-lock"></i> {{ trans(\'brackets/admin-auth::admin.profile_dropdown.logout\') }}</a>'
+        );
 
         $this->appendAdminAuthToAuthConfig();
 
@@ -92,7 +95,7 @@ class AdminAuthInstall extends Command
         ],
         '
         );
-        if(!isset($auth['guards'])) {
+        if (!isset($auth['guards'])) {
             $auth['guards'] = [];
         }
         $auth['guards']['admin'] = [
@@ -112,7 +115,7 @@ class AdminAuthInstall extends Command
         ], 
         '
         );
-        if(!isset($auth['providers'])) {
+        if (!isset($auth['providers'])) {
             $auth['providers'] = [];
         }
         $auth['providers']['admin_users'] = [
@@ -133,7 +136,7 @@ class AdminAuthInstall extends Command
         ],
         '
         );
-        if(!isset($auth['passwords'])) {
+        if (!isset($auth['passwords'])) {
             $auth['passwords'] = [];
         }
         $auth['passwords']['admin_users'] = [

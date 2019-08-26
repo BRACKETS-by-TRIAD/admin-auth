@@ -48,11 +48,11 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Create a new token repository instance.
      *
-     * @param  \Illuminate\Database\ConnectionInterface $connection
-     * @param  \Illuminate\Contracts\Hashing\Hasher $hasher
-     * @param  string $table
-     * @param  string $hashKey
-     * @param  int $expires
+     * @param \Illuminate\Database\ConnectionInterface $connection
+     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
+     * @param string $table
+     * @param string $hashKey
+     * @param int $expires
      * @return void
      */
     public function __construct(
@@ -86,7 +86,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Get a token record by token if exists and is valid.
      *
-     * @param  string $token
+     * @param string $token
      * @return array|null
      */
     public function getByToken($token)
@@ -172,8 +172,8 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Build the record payload for the table.
      *
-     * @param  string $email
-     * @param  string $token
+     * @param string $email
+     * @param string $token
      * @return array
      */
     protected function getPayload($email, $token)
@@ -185,7 +185,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * Determine if a token record exists and is valid.
      *
      * @param CanActivateContract $user
-     * @param  string $token
+     * @param string $token
      * @return bool
      */
     public function exists(CanActivateContract $user, $token)
@@ -202,7 +202,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Determine if the token has expired.
      *
-     * @param  string $createdAt
+     * @param string $createdAt
      * @return bool
      */
     protected function tokenExpired($createdAt)

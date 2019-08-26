@@ -15,5 +15,4 @@ class MissingRoutesController extends Controller
     {
         return Redirect::route('brackets/admin-auth::admin/login');
     }
-
 }

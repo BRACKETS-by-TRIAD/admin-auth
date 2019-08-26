@@ -30,7 +30,7 @@ class ActivationBroker implements ActivationBrokerContract
      * Create a new password broker instance.
      *
      * @param TokenRepositoryInterface $tokens
-     * @param  \Illuminate\Contracts\Auth\UserProvider $users
+     * @param \Illuminate\Contracts\Auth\UserProvider $users
      */
     public function __construct(
         TokenRepositoryInterface $tokens,
@@ -43,7 +43,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Send a activation link to a user.
      *
-     * @param  array $credentials
+     * @param array $credentials
      * @return string
      */
     public function sendActivationLink(array $credentials)
@@ -70,8 +70,8 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Activate account for the given token.
      *
-     * @param  array $credentials
-     * @param  \Closure $callback
+     * @param array $credentials
+     * @param \Closure $callback
      * @return mixed
      */
     public function activate(array $credentials, Closure $callback)
@@ -98,7 +98,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Validate an activation for the given credentials.
      *
-     * @param  array $credentials
+     * @param array $credentials
      * @return CanActivateContract|string
      */
     protected function validateActivation(array $credentials)
@@ -117,10 +117,10 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Get the user for the given credentials.
      *
-     * @param  array $credentials
+     * @param array $credentials
+     * @throws \UnexpectedValueException
      * @return \Brackets\AdminAuth\Contracts\Auth\CanActivate
      *
-     * @throws \UnexpectedValueException
      */
     public function getUser(array $credentials)
     {
@@ -161,7 +161,7 @@ class ActivationBroker implements ActivationBrokerContract
      * Validate the given password reset token.
      *
      * @param CanActivateContract $user
-     * @param  string $token
+     * @param string $token
      * @return bool
      */
     public function tokenExists(CanActivateContract $user, $token)

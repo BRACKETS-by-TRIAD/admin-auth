@@ -37,7 +37,7 @@ class TestStandardUserModel extends Authenticatable implements CanActivateContra
     /**
      * Send the password reset notification.
      *
-     * @param  string $token
+     * @param string $token
      * @return void
      */
     //TODO move to generator?

@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ActivationController extends Controller
 {
-
     use RedirectsUsers;
 
     /*
@@ -58,7 +57,8 @@ class ActivationController extends Controller
     /**
      * Activate user from token
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $token
      * @return \Illuminate\Http\RedirectResponse
      */
     public function activate(Request $request, $token)
@@ -73,9 +73,10 @@ class ActivationController extends Controller
         // will update the activation flag on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
         $response = $this->broker()->activate(
-            $this->credentials($request, $token), function ($user) {
-            $this->activateUser($user);
-        }
+            $this->credentials($request, $token),
+            function ($user) {
+                $this->activateUser($user);
+            }
         );
 
         // If the activation was successful, we will redirect the user back to
@@ -109,7 +110,7 @@ class ActivationController extends Controller
     /**
      * Get the activation credentials from the request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @param $token
      * @return array
      */
@@ -121,7 +122,7 @@ class ActivationController extends Controller
     /**
      * Activate the given user account.
      *
-     * @param  \Brackets\AdminAuth\Contracts\Auth\CanActivate $user
+     * @param \Brackets\AdminAuth\Contracts\Auth\CanActivate $user
      * @return void
      */
     protected function activateUser($user)
@@ -135,7 +136,7 @@ class ActivationController extends Controller
      * Get the response for a successful activation.
      *
      * @param Request $request
-     * @param  string $response
+     * @param string $response
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendActivationResponse(Request $request, $response)
@@ -152,7 +153,8 @@ class ActivationController extends Controller
      * Get the response for a failed activation.
      *
      * @param  \Illuminate\Http\Request
-     * @param  string $response
+     * @param string $response
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendActivationFailedResponse(Request $request, $response)

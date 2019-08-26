@@ -17,7 +17,7 @@ interface TokenRepositoryInterface
     /**
      * Get a token record by token if exists and is valid.
      *
-     * @param  string $token
+     * @param string $token
      * @return array|null
      */
     public function getByToken($token);
@@ -51,7 +51,7 @@ interface TokenRepositoryInterface
      * Determine if a token record exists and is valid.
      *
      * @param CanActivateContract $user
-     * @param  string $token
+     * @param string $token
      * @return bool
      */
     public function exists(CanActivateContract $user, $token);

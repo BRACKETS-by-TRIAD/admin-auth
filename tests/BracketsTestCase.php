@@ -2,7 +2,6 @@
 
 namespace Brackets\AdminAuth\Tests;
 
-
 abstract class BracketsTestCase extends TestCase
 {
     public function setUp()
