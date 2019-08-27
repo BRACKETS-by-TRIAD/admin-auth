@@ -63,8 +63,8 @@ class ResetPasswordController extends Controller
      *
      * If no token is present, display the link request form.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string|null $token
+     * @param \Illuminate\Http\Request $request
+     * @param string|null $token
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showResetForm(Request $request, $token = null)
@@ -77,8 +77,8 @@ class ResetPasswordController extends Controller
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword $user
-     * @param  string $password
+     * @param \Illuminate\Contracts\Auth\CanResetPassword $user
+     * @param string $password
      * @return void
      */
     protected function resetPassword($user, $password)
@@ -96,9 +96,9 @@ class ResetPasswordController extends Controller
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @param \Illuminate\Http\Request $request
      * @throws \Illuminate\Validation\ValidationException
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function reset(Request $request)
     {
@@ -108,9 +108,10 @@ class ResetPasswordController extends Controller
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
         $response = $this->broker()->reset(
-            $this->credentials($request), function ($user, $password) {
-            $this->resetPassword($user, $password);
-        }
+            $this->credentials($request),
+            function ($user, $password) {
+                $this->resetPassword($user, $password);
+            }
         );
 
         // If the password was successfully reset, we will redirect the user back to
@@ -125,7 +126,7 @@ class ResetPasswordController extends Controller
      * Get the response for a successful password reset.
      *
      * @param Request $request
-     * @param  string $response
+     * @param string $response
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendResetResponse(Request $request, $response)
@@ -142,7 +143,8 @@ class ResetPasswordController extends Controller
      * Get the response for a failed password reset.
      *
      * @param  \Illuminate\Http\Request
-     * @param  string $response
+     * @param string $response
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendResetFailedResponse(Request $request, $response)
@@ -181,7 +183,7 @@ class ResetPasswordController extends Controller
     /**
      * Check if provided user can be logged in
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword $user
+     * @param \Illuminate\Contracts\Auth\CanResetPassword $user
      * @return boolean
      */
     protected function loginCheck($user)

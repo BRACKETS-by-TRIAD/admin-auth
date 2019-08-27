@@ -62,7 +62,7 @@ class ActivationEmailController extends Controller
     /**
      * Send an activation link to the given user.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function sendActivationEmail(Request $request)
@@ -102,7 +102,7 @@ class ActivationEmailController extends Controller
      * Get the response for a successful activation link.
      *
      * @param Request $request
-     * @param  string $response
+     * @param string $response
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendActivationLinkResponse(Request $request, $response)
@@ -115,7 +115,8 @@ class ActivationEmailController extends Controller
      * Get the response for a failed activation link.
      *
      * @param  \Illuminate\Http\Request
-     * @param  string $response
+     * @param string $response
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendActivationLinkFailedResponse(Request $request, $response)
@@ -132,7 +133,7 @@ class ActivationEmailController extends Controller
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     protected function credentials(Request $request)

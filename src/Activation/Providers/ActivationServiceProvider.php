@@ -43,7 +43,8 @@ class ActivationServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../../../install-stubs/config/activation.php', 'activation'
+            __DIR__ . '/../../../install-stubs/config/activation.php',
+            'activation'
         );
 
         $this->registerActivationBroker();

@@ -4,8 +4,8 @@ namespace Brackets\AdminAuth\Tests\Models;
 
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Traits\CanActivate;
-use Brackets\AdminAuth\Notifications\ResetPassword;
 use Brackets\AdminAuth\Notifications\ActivationNotification;
+use Brackets\AdminAuth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -66,8 +66,8 @@ class TestBracketsUserModel extends Authenticatable implements CanActivateContra
     /**
      * Send the password reset notification.
      *
-     * @param    string $token
-     * @return  void
+     * @param string $token
+     * @return void
      */
     public function sendPasswordResetNotification($token)
     {
@@ -77,7 +77,7 @@ class TestBracketsUserModel extends Authenticatable implements CanActivateContra
     /**
      * Send the password reset notification.
      *
-     * @param  string $token
+     * @param string $token
      * @return void
      */
     public function sendActivationNotification($token)
@@ -86,6 +86,4 @@ class TestBracketsUserModel extends Authenticatable implements CanActivateContra
     }
 
     /* ************************ RELATIONS ************************ */
-
-
 }

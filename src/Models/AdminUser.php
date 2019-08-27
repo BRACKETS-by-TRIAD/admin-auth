@@ -1,4 +1,6 @@
-<?php namespace Brackets\AdminAuth\Models;
+<?php
+
+namespace Brackets\AdminAuth\Models;
 
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Traits\CanActivate;
@@ -76,8 +78,8 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
     /**
      * Send the password reset notification.
      *
-     * @param    string $token
-     * @return  void
+     * @param string $token
+     * @return void
      */
     public function sendPasswordResetNotification($token)
     {
@@ -127,6 +129,4 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
     }
 
     /* ************************ RELATIONS ************************ */
-
-
 }

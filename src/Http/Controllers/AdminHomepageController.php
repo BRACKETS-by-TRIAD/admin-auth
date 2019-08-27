@@ -17,5 +17,4 @@ class AdminHomepageController extends Controller
             'inspiration' => Inspiring::quote()
         ]);
     }
-
 }

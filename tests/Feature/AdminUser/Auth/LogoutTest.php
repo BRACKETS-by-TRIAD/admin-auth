@@ -2,8 +2,8 @@
 
 namespace Brackets\AdminAuth\Tests\Feature\AdminUser\Auth;
 
-use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
 use Brackets\AdminAuth\Tests\BracketsTestCase;
+use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Auth;
 
