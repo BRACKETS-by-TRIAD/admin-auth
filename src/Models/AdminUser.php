@@ -3,23 +3,27 @@
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Traits\CanActivate;
 use Brackets\AdminAuth\Notifications\ResetPassword;
-use Brackets\Media\HasMedia\HasMediaCollections;
+use Brackets\Media\HasMedia\AutoProcessMediaTrait;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
+use Brackets\Media\HasMedia\ProcessMediaTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class AdminUser extends Authenticatable implements CanActivateContract, HasMediaCollections
+class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
 {
     use Notifiable;
     use CanActivate;
     use SoftDeletes;
     use HasRoles;
+    use AutoProcessMediaTrait;
     use HasMediaCollectionsTrait;
     use HasMediaThumbsTrait;
+    use ProcessMediaTrait;
 
     protected $fillable = [
         "email",
@@ -120,7 +124,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
                 ->fit('crop', 200, 200)
                 ->optimize()
                 ->performOnCollections($mediaCollection->getName())
-                ->nonQueued();;
+                ->nonQueued();
         });
     }
 

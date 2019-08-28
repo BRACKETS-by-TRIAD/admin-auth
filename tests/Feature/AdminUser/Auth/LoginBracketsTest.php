@@ -12,11 +12,6 @@ class LoginBracketsTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
     protected function createTestUser($activated = true, $forbidden = false)
     {
         $user = TestBracketsUserModel::create([

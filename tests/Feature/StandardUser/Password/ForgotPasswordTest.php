@@ -12,11 +12,6 @@ class ForgotPasswordTest extends StandardTestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
     protected function createTestUser()
     {
         $user = TestStandardUserModel::create([
