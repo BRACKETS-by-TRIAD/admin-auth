@@ -16,7 +16,7 @@ return [
     'sent' => 'Poslali sme Vám aktivačný link.',
     'activated' => 'Vaše konto bolo aktivované.',
     'token' => 'Aktivačný token je neplatný.',
-    'user' => "Nenašli sme používateľa s danými prihlasovacími údajmi. Používateľ je už zrejme aktívny.",
-    'disabled' => "Aktivácia nie je možná.",
+    'user' => 'Nenašli sme používateľa s danými prihlasovacími údajmi. Používateľ je už zrejme aktívny.',
+    'disabled' => 'Aktivácia nie je možná.',
 
 ];

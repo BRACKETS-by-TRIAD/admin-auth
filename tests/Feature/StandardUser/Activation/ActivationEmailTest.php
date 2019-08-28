@@ -12,7 +12,7 @@ class ActivationEmailTest extends StandardTestCase
 {
     use DatabaseMigrations;
 
-    protected function createTestUser()
+    protected function createTestUser(): TestStandardUserModel
     {
         $user = TestStandardUserModel::create([
             'email' => 'john@example.com',
@@ -27,14 +27,14 @@ class ActivationEmailTest extends StandardTestCase
     }
 
     /** @test */
-    public function can_see_activation_form()
+    public function can_see_activation_form(): void
     {
         $response = $this->get(url('/admin/activation'));
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function do_not_send_activation_email_after_user_created()
+    public function do_not_send_activation_email_after_user_created(): void
     {
         Notification::fake();
 
@@ -47,7 +47,7 @@ class ActivationEmailTest extends StandardTestCase
     }
 
     /** @test */
-    public function do_not_send_activation_email_after_user_not_activated_and_form_filled()
+    public function do_not_send_activation_email_after_user_not_activated_and_form_filled(): void
     {
         Notification::fake();
 
@@ -63,7 +63,7 @@ class ActivationEmailTest extends StandardTestCase
     }
 
     /** @test */
-    public function do_not_send_activation_email_if_email_not_found()
+    public function do_not_send_activation_email_if_email_not_found(): void
     {
         Notification::fake();
 

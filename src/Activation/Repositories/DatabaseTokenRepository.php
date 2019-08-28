@@ -4,8 +4,10 @@ namespace Brackets\AdminAuth\Activation\Repositories;
 
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Str;
 
 class DatabaseTokenRepository implements TokenRepositoryInterface
@@ -13,14 +15,14 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * The database connection instance.
      *
-     * @var \Illuminate\Database\ConnectionInterface
+     * @var ConnectionInterface
      */
     protected $connection;
 
     /**
      * The Hasher implementation.
      *
-     * @var \Illuminate\Contracts\Hashing\Hasher
+     * @var HasherContract
      */
     protected $hasher;
 
@@ -48,11 +50,11 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Create a new token repository instance.
      *
-     * @param  \Illuminate\Database\ConnectionInterface $connection
-     * @param  \Illuminate\Contracts\Hashing\Hasher $hasher
-     * @param  string $table
-     * @param  string $hashKey
-     * @param  int $expires
+     * @param ConnectionInterface $connection
+     * @param HasherContract $hasher
+     * @param string $table
+     * @param string $hashKey
+     * @param int $expires
      * @return void
      */
     public function __construct(
@@ -75,7 +77,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param CanActivateContract $user
      * @return array|null
      */
-    public function getByUser(CanActivateContract $user)
+    public function getByUser(CanActivateContract $user): ?array
     {
         return (array)$this->getTable()
             ->where(['email' => $user->getEmailForActivation(), 'used' => false])
@@ -86,10 +88,10 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Get a token record by token if exists and is valid.
      *
-     * @param  string $token
+     * @param string $token
      * @return array|null
      */
-    public function getByToken($token)
+    public function getByToken($token): ?array
     {
         return (array)$this->getTable()
             ->where(['token' => $token, 'used' => false])
@@ -101,9 +103,10 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * Create a new token record.
      *
      * @param CanActivateContract $user
+     * @throws Exception
      * @return string
      */
-    public function create(CanActivateContract $user)
+    public function create(CanActivateContract $user): string
     {
         $email = $user->getEmailForActivation();
 
@@ -121,9 +124,10 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * Create a new token or get existing not expired and not used.
      *
      * @param CanActivateContract $user
+     * @throws Exception
      * @return string
      */
-    public function createOrGet(CanActivateContract $user)
+    public function createOrGet(CanActivateContract $user): string
     {
         $email = $user->getEmailForActivation();
 
@@ -148,11 +152,11 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param string|null $token
      * @return void
      */
-    public function markAsUsed(CanActivateContract $user, $token = null)
+    public function markAsUsed(CanActivateContract $user, $token = null): void
     {
         $query = $this->getTable()
             ->where('email', $user->getEmailForActivation());
-        if (!is_null($token)) {
+        if ($token !== null) {
             $query = $query->where('token', $token);
         }
         $query->update(['used' => true]);
@@ -164,7 +168,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param CanActivateContract $user
      * @return int
      */
-    protected function deleteExisting(CanActivateContract $user)
+    protected function deleteExisting(CanActivateContract $user): ?int
     {
         return $this->getTable()->where('email', $user->getEmailForPasswordReset())->delete();
     }
@@ -172,11 +176,12 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Build the record payload for the table.
      *
-     * @param  string $email
-     * @param  string $token
+     * @param string $email
+     * @param string $token
+     * @throws Exception
      * @return array
      */
-    protected function getPayload($email, $token)
+    protected function getPayload($email, $token): array
     {
         return ['email' => $email, 'token' => $token, 'created_at' => new Carbon];
     }
@@ -185,10 +190,10 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * Determine if a token record exists and is valid.
      *
      * @param CanActivateContract $user
-     * @param  string $token
+     * @param string $token
      * @return bool
      */
-    public function exists(CanActivateContract $user, $token)
+    public function exists(CanActivateContract $user, $token): bool
     {
         $record = (array)$this->getTable()->where(
             ['email' => $user->getEmailForActivation(), 'used' => false]
@@ -202,10 +207,10 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Determine if the token has expired.
      *
-     * @param  string $createdAt
+     * @param string $createdAt
      * @return bool
      */
-    protected function tokenExpired($createdAt)
+    protected function tokenExpired($createdAt): bool
     {
         return Carbon::parse($createdAt)->addSeconds($this->expires)->isPast();
     }
@@ -216,7 +221,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param CanActivateContract $user
      * @return void
      */
-    public function delete(CanActivateContract $user)
+    public function delete(CanActivateContract $user): void
     {
         $this->deleteExisting($user);
     }
@@ -226,7 +231,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      *
      * @return void
      */
-    public function deleteExpired()
+    public function deleteExpired(): void
     {
         $expiredAt = Carbon::now()->subSeconds($this->expires);
 
@@ -238,7 +243,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      *
      * @return string
      */
-    public function createNewToken()
+    public function createNewToken(): string
     {
         return hash_hmac('sha256', Str::random(40), $this->hashKey);
     }
@@ -246,9 +251,9 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Get the database connection instance.
      *
-     * @return \Illuminate\Database\ConnectionInterface
+     * @return ConnectionInterface
      */
-    public function getConnection()
+    public function getConnection(): ConnectionInterface
     {
         return $this->connection;
     }
@@ -256,9 +261,9 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Begin a new database query against the table.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return Builder
      */
-    protected function getTable()
+    protected function getTable(): Builder
     {
         return $this->connection->table($this->table);
     }
@@ -266,9 +271,9 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     /**
      * Get the hasher instance.
      *
-     * @return \Illuminate\Contracts\Hashing\Hasher
+     * @return HasherContract
      */
-    public function getHasher()
+    public function getHasher(): HasherContract
     {
         return $this->hasher;
     }

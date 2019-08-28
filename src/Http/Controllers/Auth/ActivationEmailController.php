@@ -2,9 +2,13 @@
 
 namespace Brackets\AdminAuth\Http\Controllers\Auth;
 
+use Brackets\AdminAuth\Activation\Contracts\ActivationBroker as ActivationBrokerContract;
 use Brackets\AdminAuth\Activation\Facades\Activation;
 use Brackets\AdminAuth\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class ActivationEmailController extends Controller
 {
@@ -48,7 +52,7 @@ class ActivationEmailController extends Controller
     /**
      * Display the form to request a activation link.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showLinkRequestForm()
     {
@@ -62,8 +66,9 @@ class ActivationEmailController extends Controller
     /**
      * Send an activation link to the given user.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @param Request $request
+     * @throws ValidationException
+     * @return RedirectResponse|Response
      */
     public function sendActivationEmail(Request $request)
     {
@@ -90,7 +95,8 @@ class ActivationEmailController extends Controller
     /**
      * Validate the email for the given request.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
+     * @throws ValidationException
      * @return void
      */
     protected function validateEmail(Request $request)
@@ -102,8 +108,8 @@ class ActivationEmailController extends Controller
      * Get the response for a successful activation link.
      *
      * @param Request $request
-     * @param  string $response
-     * @return \Illuminate\Http\RedirectResponse
+     * @param string $response
+     * @return RedirectResponse
      */
     protected function sendActivationLinkResponse(Request $request, $response)
     {
@@ -114,14 +120,15 @@ class ActivationEmailController extends Controller
     /**
      * Get the response for a failed activation link.
      *
-     * @param  \Illuminate\Http\Request
-     * @param  string $response
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request
+     * @param string $response
+     * @param Request $request
+     * @return RedirectResponse
      */
     protected function sendActivationLinkFailedResponse(Request $request, $response)
     {
         $message = trans($response);
-        if ($response == Activation::ACTIVATION_DISABLED) {
+        if ($response === Activation::ACTIVATION_DISABLED) {
             $message = trans('brackets/admin-auth::admin.activations.disabled');
         }
         return back()->withErrors(
@@ -132,10 +139,10 @@ class ActivationEmailController extends Controller
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
-    protected function credentials(Request $request)
+    protected function credentials(Request $request): array
     {
         $conditions = ['activated' => false];
         return array_merge($request->only('email'), $conditions);
@@ -144,9 +151,9 @@ class ActivationEmailController extends Controller
     /**
      * Get the broker to be used during activation.
      *
-     * @return \Brackets\AdminAuth\Activation\Contracts\ActivationBroker
+     * @return ActivationBrokerContract
      */
-    public function broker()
+    public function broker(): ?ActivationBrokerContract
     {
         return Activation::broker($this->activationBroker);
     }

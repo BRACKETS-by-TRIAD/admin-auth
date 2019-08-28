@@ -12,15 +12,15 @@ interface TokenRepositoryInterface
      * @param CanActivateContract $user
      * @return array|null
      */
-    public function getByUser(CanActivateContract $user);
+    public function getByUser(CanActivateContract $user): ?array;
 
     /**
      * Get a token record by token if exists and is valid.
      *
-     * @param  string $token
+     * @param string $token
      * @return array|null
      */
-    public function getByToken($token);
+    public function getByToken($token): ?array;
 
     /**
      * Create a new token.
@@ -28,7 +28,7 @@ interface TokenRepositoryInterface
      * @param CanActivateContract $user
      * @return string
      */
-    public function create(CanActivateContract $user);
+    public function create(CanActivateContract $user): string;
 
     /**
      * Create a new token or get existing not expired and not used.
@@ -36,7 +36,7 @@ interface TokenRepositoryInterface
      * @param CanActivateContract $user
      * @return string
      */
-    public function createOrGet(CanActivateContract $user);
+    public function createOrGet(CanActivateContract $user): string;
 
     /**
      * Mark all token records as used by user.
@@ -45,16 +45,16 @@ interface TokenRepositoryInterface
      * @param $token
      * @return void
      */
-    public function markAsUsed(CanActivateContract $user, $token);
+    public function markAsUsed(CanActivateContract $user, $token): void;
 
     /**
      * Determine if a token record exists and is valid.
      *
      * @param CanActivateContract $user
-     * @param  string $token
+     * @param string $token
      * @return bool
      */
-    public function exists(CanActivateContract $user, $token);
+    public function exists(CanActivateContract $user, $token): bool;
 
     /**
      * Delete a token record.
@@ -62,12 +62,12 @@ interface TokenRepositoryInterface
      * @param CanActivateContract $user
      * @return void
      */
-    public function delete(CanActivateContract $user);
+    public function delete(CanActivateContract $user): void;
 
     /**
      * Delete expired tokens.
      *
      * @return void
      */
-    public function deleteExpired();
+    public function deleteExpired(): void;
 }

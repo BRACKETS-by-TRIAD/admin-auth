@@ -12,7 +12,7 @@ class ForgotPasswordTest extends StandardTestCase
 {
     use DatabaseMigrations;
 
-    protected function createTestUser()
+    protected function createTestUser(): TestStandardUserModel
     {
         $user = TestStandardUserModel::create([
             'email' => 'john@example.com',
@@ -27,14 +27,14 @@ class ForgotPasswordTest extends StandardTestCase
     }
 
     /** @test */
-    public function can_see_forgot_password_form()
+    public function can_see_forgot_password_form(): void
     {
         $response = $this->get(url('/admin/password-reset'));
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function send_forgot_password_email_after_form_filled()
+    public function send_forgot_password_email_after_form_filled(): void
     {
         Notification::fake();
 
@@ -50,7 +50,7 @@ class ForgotPasswordTest extends StandardTestCase
     }
 
     /** @test */
-    public function do_not_send_password_email_if_email_not_found()
+    public function do_not_send_password_email_if_email_not_found(): void
     {
         Notification::fake();
 

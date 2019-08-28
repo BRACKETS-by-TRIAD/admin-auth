@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateActivationsTable extends Migration
@@ -11,9 +11,9 @@ class CreateActivationsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('activations', function (Blueprint $table) {
+        Schema::create('activations', static function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('token');
             $table->boolean('used')->default(false);
@@ -26,7 +26,7 @@ class CreateActivationsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::drop('activations');
     }

@@ -7,7 +7,6 @@ use Brackets\AdminAuth\Tests\StandardTestCase;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class ResetPasswordTest extends StandardTestCase
 {
@@ -21,7 +20,7 @@ class ResetPasswordTest extends StandardTestCase
         $this->token = '123456aabbcc';
     }
 
-    protected function createTestUser()
+    protected function createTestUser(): TestStandardUserModel
     {
         $user = TestStandardUserModel::create([
             'email' => 'john@example.com',
@@ -47,24 +46,26 @@ class ResetPasswordTest extends StandardTestCase
     }
 
     /** @test */
-    public function can_see_reset_password_form()
+    public function can_see_reset_password_form(): void
     {
         $response = $this->get(route('brackets/admin-auth::admin/password/showResetForm', ['token' => $this->token]));
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function reset_password_after_form_filled()
+    public function reset_password_after_form_filled(): void
     {
         $user = $this->createTestUser();
 
-        $response = $this->post(url('/admin/password-reset/reset'),
+        $response = $this->post(
+            url('/admin/password-reset/reset'),
             [
                 'email' => 'john@example.com',
                 'password' => 'testpass123new',
                 'password_confirmation' => 'testpass123new',
                 'token' => $this->token
-            ]);
+            ]
+        );
         $response->assertStatus(302);
 
         $userNew = TestStandardUserModel::where('email', 'john@example.com')->first();
@@ -73,17 +74,19 @@ class ResetPasswordTest extends StandardTestCase
     }
 
     /** @test */
-    public function do_not_reset_password_if_email_not_found()
+    public function do_not_reset_password_if_email_not_found(): void
     {
         $user = $this->createTestUser();
 
-        $response = $this->post(url('/admin/password-reset/reset'),
+        $response = $this->post(
+            url('/admin/password-reset/reset'),
             [
                 'email' => 'john1@example.com',
                 'password' => 'testpass123new',
                 'password_confirmation' => 'testpass123new',
                 'token' => $this->token
-            ]);
+            ]
+        );
         $response->assertStatus(302);
 
         $userNew = TestStandardUserModel::where('email', 'john@example.com')->first();
@@ -93,17 +96,19 @@ class ResetPasswordTest extends StandardTestCase
     }
 
     /** @test */
-    public function do_not_reset_password_if_token_failed()
+    public function do_not_reset_password_if_token_failed(): void
     {
         $user = $this->createTestUser();
 
-        $response = $this->post(url('/admin/password-reset/reset'),
+        $response = $this->post(
+            url('/admin/password-reset/reset'),
             [
                 'email' => 'john@example.com',
                 'password' => 'testpass123new',
                 'password_confirmation' => 'testpass123new',
                 'token' => $this->token . '11'
-            ]);
+            ]
+        );
         $response->assertStatus(302);
 
         $userNew = TestStandardUserModel::where('email', 'john@example.com')->first();
@@ -113,7 +118,7 @@ class ResetPasswordTest extends StandardTestCase
     }
 
     /** @test */
-    public function do_not_reset_password_if_email_and_token_does_not_match()
+    public function do_not_reset_password_if_email_and_token_does_not_match(): void
     {
         $user1 = $this->createTestUser();
 
@@ -137,13 +142,15 @@ class ResetPasswordTest extends StandardTestCase
             'email' => 'john2@example.com',
         ]);
 
-        $response = $this->post(url('/admin/password-reset/reset'),
+        $response = $this->post(
+            url('/admin/password-reset/reset'),
             [
                 'email' => 'john2@example.com',
                 'password' => 'testpass123new',
                 'password_confirmation' => 'testpass123new',
                 'token' => $this->token
-            ]);
+            ]
+        );
         $response->assertStatus(302);
 
         $userNew2 = TestStandardUserModel::where('email', 'john2@example.com')->first();
@@ -151,13 +158,15 @@ class ResetPasswordTest extends StandardTestCase
         $this->assertNotEquals(true, Hash::check('testpass123new', $userNew2->password));
         $this->assertEquals(true, Hash::check('testpass123', $userNew2->password));
 
-        $response = $this->post(url('/admin/password-reset/reset'),
+        $response = $this->post(
+            url('/admin/password-reset/reset'),
             [
                 'email' => 'john@example.com',
                 'password' => 'testpass123new',
                 'password_confirmation' => 'testpass123new',
                 'token' => $this->token . '2'
-            ]);
+            ]
+        );
         $response->assertStatus(302);
 
         $userNew1 = TestStandardUserModel::where('email', 'john@example.com')->first();
@@ -167,18 +176,20 @@ class ResetPasswordTest extends StandardTestCase
     }
 
     /** @test */
-    public function do_not_reset_password_if_password_validation_failed()
+    public function do_not_reset_password_if_password_validation_failed(): void
     {
         $user = $this->createTestUser();
 
         //Fixme not working getting error instead of exception
-        $response = $this->post(url('/admin/password-reset/reset'),
+        $response = $this->post(
+            url('/admin/password-reset/reset'),
             [
                 'email' => 'john@example.com',
                 'password' => 'testpass',
                 'password_confirmation' => 'testpass',
                 'token' => $this->token.'11'
-            ]);
+            ]
+        );
         $response->assertStatus(302);
 
         $userNew = TestStandardUserModel::where('email', 'john@example.com')->first();
@@ -188,13 +199,15 @@ class ResetPasswordTest extends StandardTestCase
 
         //Fixme not working getting error instead of exception
         // validation for changed password length
-        $response = $this->post(url('/admin/password-reset/reset'),
+        $response = $this->post(
+            url('/admin/password-reset/reset'),
             [
                 'email' => 'john@example.com',
                 'password' => 'test777',
                 'password_confirmation' => 'test777',
                 'token' => $this->token
-            ]);
+            ]
+        );
         $response->assertStatus(302);
 
         $userNew = TestStandardUserModel::where('email', 'john@example.com')->first();

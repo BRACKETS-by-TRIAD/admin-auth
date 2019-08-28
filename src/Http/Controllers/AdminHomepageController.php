@@ -2,14 +2,16 @@
 
 namespace Brackets\AdminAuth\Http\Controllers;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Inspiring;
+use Illuminate\View\View;
 
 class AdminHomepageController extends Controller
 {
     /**
      * Display default admin home page
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -17,5 +19,4 @@ class AdminHomepageController extends Controller
             'inspiration' => Inspiring::quote()
         ]);
     }
-
 }

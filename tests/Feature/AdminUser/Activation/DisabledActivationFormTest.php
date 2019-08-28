@@ -16,7 +16,7 @@ class DisabledActivationFormTest extends BracketsTestCase
     }
 
     /** @test */
-    public function can_not_see_activation_form_if_disabled()
+    public function can_not_see_activation_form_if_disabled(): void
     {
         $response = $this->get(url('/admin/activation'));
         $response->assertStatus(404);

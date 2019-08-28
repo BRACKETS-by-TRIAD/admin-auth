@@ -1,4 +1,6 @@
-<?php namespace Brackets\AdminAuth\Models;
+<?php
+
+namespace Brackets\AdminAuth\Models;
 
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Traits\CanActivate;
@@ -7,13 +9,19 @@ use Brackets\Media\HasMedia\AutoProcessMediaTrait;
 use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
 use Brackets\Media\HasMedia\HasMediaThumbsTrait;
 use Brackets\Media\HasMedia\ProcessMediaTrait;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property mixed first_name
+ * @property mixed last_name
+ */
 class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
 {
     use Notifiable;
@@ -26,24 +34,24 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
     use ProcessMediaTrait;
 
     protected $fillable = [
-        "email",
-        "password",
-        "first_name",
-        "last_name",
-        "activated",
-        "forbidden",
-        "language",
+        'email',
+        'password',
+        'first_name',
+        'last_name',
+        'activated',
+        'forbidden',
+        'language',
     ];
 
     protected $hidden = [
-        "password",
-        "remember_token",
+        'password',
+        'remember_token',
     ];
 
     protected $dates = [
-        "created_at",
-        "updated_at",
-        "deleted_at",
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $appends = ['full_name', 'resource_url'];
@@ -53,7 +61,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
     /**
      * Resource url to generate edit
      *
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return UrlGenerator|string
      */
     public function getResourceUrlAttribute()
     {
@@ -65,21 +73,26 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
      *
      * @return string
      */
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
-        return $this->first_name . " " . $this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
-    public function getAvatarThumbUrlAttribute()
+    /**
+     * Get url of avatar image
+     *
+     * @return string|null
+     */
+    public function getAvatarThumbUrlAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('avatar', 'thumb_150') ?: false;
+        return $this->getFirstMediaUrl('avatar', 'thumb_150') ?: null;
     }
 
     /**
      * Send the password reset notification.
      *
-     * @param    string $token
-     * @return  void
+     * @param string $token
+     * @return void
      */
     public function sendPasswordResetNotification($token)
     {
@@ -88,12 +101,21 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
 
     /* ************************ MEDIA ************************ */
 
+    /**
+     * Register media collections
+     */
     public function registerMediaCollections()
     {
         $this->addMediaCollection('avatar')
             ->accepts('image/*');
     }
 
+    /**
+     * Register media conversions
+     *
+     * @param Media|null $media
+     * @throws InvalidManipulation
+     */
     public function registerMediaConversions(Media $media = null)
     {
         $this->autoRegisterThumb200();
@@ -115,6 +137,9 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
             ->nonQueued();
     }
 
+    /**
+     * Auto register thumb overridden
+     */
     public function autoRegisterThumb200()
     {
         $this->getMediaCollections()->filter->isImage()->each(function ($mediaCollection) {
@@ -129,6 +154,4 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
     }
 
     /* ************************ RELATIONS ************************ */
-
-
 }

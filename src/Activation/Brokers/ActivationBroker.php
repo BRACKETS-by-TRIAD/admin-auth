@@ -15,14 +15,14 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * The activation token repository.
      *
-     * @var \Brackets\AdminAuth\Auth\Activations\TokenRepositoryInterface
+     * @var TokenRepositoryInterface
      */
     protected $tokens;
 
     /**
      * The user provider implementation.
      *
-     * @var \Illuminate\Contracts\Auth\UserProvider
+     * @var UserProvider
      */
     protected $users;
 
@@ -30,7 +30,7 @@ class ActivationBroker implements ActivationBrokerContract
      * Create a new password broker instance.
      *
      * @param TokenRepositoryInterface $tokens
-     * @param  \Illuminate\Contracts\Auth\UserProvider $users
+     * @param UserProvider $users
      */
     public function __construct(
         TokenRepositoryInterface $tokens,
@@ -43,17 +43,17 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Send a activation link to a user.
      *
-     * @param  array $credentials
+     * @param array $credentials
      * @return string
      */
-    public function sendActivationLink(array $credentials)
+    public function sendActivationLink(array $credentials): string
     {
         // First we will check to see if we found a user at the given credentials and
         // if we did not we will redirect back to this current URI with a piece of
         // "flash" data in the session to indicate to the developers the errors.
         $user = $this->getUser($credentials);
 
-        if (is_null($user)) {
+        if ($user === null) {
             return static::INVALID_USER;
         }
 
@@ -70,8 +70,8 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Activate account for the given token.
      *
-     * @param  array $credentials
-     * @param  \Closure $callback
+     * @param array $credentials
+     * @param Closure $callback
      * @return mixed
      */
     public function activate(array $credentials, Closure $callback)
@@ -98,7 +98,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Validate an activation for the given credentials.
      *
-     * @param  array $credentials
+     * @param array $credentials
      * @return CanActivateContract|string
      */
     protected function validateActivation(array $credentials)
@@ -107,7 +107,7 @@ class ActivationBroker implements ActivationBrokerContract
             return static::INVALID_TOKEN;
         }
 
-        if (is_null($user = $this->getUser(['email' => $tokenRecord['email']]))) {
+        if (($user = $this->getUser(['email' => $tokenRecord['email']])) === null) {
             return static::INVALID_USER;
         }
 
@@ -117,12 +117,11 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Get the user for the given credentials.
      *
-     * @param  array $credentials
-     * @return \Brackets\AdminAuth\Contracts\Auth\CanActivate
-     *
-     * @throws \UnexpectedValueException
+     * @param array $credentials
+     * @throws UnexpectedValueException
+     * @return CanActivateContract
      */
-    public function getUser(array $credentials)
+    public function getUser(array $credentials): ?CanActivateContract
     {
         $credentials = Arr::except($credentials, ['token']);
 
@@ -141,7 +140,7 @@ class ActivationBroker implements ActivationBrokerContract
      * @param CanActivateContract $user
      * @return string
      */
-    public function createToken(CanActivateContract $user)
+    public function createToken(CanActivateContract $user): string
     {
         return $this->tokens->create($user);
     }
@@ -152,7 +151,7 @@ class ActivationBroker implements ActivationBrokerContract
      * @param CanActivateContract $user
      * @return void
      */
-    public function deleteToken(CanActivateContract $user)
+    public function deleteToken(CanActivateContract $user): void
     {
         $this->tokens->delete($user);
     }
@@ -161,10 +160,10 @@ class ActivationBroker implements ActivationBrokerContract
      * Validate the given password reset token.
      *
      * @param CanActivateContract $user
-     * @param  string $token
+     * @param string $token
      * @return bool
      */
-    public function tokenExists(CanActivateContract $user, $token)
+    public function tokenExists(CanActivateContract $user, $token): bool
     {
         return $this->tokens->exists($user, $token);
     }
@@ -172,9 +171,9 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Get the activation token repository implementation.
      *
-     * @return \Brackets\AdminAuth\Auth\Activations\TokenRepositoryInterface
+     * @return TokenRepositoryInterface
      */
-    public function getRepository()
+    public function getRepository(): TokenRepositoryInterface
     {
         return $this->tokens;
     }
@@ -182,7 +181,7 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Get the user model class implementation.
      *
-     * @return \Brackets\AdminAuth\Auth\Activations\TokenRepositoryInterface
+     * @return CanActivateContract
      */
     public function getUserModelClass()
     {

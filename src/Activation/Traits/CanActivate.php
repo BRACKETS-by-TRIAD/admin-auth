@@ -11,7 +11,7 @@ trait CanActivate
      *
      * @return string
      */
-    public function getEmailForActivation()
+    public function getEmailForActivation(): string
     {
         return $this->email;
     }
@@ -19,10 +19,10 @@ trait CanActivate
     /**
      * Send the password reset notification.
      *
-     * @param  string $token
+     * @param string $token
      * @return void
      */
-    public function sendActivationNotification($token)
+    public function sendActivationNotification(string $token): void
     {
         $this->notify(app(ActivationNotification::class, ['token' => $token]));
     }

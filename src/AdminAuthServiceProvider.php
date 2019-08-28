@@ -1,12 +1,16 @@
-<?php namespace Brackets\AdminAuth;
+<?php
+
+namespace Brackets\AdminAuth;
 
 use Brackets\AdminAuth\Activation\Providers\ActivationServiceProvider;
 use Brackets\AdminAuth\Console\Commands\AdminAuthInstall;
+use Brackets\AdminAuth\Exceptions\Handler;
 use Brackets\AdminAuth\Http\Middleware\ApplyUserLocale;
 use Brackets\AdminAuth\Http\Middleware\CanAdmin;
 use Brackets\AdminAuth\Http\Middleware\RedirectIfAuthenticated;
 use Brackets\AdminAuth\Providers\EventServiceProvider;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -58,8 +62,8 @@ class AdminAuthServiceProvider extends ServiceProvider
         }
 
         $this->app->bind(
-            \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            \Brackets\AdminAuth\Exceptions\Handler::class
+            ExceptionHandler::class,
+            Handler::class
         );
     }
 
@@ -71,15 +75,18 @@ class AdminAuthServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../install-stubs/config/admin-auth.php', 'admin-auth'
+            __DIR__ . '/../install-stubs/config/admin-auth.php',
+            'admin-auth'
         );
 
         if (config('admin-auth.use_routes', true)) {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         }
 
-        if (config('admin-auth.use_routes', true) && config('admin-auth.activations.self_activation_form_enabled',
-                true)) {
+        if (config('admin-auth.use_routes', true) && config(
+            'admin-auth.activations.self_activation_form_enabled',
+            true
+        )) {
             $this->loadRoutesFrom(__DIR__ . '/../routes/activation-form.php');
         }
 
@@ -96,8 +103,8 @@ class AdminAuthServiceProvider extends ServiceProvider
             });
         }
 
-        app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('admin', CanAdmin::class);
-        app(\Illuminate\Routing\Router::class)->pushMiddlewareToGroup('admin', ApplyUserLocale::class);
-        app(\Illuminate\Routing\Router::class)->aliasMiddleware('guest.admin', RedirectIfAuthenticated::class);
+        app(Router::class)->pushMiddlewareToGroup('admin', CanAdmin::class);
+        app(Router::class)->pushMiddlewareToGroup('admin', ApplyUserLocale::class);
+        app(Router::class)->aliasMiddleware('guest.admin', RedirectIfAuthenticated::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Brackets\AdminAuth\Services;
 
+use Brackets\AdminAuth\Activation\Contracts\ActivationBroker as ActivationBrokerContract;
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Facades\Activation;
 use Illuminate\Support\Facades\Log;
@@ -36,12 +37,6 @@ class ActivationService
             return false;
         }
 
-        //TODO need to be changed or removed
-//        if (!property_exists($user, 'activated')) {
-//            Log::error('User does not have activated column.');
-//            return false;
-//        }
-
         if ($user->activated === true) {
             Log::info('User is already activated.');
             return true;
@@ -54,7 +49,7 @@ class ActivationService
             $this->credentials($user)
         );
 
-        if ($response == Activation::ACTIVATION_LINK_SENT) {
+        if ($response === Activation::ACTIVATION_LINK_SENT) {
             Log::info('Activation e-mail has been send: ' . $response);
         } else {
             Log::error('Sending activation e-mail has failed: ' . $response);
@@ -69,7 +64,7 @@ class ActivationService
      * @param CanActivateContract $user
      * @return array
      */
-    protected function credentials(CanActivateContract $user)
+    protected function credentials(CanActivateContract $user): array
     {
         return ['email' => $user->getEmailForActivation(), 'activated' => false];
     }
@@ -77,9 +72,9 @@ class ActivationService
     /**
      * Get the broker to be used during activation.
      *
-     * @return \Brackets\AdminAuth\Contracts\Auth\ActivationBroker
+     * @return ActivationBrokerContract
      */
-    public function broker()
+    public function broker(): ?ActivationBrokerContract
     {
         return Activation::broker($this->activationBroker);
     }
