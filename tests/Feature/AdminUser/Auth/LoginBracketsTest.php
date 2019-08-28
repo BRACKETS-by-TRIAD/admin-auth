@@ -38,7 +38,7 @@ class LoginBracketsTest extends BracketsTestCase
     }
 
     /** @test */
-    public function user_can_l«og_in(): void
+    public function user_can_log_in(): void
     {
         $user = $this->createTestUser();
 
