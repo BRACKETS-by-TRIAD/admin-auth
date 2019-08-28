@@ -20,7 +20,7 @@ class ResetPasswordTest extends BracketsTestCase
         $this->token = '123456aabbcc';
     }
 
-    protected function createTestUser()
+    protected function createTestUser(): TestBracketsUserModel
     {
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
@@ -46,14 +46,14 @@ class ResetPasswordTest extends BracketsTestCase
     }
 
     /** @test */
-    public function can_see_reset_password_form()
+    public function can_see_reset_password_form(): void
     {
         $response = $this->get(route('brackets/admin-auth::admin/password/showResetForm', ['token' => $this->token]));
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function reset_password_after_form_filled()
+    public function reset_password_after_form_filled(): void
     {
         $user = $this->createTestUser();
 
@@ -74,7 +74,7 @@ class ResetPasswordTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_reset_password_if_email_not_found()
+    public function do_not_reset_password_if_email_not_found(): void
     {
         $user = $this->createTestUser();
 
@@ -96,7 +96,7 @@ class ResetPasswordTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_reset_password_if_token_failed()
+    public function do_not_reset_password_if_token_failed(): void
     {
         $user = $this->createTestUser();
 
@@ -118,7 +118,7 @@ class ResetPasswordTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_reset_password_if_email_and_token_does_not_match()
+    public function do_not_reset_password_if_email_and_token_does_not_match(): void
     {
         $user1 = $this->createTestUser();
 
@@ -176,7 +176,7 @@ class ResetPasswordTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_reset_password_if_password_validation_failed()
+    public function do_not_reset_password_if_password_validation_failed(): void
     {
         $user = $this->createTestUser();
 

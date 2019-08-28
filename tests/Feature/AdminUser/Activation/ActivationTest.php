@@ -5,6 +5,7 @@ namespace Brackets\AdminAuth\Tests\Feature\AdminUser\Activation;
 use Brackets\AdminAuth\Tests\BracketsTestCase;
 use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ActivationTest extends BracketsTestCase
@@ -19,19 +20,12 @@ class ActivationTest extends BracketsTestCase
         $this->token = '123456aabbcc';
     }
 
-    /**
-     * @param bool $activated
-     * @param bool $forbidden
-     * @param bool $used
-     * @param Carbon|null $activationCreatedAt
-     * @return $this|\Illuminate\Database\Eloquent\Model
-     */
     protected function createTestUser(
-        $activated = true,
-        $forbidden = false,
-        $used = false,
+        bool $activated = true,
+        bool $forbidden = false,
+        bool $used = false,
         Carbon $activationCreatedAt = null
-    ) {
+    ): TestBracketsUserModel {
         // TODO maybe we can Mock sending an email to speed up a test?
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
@@ -51,7 +45,7 @@ class ActivationTest extends BracketsTestCase
             'email' => $user->email,
             'token' => $this->token,
             'used' => $used,
-            'created_at' => !is_null($activationCreatedAt) ? $activationCreatedAt : Carbon::now(),
+            'created_at' => $activationCreatedAt ?? Carbon::now(),
         ]);
 
         $this->assertDatabaseHas('admin_activations', [
@@ -64,7 +58,7 @@ class ActivationTest extends BracketsTestCase
     }
 
     /** @test */
-    public function activate_user_if_token_is_ok()
+    public function activate_user_if_token_is_ok(): void
     {
         $user = $this->createTestUser(false);
 
@@ -83,7 +77,7 @@ class ActivationTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_activate_user_if_token_does_not_exists()
+    public function do_not_activate_user_if_token_does_not_exists(): void
     {
         $user = $this->createTestUser(false);
 
@@ -104,7 +98,7 @@ class ActivationTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_activate_user_if_token_used()
+    public function do_not_activate_user_if_token_used(): void
     {
         $user = $this->createTestUser(false, false, true);
 
@@ -122,7 +116,7 @@ class ActivationTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_activate_user_if_token_expired()
+    public function do_not_activate_user_if_token_expired(): void
     {
         $user = $this->createTestUser(false, false, false, Carbon::now()->subDays(10));
 

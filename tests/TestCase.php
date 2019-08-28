@@ -2,12 +2,12 @@
 
 namespace Brackets\AdminAuth\Tests;
 
-use Brackets\AdminAuth\Tests\Exceptions\Handler;
+use Brackets\AdminAuth\AdminAuthServiceProvider;
 use Brackets\AdminAuth\Tests\Models\TestBracketsUserModel;
 use Brackets\AdminAuth\Tests\Models\TestStandardUserModel;
-use Exception;
-use Illuminate\Contracts\Debug\ExceptionHandler;
+use Brackets\AdminUI\AdminUIServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -28,20 +28,20 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      *
      * @return array
      */
     protected function getPackageProviders($app)
     {
         return [
-            \Brackets\AdminAuth\AdminAuthServiceProvider::class,
-            \Brackets\AdminUI\AdminUIServiceProvider::class,
+            AdminAuthServiceProvider::class,
+            AdminUIServiceProvider::class,
         ];
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -100,73 +100,55 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      */
     protected function setUpDatabase($app)
     {
-        $app['db']->connection()->getSchemaBuilder()->create('test_standard_user_models', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('email');
-            $table->string('password');
-            $table->string('remember_token')->nullable();
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-        });
+        $app['db']->connection()->getSchemaBuilder()->create('test_standard_user_models',
+            static function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->nullable();
+                $table->string('email');
+                $table->string('password');
+                $table->string('remember_token')->nullable();
+                $table->dateTime('created_at');
+                $table->dateTime('updated_at');
+            });
 
-        $app['db']->connection()->getSchemaBuilder()->create('test_brackets_user_models', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('email');
-            $table->string('password');
-            $table->string('remember_token')->nullable();
-            $table->boolean('activated')->default(false);
-            $table->boolean('forbidden')->default(false);
-            $table->string('language', 2)->default('en');
-            $table->softDeletes('deleted_at');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-        });
+        $app['db']->connection()->getSchemaBuilder()->create('test_brackets_user_models',
+            static function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('first_name')->nullable();
+                $table->string('last_name')->nullable();
+                $table->string('email');
+                $table->string('password');
+                $table->string('remember_token')->nullable();
+                $table->boolean('activated')->default(false);
+                $table->boolean('forbidden')->default(false);
+                $table->string('language', 2)->default('en');
+                $table->softDeletes('deleted_at');
+                $table->dateTime('created_at');
+                $table->dateTime('updated_at');
+            });
 
-        $app['db']->connection()->getSchemaBuilder()->create('password_resets', function (Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('password_resets', static function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
-        $app['db']->connection()->getSchemaBuilder()->create('admin_password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
+        $app['db']->connection()->getSchemaBuilder()->create('admin_password_resets',
+            static function (Blueprint $table) {
+                $table->string('email')->index();
+                $table->string('token');
+                $table->timestamp('created_at')->nullable();
+            });
 
-        $app['db']->connection()->getSchemaBuilder()->create('admin_activations', function (Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('admin_activations', static function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('token');
             $table->boolean('used')->default(false);
             $table->timestamp('created_at')->nullable();
-        });
-
-//        $this->artisan('migrate');
-    }
-
-    protected function disableExceptionHandling()
-    {
-        $this->app->instance(ExceptionHandler::class, new class extends Handler {
-            public function __construct()
-            {
-            }
-
-            public function report(Exception $e)
-            {
-                // no-op
-            }
-
-            public function render($request, Exception $e)
-            {
-                throw $e;
-            }
         });
     }
 }

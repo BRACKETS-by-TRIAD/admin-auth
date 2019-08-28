@@ -23,11 +23,11 @@ class DisabledActivationTest extends BracketsTestCase
     }
 
     protected function createTestUser(
-        $activated = true,
-        $forbidden = false,
-        $used = false,
+        bool $activated = true,
+        bool $forbidden = false,
+        bool $used = false,
         Carbon $activationCreatedAt = null
-    ) {
+    ): TestBracketsUserModel {
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
             'password' => bcrypt('testpass123'),
@@ -46,7 +46,7 @@ class DisabledActivationTest extends BracketsTestCase
             'email' => $user->email,
             'token' => $this->token,
             'used' => $used,
-            'created_at' => !is_null($activationCreatedAt) ? $activationCreatedAt : Carbon::now(),
+            'created_at' => $activationCreatedAt ?? Carbon::now(),
         ]);
 
         $this->assertDatabaseHas('admin_activations', [
@@ -59,7 +59,7 @@ class DisabledActivationTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_send_activation_mail_after_user_created()
+    public function do_not_send_activation_mail_after_user_created(): void
     {
         Notification::fake();
 
@@ -72,7 +72,7 @@ class DisabledActivationTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_send_activation_mail_form_filled()
+    public function do_not_send_activation_mail_form_filled(): void
     {
         Notification::fake();
 
@@ -88,7 +88,7 @@ class DisabledActivationTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_activate_user_if_activation_disabled()
+    public function do_not_activate_user_if_activation_disabled(): void
     {
         $user = $this->createTestUser(false);
 

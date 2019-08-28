@@ -11,49 +11,49 @@ interface ActivationBroker
      *
      * @var string
      */
-    const ACTIVATION_LINK_SENT = 'sent';
+    public const ACTIVATION_LINK_SENT = 'sent';
 
     /**
      * Constant representing a successfully reset password.
      *
      * @var string
      */
-    const ACTIVATED = 'activated';
+    public const ACTIVATED = 'activated';
 
     /**
      * Constant representing the user not found response.
      *
      * @var string
      */
-    const INVALID_USER = 'invalid-user';
+    public const INVALID_USER = 'invalid-user';
 
     /**
      * Constant representing an invalid token.
      *
      * @var string
      */
-    const INVALID_TOKEN = 'invalid-token';
+    public const INVALID_TOKEN = 'invalid-token';
 
     /**
      * Constant representing a disabled activation.
      *
      * @var string
      */
-    const ACTIVATION_DISABLED = 'disabled';
+    public const ACTIVATION_DISABLED = 'disabled';
 
     /**
-     * Send a password reset link to a user.
+     * Send activation link to a user.
      *
      * @param array $credentials
      * @return string
      */
-    public function sendActivationLink(array $credentials);
+    public function sendActivationLink(array $credentials): string;
 
     /**
-     * Reset the password for the given token.
+     * Activate user for the given token.
      *
      * @param array $credentials
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return mixed
      */
     public function activate(array $credentials, Closure $callback);

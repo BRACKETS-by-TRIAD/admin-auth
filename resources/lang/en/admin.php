@@ -36,7 +36,7 @@ return [
         'sent' => 'We have sent you an activation link!',
         'activated' => 'Your account was activated!',
         'invalid_request' => 'The request failed.',
-        'disabled' => "Activation is disabled.",
+        'disabled' => 'Activation is disabled.',
     ],
 
     'passwords' => [

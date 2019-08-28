@@ -2,8 +2,10 @@
 
 namespace Brackets\AdminAuth\Activation\Brokers;
 
+use Brackets\AdminAuth\Activation\Contracts\ActivationBroker as ActivationBrokerContract;
 use Brackets\AdminAuth\Activation\Contracts\ActivationBrokerFactory as FactoryContract;
 use Brackets\AdminAuth\Activation\Repositories\DatabaseTokenRepository;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
@@ -12,7 +14,7 @@ class ActivationBrokerManager implements FactoryContract
     /**
      * The application instance.
      *
-     * @var \Illuminate\Foundation\Application
+     * @var Application
      */
     protected $app;
 
@@ -26,7 +28,7 @@ class ActivationBrokerManager implements FactoryContract
     /**
      * Create a new ActivationBroker manager instance.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      * @return void
      */
     public function __construct($app)
@@ -38,15 +40,13 @@ class ActivationBrokerManager implements FactoryContract
      * Attempt to get the broker from the local cache.
      *
      * @param string $name
-     * @return ActivationBroker
+     * @return ActivationBrokerContract
      */
-    public function broker($name = null)
+    public function broker($name = null): ?ActivationBrokerContract
     {
         $name = $name ?: $this->getDefaultDriver();
 
-        return isset($this->brokers[$name])
-            ? $this->brokers[$name]
-            : $this->brokers[$name] = $this->resolve($name);
+        return $this->brokers[$name] ?? $this->brokers[$name] = $this->resolve($name);
     }
 
     /**
@@ -54,14 +54,13 @@ class ActivationBrokerManager implements FactoryContract
      *
      * @param string $name
      * @throws \InvalidArgumentException
-     * @return ActivationBroker
-     *
+     * @return ActivationBrokerContract
      */
-    protected function resolve($name)
+    protected function resolve($name): ActivationBrokerContract
     {
         $config = $this->getConfig($name);
 
-        if (is_null($config)) {
+        if ($config === null) {
             throw new InvalidArgumentException("Activationer [{$name}] is not defined.");
         }
 
@@ -80,7 +79,7 @@ class ActivationBrokerManager implements FactoryContract
      * @param array $config
      * @return DatabaseTokenRepository
      */
-    protected function createTokenRepository(array $config)
+    protected function createTokenRepository(array $config): DatabaseTokenRepository
     {
         $key = $this->app['config']['app.key'];
 
@@ -88,7 +87,7 @@ class ActivationBrokerManager implements FactoryContract
             $key = base64_decode(substr($key, 7));
         }
 
-        $connection = isset($config['connection']) ? $config['connection'] : null;
+        $connection = $config['connection'] ?? null;
 
         return new DatabaseTokenRepository(
             $this->app['db']->connection($connection),
@@ -105,7 +104,7 @@ class ActivationBrokerManager implements FactoryContract
      * @param string $name
      * @return array
      */
-    protected function getConfig($name)
+    protected function getConfig($name): array
     {
         return $this->app['config']["activation.activations.{$name}"];
     }
@@ -115,7 +114,7 @@ class ActivationBrokerManager implements FactoryContract
      *
      * @return string
      */
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
         return $this->app['config']['activation.defaults.activations'];
     }
@@ -126,7 +125,7 @@ class ActivationBrokerManager implements FactoryContract
      * @param string $name
      * @return void
      */
-    public function setDefaultDriver($name)
+    public function setDefaultDriver($name): void
     {
         $this->app['config']['activation.defaults.activations'] = $name;
     }

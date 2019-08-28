@@ -3,8 +3,12 @@
 namespace Brackets\AdminAuth\Http\Controllers\Auth;
 
 use Brackets\AdminAuth\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\PasswordBroker as PasswordBrokerContract;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
@@ -51,7 +55,7 @@ class ForgotPasswordController extends Controller
     /**
      * Display the form to request a password reset link.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showLinkRequestForm()
     {
@@ -61,8 +65,8 @@ class ForgotPasswordController extends Controller
     /**
      * Send a reset link to the given user.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function sendResetLinkEmail(Request $request)
     {
@@ -75,7 +79,7 @@ class ForgotPasswordController extends Controller
             $request->only('email')
         );
 
-        return $response == Password::RESET_LINK_SENT
+        return $response === Password::RESET_LINK_SENT
             ? $this->sendResetLinkResponse($request, $response)
             : $this->sendResetLinkFailedResponse($request, $response);
     }
@@ -85,12 +89,12 @@ class ForgotPasswordController extends Controller
      *
      * @param Request $request
      * @param string $response
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
         $message = trans($response);
-        if ($response == Password::RESET_LINK_SENT) {
+        if ($response === Password::RESET_LINK_SENT) {
             $message = trans('brackets/admin-auth::admin.passwords.sent');
         }
         return back()->with('status', $message);
@@ -99,9 +103,9 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a failed password reset link.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param string $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @return RedirectResponse|JsonResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
@@ -117,9 +121,9 @@ class ForgotPasswordController extends Controller
     /**
      * Get the broker to be used during password reset.
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     * @return PasswordBrokerContract
      */
-    public function broker()
+    public function broker(): ?PasswordBrokerContract
     {
         return Password::broker($this->passwordBroker);
     }

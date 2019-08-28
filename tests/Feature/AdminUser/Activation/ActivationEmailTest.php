@@ -12,7 +12,7 @@ class ActivationEmailTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
-    protected function createTestUser($activated = true, $forbidden = false)
+    protected function createTestUser(bool $activated = true, bool $forbidden = false): TestBracketsUserModel
     {
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
@@ -31,14 +31,14 @@ class ActivationEmailTest extends BracketsTestCase
     }
 
     /** @test */
-    public function can_see_activation_form()
+    public function can_see_activation_form(): void
     {
         $response = $this->get(url('/admin/activation'));
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function send_activation_email_after_user_created()
+    public function send_activation_email_after_user_created(): void
     {
         Notification::fake();
 
@@ -51,7 +51,7 @@ class ActivationEmailTest extends BracketsTestCase
     }
 
     /** @test */
-    public function send_activation_email_after_user_not_activated_and_form_filled()
+    public function send_activation_email_after_user_not_activated_and_form_filled(): void
     {
         Notification::fake();
 
@@ -67,7 +67,7 @@ class ActivationEmailTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_send_activation_email_if_email_not_found()
+    public function do_not_send_activation_email_if_email_not_found(): void
     {
         Notification::fake();
 
@@ -88,7 +88,7 @@ class ActivationEmailTest extends BracketsTestCase
     }
 
     /** @test */
-    public function do_not_send_activation_email_if_user_already_activated()
+    public function do_not_send_activation_email_if_user_already_activated(): void
     {
         Notification::fake();
 

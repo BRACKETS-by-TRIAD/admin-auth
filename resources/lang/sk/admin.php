@@ -44,7 +44,7 @@ return [
         'sent' => 'Poslali sme Vám link na obnovu hesla.',
         'invalid_password' => 'Heslo musí obsahovať najmenej šesť znakov a musí sa zhodovať s potvrdením.',
         'invalid_token' => 'Token na obnovu hesla je neplatný.',
-        'invalid_user' => "Nepodarilo sa nájsť používateľa s touto e-mailovou adresou.",
+        'invalid_user' => 'Nepodarilo sa nájsť používateľa s touto e-mailovou adresou.',
     ],
 
     'profile_dropdown' => [

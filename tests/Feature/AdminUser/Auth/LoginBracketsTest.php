@@ -12,7 +12,7 @@ class LoginBracketsTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
-    protected function createTestUser($activated = true, $forbidden = false)
+    protected function createTestUser(bool $activated = true, bool $forbidden = false): TestBracketsUserModel
     {
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
@@ -31,14 +31,14 @@ class LoginBracketsTest extends BracketsTestCase
     }
 
     /** @test */
-    public function login_page_is_accessible()
+    public function login_page_is_accessible(): void
     {
         $response = $this->get('/admin/login');
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function user_can_log_in()
+    public function user_can_l«og_in(): void
     {
         $user = $this->createTestUser();
 
@@ -49,7 +49,7 @@ class LoginBracketsTest extends BracketsTestCase
     }
 
     /** @test */
-    public function user_with_wrong_credentials_cannot_log_in()
+    public function user_with_wrong_credentials_cannot_log_in(): void
     {
         $user = $this->createTestUser();
 
@@ -60,7 +60,7 @@ class LoginBracketsTest extends BracketsTestCase
     }
 
     /** @test */
-    public function not_activated_user_cannot_log_in()
+    public function not_activated_user_cannot_log_in(): void
     {
         $user = $this->createTestUser(false);
 
@@ -71,8 +71,7 @@ class LoginBracketsTest extends BracketsTestCase
     }
 
     /** @test */
-    //Fixme Maybe not???
-    public function not_activated_user_can_log_in_if_activation_disabled()
+    public function not_activated_user_can_log_in_if_activation_disabled(): void
     {
         $user = $this->createTestUser(false);
 
@@ -85,7 +84,7 @@ class LoginBracketsTest extends BracketsTestCase
     }
 
     /** @test */
-    public function forbidden_user_cannot_log_in()
+    public function forbidden_user_cannot_log_in(): void
     {
         $user = $this->createTestUser(true, true);
 
@@ -96,7 +95,7 @@ class LoginBracketsTest extends BracketsTestCase
     }
 
     /** @test */
-    public function deleted_user_cannot_log_in()
+    public function deleted_user_cannot_log_in(): void
     {
         $time = Carbon::now();
         //Delted at is not fillable, therefore we need to unguard to force fill
@@ -124,7 +123,7 @@ class LoginBracketsTest extends BracketsTestCase
     }
 
     /** @test */
-    public function already_auth_user_is_redirected_from_login()
+    public function already_auth_user_is_redirected_from_login(): void
     {
         $user = $this->createTestUser();
 

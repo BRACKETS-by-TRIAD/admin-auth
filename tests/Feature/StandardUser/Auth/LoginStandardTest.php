@@ -11,7 +11,7 @@ class LoginStandardTest extends StandardTestCase
 {
     use DatabaseMigrations;
 
-    protected function createTestUser()
+    protected function createTestUser(): TestStandardUserModel
     {
         $user = TestStandardUserModel::create([
             'email' => 'john@example.com',
@@ -26,14 +26,14 @@ class LoginStandardTest extends StandardTestCase
     }
 
     /** @test */
-    public function login_page_is_accessible()
+    public function login_page_is_accessible(): void
     {
         $response = $this->get('/admin/login');
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function user_can_log_in()
+    public function user_can_log_in(): void
     {
         $user = $this->createTestUser();
 
@@ -44,7 +44,7 @@ class LoginStandardTest extends StandardTestCase
     }
 
     /** @test */
-    public function user_with_wrong_credentials_cannot_log_in()
+    public function user_with_wrong_credentials_cannot_log_in(): void
     {
         $user = $this->createTestUser();
 
@@ -55,7 +55,7 @@ class LoginStandardTest extends StandardTestCase
     }
 
     /** @test */
-    public function already_auth_user_is_redirected_from_login()
+    public function already_auth_user_is_redirected_from_login(): void
     {
         $user = $this->createTestUser();
 

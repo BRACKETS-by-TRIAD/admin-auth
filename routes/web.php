@@ -11,8 +11,8 @@
 |
 */
 
-Route::middleware(['web'])->group(function () {
-    Route::namespace('Brackets\AdminAuth\Http\Controllers\Auth')->group(function () {
+Route::middleware(['web'])->group(static function () {
+    Route::namespace('Brackets\AdminAuth\Http\Controllers\Auth')->group(static function () {
         Route::get('/admin/login', 'LoginController@showLoginForm')->name('brackets/admin-auth::admin/login');
         Route::post('/admin/login', 'LoginController@login');
 
@@ -27,8 +27,8 @@ Route::middleware(['web'])->group(function () {
     });
 });
 
-Route::middleware(['web', 'admin', 'auth:' . config('admin-auth.defaults.guard')])->group(function () {
-    Route::namespace('Brackets\AdminAuth\Http\Controllers')->group(function () {
+Route::middleware(['web', 'admin', 'auth:' . config('admin-auth.defaults.guard')])->group(static function () {
+    Route::namespace('Brackets\AdminAuth\Http\Controllers')->group(static function () {
         Route::get('/admin', 'AdminHomepageController@index')->name('brackets/admin-auth::admin');
     });
 });

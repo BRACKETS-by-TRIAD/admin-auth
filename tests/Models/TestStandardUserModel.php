@@ -40,7 +40,6 @@ class TestStandardUserModel extends Authenticatable implements CanActivateContra
      * @param string $token
      * @return void
      */
-    //TODO move to generator?
     public function sendPasswordResetNotification($token)
     {
         $this->notify(app(ResetPassword::class, ['token' => $token]));

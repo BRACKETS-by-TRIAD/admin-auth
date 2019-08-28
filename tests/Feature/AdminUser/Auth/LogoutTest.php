@@ -11,7 +11,7 @@ class LogoutTest extends BracketsTestCase
 {
     use DatabaseMigrations;
 
-    protected function createTestUser()
+    protected function createTestUser(): TestBracketsUserModel
     {
         $user = TestBracketsUserModel::create([
             'email' => 'john@example.com',
@@ -30,7 +30,7 @@ class LogoutTest extends BracketsTestCase
     }
 
     /** @test */
-    public function auth_user_can_logout()
+    public function auth_user_can_logout(): void
     {
         $user = $this->createTestUser();
 
@@ -47,7 +47,7 @@ class LogoutTest extends BracketsTestCase
     }
 
     /** @test */
-    public function not_auth_user_cannot_logout()
+    public function not_auth_user_cannot_logout(): void
     {
         $this->assertEmpty(Auth::guard($this->adminAuthGuard)->user());
 

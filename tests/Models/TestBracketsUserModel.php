@@ -6,11 +6,16 @@ use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Traits\CanActivate;
 use Brackets\AdminAuth\Notifications\ActivationNotification;
 use Brackets\AdminAuth\Notifications\ResetPassword;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property mixed first_name
+ * @property mixed last_name
+ */
 class TestBracketsUserModel extends Authenticatable implements CanActivateContract
 {
     use Notifiable;
@@ -19,24 +24,24 @@ class TestBracketsUserModel extends Authenticatable implements CanActivateContra
     use HasRoles;
 
     protected $fillable = [
-        "email",
-        "password",
-        "first_name",
-        "last_name",
-        "activated",
-        "forbidden",
-        "language",
+        'email',
+        'password',
+        'first_name',
+        'last_name',
+        'activated',
+        'forbidden',
+        'language',
     ];
 
     protected $hidden = [
-        "password",
-        "remember_token",
+        'password',
+        'remember_token',
     ];
 
     protected $dates = [
-        "created_at",
-        "updated_at",
-        "deleted_at",
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $appends = ['full_name', 'resource_url'];
@@ -46,7 +51,7 @@ class TestBracketsUserModel extends Authenticatable implements CanActivateContra
     /**
      * Resource url to generate edit
      *
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return UrlGenerator|string
      */
     public function getResourceUrlAttribute()
     {
@@ -58,9 +63,9 @@ class TestBracketsUserModel extends Authenticatable implements CanActivateContra
      *
      * @return string
      */
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
-        return $this->first_name . " " . $this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     /**
@@ -80,7 +85,7 @@ class TestBracketsUserModel extends Authenticatable implements CanActivateContra
      * @param string $token
      * @return void
      */
-    public function sendActivationNotification($token)
+    public function sendActivationNotification(string $token): void
     {
         $this->notify(app(ActivationNotification::class, ['token' => $token]));
     }

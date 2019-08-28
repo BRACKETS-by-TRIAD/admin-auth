@@ -9,7 +9,7 @@ interface CanActivate
      *
      * @return string
      */
-    public function getEmailForActivation();
+    public function getEmailForActivation(): string;
 
     /**
      * Send the password reset notification.
@@ -17,5 +17,5 @@ interface CanActivate
      * @param string $token
      * @return void
      */
-    public function sendActivationNotification($token);
+    public function sendActivationNotification(string $token): void;
 }

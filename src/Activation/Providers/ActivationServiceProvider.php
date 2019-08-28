@@ -4,6 +4,7 @@ namespace Brackets\AdminAuth\Activation\Providers;
 
 use Brackets\AdminAuth\Activation\Brokers\ActivationBrokerManager;
 use Brackets\AdminAuth\Activation\Facades\Activation;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 class ActivationServiceProvider extends ServiceProvider
@@ -49,7 +50,7 @@ class ActivationServiceProvider extends ServiceProvider
 
         $this->registerActivationBroker();
 
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader = AliasLoader::getInstance();
         $loader->alias('Activation', Activation::class);
     }
 

@@ -68,7 +68,7 @@ class AdminAuthInstall extends Command
     private function strReplaceInFile($fileName, $ifExistsRegex, $find, $replaceWith)
     {
         $content = File::get($fileName);
-        if (!is_null($ifExistsRegex) && preg_match($ifExistsRegex, $content)) {
+        if ($ifExistsRegex !== null && preg_match($ifExistsRegex, $content)) {
             return;
         }
 

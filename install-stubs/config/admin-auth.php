@@ -20,7 +20,6 @@ return [
     |
     */
 
-    //TODO maybe not in env
     'check_forbidden' => env('FORBIDDEN_ENABLED', false),
 
     /*
@@ -29,7 +28,6 @@ return [
     |
     */
 
-    //TODO maybe not in env
     'activation_enabled' => env('ACTIVATION_ENABLED', false),
 
     /*
