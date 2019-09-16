@@ -28,10 +28,10 @@
     ],
     "require": {
         "php": "^7.2",
-        "brackets/admin-ui": "dev-laravel-6",
+        "brackets/admin-ui": "^4.0",
+        "brackets/media": "^4.0",
         "illuminate/support": "~6.0",
-        "spatie/laravel-permission": "^3.0",
-        "brackets/media": "dev-laravel-6"
+        "spatie/laravel-permission": "^3.0"
     },
     "require-dev": {
         "orchestra/testbench": "~4.0",
@@ -56,7 +56,7 @@
             ]
         },
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }
