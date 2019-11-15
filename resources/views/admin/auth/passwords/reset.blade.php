@@ -24,14 +24,14 @@
                                     <input type="hidden" name="token" value="{{ $token }}">
 
                                     <div class="form-group"
-                                         :class="{'has-danger': errors.has('email'), 'has-success': this.fields.email && this.fields.email.valid }">
+                                         :class="{'has-danger': errors.has('email'), 'has-success': fields.email && fields.email.valid }">
                                         <label for="email">{{ trans('brackets/admin-auth::admin.auth_global.email') }}</label>
                                         <div class="input-group input-group--custom">
                                             <div class="input-group-addon"><i class="input-icon input-icon--mail"></i>
                                             </div>
                                             <input type="text" v-model="form.email" v-validate="'required|email'"
                                                    class="form-control"
-                                                   :class="{'form-control-danger': errors.has('email'), 'form-control-success': this.fields.email && this.fields.email.valid}"
+                                                   :class="{'form-control-danger': errors.has('email'), 'form-control-success': fields.email && fields.email.valid}"
                                                    id="email" name="email"
                                                    placeholder="{{ trans('brackets/admin-auth::admin.auth_global.email') }}">
                                         </div>
@@ -41,7 +41,7 @@
                                     </div>
 
                                     <div class="form-group"
-                                         :class="{'has-danger': errors.has('password'), 'has-success': this.fields.password && this.fields.password.valid }">
+                                         :class="{'has-danger': errors.has('password'), 'has-success': fields.password && fields.password.valid }">
                                         <label for="password">{{ trans('brackets/admin-auth::admin.auth_global.password') }}</label>
                                         <div class="input-group input-group--custom">
                                             <div class="input-group-addon"><i class="input-icon input-icon--lock"></i>
@@ -49,7 +49,7 @@
                                             <input type="password" v-model="form.password"
                                                    v-validate="'required|min:7'"
                                                    class="form-control"
-                                                   :class="{'form-control-danger': errors.has('password'), 'form-control-success': this.fields.password && this.fields.password.valid}"
+                                                   :class="{'form-control-danger': errors.has('password'), 'form-control-success': fields.password && fields.password.valid}"
                                                    id="password" name="password"
                                                    placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}"
                                                    ref="password">
@@ -64,7 +64,7 @@
                                     </div>
 
                                     <div class="form-group"
-                                         :class="{'has-danger': errors.has('password_confirmation'), 'has-success': this.fields.password_confirmation && this.fields.password_confirmation.valid }">
+                                         :class="{'has-danger': errors.has('password_confirmation'), 'has-success': fields.password_confirmation && fields.password_confirmation.valid }">
                                         <label for="password_confirmation">{{ trans('brackets/admin-auth::admin.auth_global.password_confirm') }}</label>
                                         <div class="input-group input-group--custom">
                                             <div class="input-group-addon"><i class="input-icon input-icon--lock"></i>
@@ -72,7 +72,7 @@
                                             <input type="password" v-model="form.password_confirmation"
                                                    v-validate="'required|confirmed:password|min:7'"
                                                    class="form-control"
-                                                   :class="{'form-control-danger': errors.has('password_confirmation'), 'form-control-success': this.fields.password_confirmation && this.fields.password_confirmation.valid}"
+                                                   :class="{'form-control-danger': errors.has('password_confirmation'), 'form-control-success': fields.password_confirmation && fields.password_confirmation.valid}"
                                                    id="password_confirmation" name="password_confirmation"
                                                    placeholder="{{ trans('brackets/admin-auth::admin.auth_global.password') }}"
                                                    data-vv-as="password">
