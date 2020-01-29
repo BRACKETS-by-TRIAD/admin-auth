@@ -45,7 +45,7 @@ class CanAdmin
         if (!Auth::guard($this->guard)->check()) {
             return redirect()->guest('/admin/login');
         } else {
-            throw new UnauthorizedException('Unathorized');
+            throw new UnauthorizedException('Unauthorized');
         }
     }
 }
