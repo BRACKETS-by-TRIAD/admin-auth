@@ -54,7 +54,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
         'deleted_at',
     ];
 
-    protected $appends = ['full_name', 'resource_url'];
+    protected $appends = ['full_name', 'resource_url', 'avatar_thumb_url'];
 
     /* ************************ ACCESSOR ************************* */
 
