@@ -30,7 +30,6 @@
         "php": "^7.2.5",
         "brackets/admin-ui": "^4.0",
         "brackets/media": "^4.0",
-        "laravel/ui": "^1.2|^2.0",
         "illuminate/support": "^6.0|^7.0",
         "spatie/laravel-permission": "^3.0"
     },

@@ -6,7 +6,7 @@ use Brackets\AdminAuth\Activation\Contracts\ActivationBroker as ActivationBroker
 use Brackets\AdminAuth\Activation\Contracts\CanActivate as CanActivateContract;
 use Brackets\AdminAuth\Activation\Facades\Activation;
 use Brackets\AdminAuth\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\RedirectsUsers;
+use Brackets\AdminAuth\Traits\RedirectsUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
