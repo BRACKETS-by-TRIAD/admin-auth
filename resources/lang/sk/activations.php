@@ -19,4 +19,10 @@ return [
     'user' => 'Nenašli sme používateľa s danými prihlasovacími údajmi. Používateľ je už zrejme aktívny.',
     'disabled' => 'Aktivácia nie je možná.',
 
+    'email' => [
+        'line' => 'Tento email ste dostali pretože sme zaznamenali požiadavku o aktiváciu vašeho účtu.',
+        'action' => 'Aktivovať účet',
+        'notRequested' => 'Ak ste nepožiadali o aktiváciu vašeho účtú môžete túto správu ignorovať.',
+    ],
+
 ];

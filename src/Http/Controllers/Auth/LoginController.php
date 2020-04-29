@@ -3,8 +3,8 @@
 namespace Brackets\AdminAuth\Http\Controllers\Auth;
 
 use Brackets\AdminAuth\Http\Controllers\Controller;
+use Brackets\AdminAuth\Traits\AuthenticatesUsers;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;

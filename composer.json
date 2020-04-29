@@ -34,7 +34,7 @@
         "spatie/laravel-permission": "^3.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~4.0",
+        "orchestra/testbench": "~4.0|~5.0",
         "mockery/mockery": "^1.0",
         "phpunit/phpunit": "^8.5"
     },

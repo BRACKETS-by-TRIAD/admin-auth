@@ -46,8 +46,8 @@ class ResetPassword extends Notification
     {
         //TODO change to template?
         return (new MailMessage)
-            ->line('You are receiving this email because we received a password reset request for your account.')
-            ->action('Reset Password', route('brackets/admin-auth::admin/password/showResetForm', $this->token))
-            ->line('If you did not request a password reset, no further action is required.');
+            ->line(trans('brackets/admin-auth::resets.email.line'))
+            ->action(trans('brackets/admin-auth::resets.email.action'), route('brackets/admin-auth::admin/password/showResetForm', $this->token))
+            ->line(trans('brackets/admin-auth::resets.email.notRequested'));
     }
 }
