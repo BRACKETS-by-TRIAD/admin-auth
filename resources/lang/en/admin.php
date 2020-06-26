@@ -48,6 +48,8 @@ return [
     ],
 
     'profile_dropdown' => [
+        'profile' => 'Profile',
+        'password' => 'Password',
         'logout' => 'Logout',
     ],
 ];
