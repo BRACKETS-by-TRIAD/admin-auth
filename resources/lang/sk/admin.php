@@ -48,6 +48,8 @@ return [
     ],
 
     'profile_dropdown' => [
+        'profile' => 'Profil',
+        'password' => 'Heslo',
         'logout' => 'Odhlásiť sa',
     ],
 ];
