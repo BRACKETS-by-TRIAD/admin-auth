@@ -41,11 +41,13 @@ class LoginBracketsTest extends BracketsTestCase
     public function user_can_log_in(): void
     {
         $user = $this->createTestUser();
+        $this->assertNull($user->last_login_at);
 
         $response = $this->post('/admin/login', ['email' => 'john@example.com', 'password' => 'testpass123']);
         $response->assertStatus(302);
 
         $this->assertNotEmpty(Auth::guard($this->adminAuthGuard)->user());
+        $this->assertNotNull(Auth::guard($this->adminAuthGuard)->user()->last_login_at);
     }
 
     /** @test */

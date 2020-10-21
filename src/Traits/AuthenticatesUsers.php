@@ -5,6 +5,7 @@ namespace Brackets\AdminAuth\Traits;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\ValidationException;
 
 trait AuthenticatesUsers
@@ -125,7 +126,10 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        if(Schema::hasColumn($user->getTable(), 'last_login_at')) {
+            $user->last_login_at = now();
+            $user->save();
+        }
     }
 
     /**

@@ -56,6 +56,12 @@ class AdminAuthServiceProvider extends ServiceProvider
                 ], 'migrations');
             }
 
+            if (!glob(base_path('database/migrations/*_add_last_login_at_timestamp_to_admin_users_table.php'))) {
+                $this->publishes([
+                    __DIR__ . '/../install-stubs/database/migrations/add_last_login_at_timestamp_to_admin_users_table.php' => database_path('migrations') . '/2020_10_21_000000_add_last_login_at_timestamp_to_admin_users_table.php',
+                ], 'migrations');
+            }
+
             $this->publishes([
                 __DIR__ . '/../install-stubs/resources/lang' => resource_path('lang/vendor/admin-auth'),
             ], 'lang');
