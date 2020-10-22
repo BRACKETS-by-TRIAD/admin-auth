@@ -41,6 +41,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
         'activated',
         'forbidden',
         'language',
+        'last_login_at',
     ];
 
     protected $hidden = [
@@ -52,6 +53,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
         'created_at',
         'updated_at',
         'deleted_at',
+        'last_login_at',
     ];
 
     protected $appends = ['full_name', 'resource_url'];
