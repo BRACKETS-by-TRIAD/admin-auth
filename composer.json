@@ -27,16 +27,16 @@
         }
     ],
     "require": {
-        "php": "^7.2.5|^7.3.0",
+        "php": "^7.4.0",
         "brackets/admin-ui": "^4.0",
-        "brackets/media": "^4.0",
-        "illuminate/support": "^6.0|^7.0|^8.0",
+        "brackets/media": "^5.0",
+        "illuminate/support": "^8.0",
         "spatie/laravel-permission": "^3.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~4.0|~5.0|~6.0",
+        "orchestra/testbench": "~6.0",
         "mockery/mockery": "^1.0",
-        "phpunit/phpunit": "^8.5|^9.0"
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
         "classmap": [],
@@ -56,7 +56,7 @@
             ]
         },
         "branch-alias": {
-            "dev-master": "5.0-dev"
+            "dev-master": "6.0-dev"
         }
     }
 }
