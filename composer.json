@@ -27,7 +27,7 @@
         }
     ],
     "require": {
-        "php": "^7.4.0",
+        "php": "^7.4.0|^8.0",
         "brackets/admin-ui": "^4.0",
         "brackets/media": "^5.0",
         "illuminate/support": "^8.0",
