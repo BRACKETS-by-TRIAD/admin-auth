@@ -14,33 +14,31 @@ class CreateAdminUsersTable extends Migration
      */
     public function up(): void
     {
-        DB::transaction(static function () {
-            Schema::create('admin_users', static function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('first_name')->nullable();
-                $table->string('last_name')->nullable();
-                $table->string('email');
-                $table->string('password');
-                $table->rememberToken();
+        Schema::create('admin_users', static function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email');
+            $table->string('password');
+            $table->rememberToken();
 
-                $table->boolean('activated')->default(false);
-                $table->boolean('forbidden')->default(false);
-                $table->string('language', 2)->default('en');
+            $table->boolean('activated')->default(false);
+            $table->boolean('forbidden')->default(false);
+            $table->string('language', 2)->default('en');
 
-                $table->softDeletes();
-                $table->timestamps();
+            $table->softDeletes();
+            $table->timestamps();
 
-                $table->unique(['email', 'deleted_at']);
-            });
-
-            $connection = config('database.default');
-            $driver = config("database.connections.{$connection}.driver");
-            if ($driver === 'pgsql') {
-                Schema::table('admin_users', static function (Blueprint $table) {
-                    DB::statement('CREATE UNIQUE INDEX admin_users_email_null_deleted_at ON admin_users (email) WHERE deleted_at IS NULL;');
-                });
-            }
+            $table->unique(['email', 'deleted_at']);
         });
+
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        if ($driver === 'pgsql') {
+            Schema::table('admin_users', static function (Blueprint $table) {
+                DB::statement('CREATE UNIQUE INDEX admin_users_email_null_deleted_at ON admin_users (email) WHERE deleted_at IS NULL;');
+            });
+        }
     }
 
     /**
