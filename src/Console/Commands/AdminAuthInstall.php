@@ -13,7 +13,7 @@ class AdminAuthInstall extends Command
      *
      * @var string
      */
-    protected $signature = 'admin-auth:install';
+    protected $signature = 'admin-auth:install {--dont-install-admin-ui}';
 
     /**
      * The console command description.
@@ -31,7 +31,9 @@ class AdminAuthInstall extends Command
     {
         $this->info('Installing package brackets/admin-auth');
 
-        $this->call('admin-ui:install');
+        if (!$this->option('dont-install-admin-ui')) {
+            $this->call('admin-ui:install');
+        }
 
         $this->call('vendor:publish', [
             '--provider' => "Brackets\\AdminAuth\\AdminAuthServiceProvider",
