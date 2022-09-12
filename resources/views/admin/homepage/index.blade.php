@@ -4,12 +4,12 @@
 
     <div class="welcome-quote">
 
-	    <blockquote>
-		    {{ explode(" - ", $inspiration)[0] }}
-		    <cite>
-			    {{ explode(" - ", $inspiration)[1] }}
-		    </cite>
-	    </blockquote>
+		<blockquote>
+			{{ $quote }}
+			<cite>
+				{{ $quoteAuthor }}
+			</cite>
+		</blockquote>
 
     </div>
 
