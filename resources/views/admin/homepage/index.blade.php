@@ -4,12 +4,12 @@
 
     <div class="welcome-quote">
 
-		<blockquote>
-			{{ $quote }}
-			<cite>
-				{{ $quoteAuthor }}
-			</cite>
-		</blockquote>
+	    <blockquote>
+		    {{ $quote }}
+		    <cite>
+			    {{ $quoteAuthor }}
+		    </cite>
+	    </blockquote>
 
     </div>
 
