@@ -15,8 +15,13 @@ class AdminHomepageController extends Controller
      */
     public function index()
     {
+        $inspiringQuote = Inspiring::quotes()->random();
+
+        [$quote, $quoteAuthor] = explode(' - ', $inspiringQuote);
+
         return view('brackets/admin-auth::admin.homepage.index', [
-            'inspiration' => Inspiring::quote()
+            'quote' => $quote,
+            'quoteAuthor' => $quoteAuthor
         ]);
     }
 }
