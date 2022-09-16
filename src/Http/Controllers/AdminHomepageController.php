@@ -3,7 +3,6 @@
 namespace Brackets\AdminAuth\Http\Controllers;
 
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Foundation\Inspiring;
 use Illuminate\View\View;
 
 class AdminHomepageController extends Controller
@@ -15,7 +14,8 @@ class AdminHomepageController extends Controller
      */
     public function index()
     {
-        $inspiringQuote = Inspiring::quotes()->random();
+        $inspiringQuote = 'Well begun is half done. - Aristotle';
+
 
         [$quote, $quoteAuthor] = explode(' - ', $inspiringQuote);
 
