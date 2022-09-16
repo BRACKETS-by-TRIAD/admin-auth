@@ -14,10 +14,8 @@ class AdminHomepageController extends Controller
      */
     public function index()
     {
-        $inspiringQuote = 'Well begun is half done. - Aristotle';
-
-
-        [$quote, $quoteAuthor] = explode(' - ', $inspiringQuote);
+        $quote = 'Well begun is half done.';
+        $quoteAuthor = 'Aristotle';
 
         return view('brackets/admin-auth::admin.homepage.index', [
             'quote' => $quote,
