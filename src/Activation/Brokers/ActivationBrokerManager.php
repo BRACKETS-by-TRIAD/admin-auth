@@ -16,14 +16,14 @@ class ActivationBrokerManager implements FactoryContract
      *
      * @var Application
      */
-    protected $app;
+    protected Application $app;
 
     /**
      * The array of created "drivers".
      *
      * @var array
      */
-    protected $brokers = [];
+    protected array $brokers = [];
 
     /**
      * Create a new ActivationBroker manager instance.
@@ -31,7 +31,7 @@ class ActivationBrokerManager implements FactoryContract
      * @param Application $app
      * @return void
      */
-    public function __construct($app)
+    public function __construct(Application $app)
     {
         $this->app = $app;
     }
@@ -39,10 +39,10 @@ class ActivationBrokerManager implements FactoryContract
     /**
      * Attempt to get the broker from the local cache.
      *
-     * @param string $name
-     * @return ActivationBrokerContract
+     * @param string|null $name
+     * @return ActivationBrokerContract|null
      */
-    public function broker($name = null): ?ActivationBrokerContract
+    public function broker(string $name = null): ?ActivationBrokerContract
     {
         $name = $name ?: $this->getDefaultDriver();
 
@@ -56,7 +56,7 @@ class ActivationBrokerManager implements FactoryContract
      * @throws \InvalidArgumentException
      * @return ActivationBrokerContract
      */
-    protected function resolve($name): ActivationBrokerContract
+    protected function resolve(string $name): ActivationBrokerContract
     {
         $config = $this->getConfig($name);
 
@@ -104,7 +104,7 @@ class ActivationBrokerManager implements FactoryContract
      * @param string $name
      * @return array
      */
-    protected function getConfig($name): array
+    protected function getConfig(string $name): array
     {
         return $this->app['config']["activation.activations.{$name}"];
     }
@@ -125,7 +125,7 @@ class ActivationBrokerManager implements FactoryContract
      * @param string $name
      * @return void
      */
-    public function setDefaultDriver($name): void
+    public function setDefaultDriver(string $name): void
     {
         $this->app['config']['activation.defaults.activations'] = $name;
     }
@@ -137,7 +137,7 @@ class ActivationBrokerManager implements FactoryContract
      * @param array $parameters
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters): mixed
     {
         return $this->broker()->{$method}(...$parameters);
     }

@@ -17,35 +17,35 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      *
      * @var ConnectionInterface
      */
-    protected $connection;
+    protected ConnectionInterface $connection;
 
     /**
      * The Hasher implementation.
      *
      * @var HasherContract
      */
-    protected $hasher;
+    protected HasherContract $hasher;
 
     /**
      * The token database table.
      *
      * @var string
      */
-    protected $table;
+    protected string $table;
 
     /**
      * The hashing key.
      *
      * @var string
      */
-    protected $hashKey;
+    protected string $hashKey;
 
     /**
      * The number of seconds a token should last.
      *
      * @var int
      */
-    protected $expires;
+    protected int $expires;
 
     /**
      * Create a new token repository instance.
@@ -59,10 +59,10 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      */
     public function __construct(
         ConnectionInterface $connection,
-        HasherContract $hasher,
-        $table,
-        $hashKey,
-        $expires = 60
+        HasherContract      $hasher,
+        string              $table,
+        string              $hashKey,
+        int $expires = 60
     ) {
         $this->table = $table;
         $this->hasher = $hasher;
@@ -91,7 +91,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param string $token
      * @return array|null
      */
-    public function getByToken($token): ?array
+    public function getByToken(string $token): ?array
     {
         return (array)$this->getTable()
             ->where(['token' => $token, 'used' => false])
@@ -178,10 +178,10 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      *
      * @param string $email
      * @param string $token
-     * @throws Exception
      * @return array
+     *@throws Exception
      */
-    protected function getPayload($email, $token): array
+    protected function getPayload(string $email, string $token): array
     {
         return ['email' => $email, 'token' => $token, 'created_at' => new Carbon];
     }
@@ -193,7 +193,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param string $token
      * @return bool
      */
-    public function exists(CanActivateContract $user, $token): bool
+    public function exists(CanActivateContract $user, string $token): bool
     {
         $record = (array)$this->getTable()->where(
             ['email' => $user->getEmailForActivation(), 'used' => false]
@@ -210,7 +210,7 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param string $createdAt
      * @return bool
      */
-    protected function tokenExpired($createdAt): bool
+    protected function tokenExpired(string $createdAt): bool
     {
         return Carbon::parse($createdAt)->addSeconds($this->expires)->isPast();
     }

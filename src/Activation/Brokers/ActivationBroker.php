@@ -74,7 +74,7 @@ class ActivationBroker implements ActivationBrokerContract
      * @param Closure $callback
      * @return mixed
      */
-    public function activate(array $credentials, Closure $callback)
+    public function activate(array $credentials, Closure $callback): mixed
     {
         // If the responses from the validate method is not a user instance, we will
         // assume that it is a redirect and simply return it from this method and
@@ -101,7 +101,7 @@ class ActivationBroker implements ActivationBrokerContract
      * @param array $credentials
      * @return CanActivateContract|string
      */
-    protected function validateActivation(array $credentials)
+    protected function validateActivation(array $credentials): CanActivateContract|string
     {
         if (empty($tokenRecord = $this->tokens->getByToken($credentials['token']))) {
             return static::INVALID_TOKEN;
@@ -183,7 +183,7 @@ class ActivationBroker implements ActivationBrokerContract
      *
      * @return CanActivateContract
      */
-    public function getUserModelClass()
+    public function getUserModelClass(): CanActivateContract
     {
         return $this->users->getModel();
     }

@@ -29,9 +29,9 @@ class ActivationNotification extends Notification
      * Get the notification's channels.
      *
      * @param mixed $notifiable
-     * @return array|string
+     * @return array
      */
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
@@ -42,7 +42,7 @@ class ActivationNotification extends Notification
      * @param mixed $notifiable
      * @return MailMessage
      */
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         //TODO change to template?
         return (new MailMessage)

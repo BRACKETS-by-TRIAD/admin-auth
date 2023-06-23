@@ -14,7 +14,7 @@ class ActivationListener
      *
      * @var string
      */
-    protected $activationBroker = 'admin_users';
+    protected mixed $activationBroker = 'admin_users';
 
     /**
      * Create a new ActivationListener
@@ -31,7 +31,7 @@ class ActivationListener
      *
      * @param Dispatcher $events
      */
-    public function subscribe(Dispatcher $events)
+    public function subscribe(Dispatcher $events): void
     {
         $activationBrokerConfig = config("activation.activations.{$this->activationBroker}");
         if (app('auth')->createUserProvider($activationBrokerConfig['provider']) !== null) {

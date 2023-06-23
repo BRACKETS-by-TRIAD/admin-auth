@@ -31,7 +31,7 @@ class ActivationNotification extends Notification
      * @param mixed $notifiable
      * @return array|string
      */
-    public function via($notifiable)
+    public function via(mixed $notifiable): array|string
     {
         return ['mail'];
     }
@@ -42,7 +42,7 @@ class ActivationNotification extends Notification
      * @param mixed $notifiable
      * @return MailMessage
      */
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         //TODO change to template?
         return (new MailMessage)

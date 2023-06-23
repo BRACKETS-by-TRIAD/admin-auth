@@ -4,8 +4,9 @@ namespace Brackets\AdminAuth\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ParentHandler;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Handler extends ParentHandler
 {
@@ -14,11 +15,11 @@ class Handler extends ParentHandler
      *
      * @param Request $request
      * @param AuthenticationException $exception
-     * @return Response
+     * @return JsonResponse|RedirectResponse
      */
-    protected function unauthenticated($request, AuthenticationException $exception)
+    protected function unauthenticated($request, AuthenticationException $exception): JsonResponse|RedirectResponse
     {
-        if (strpos($request->getRequestUri(), '/admin') === 0) {
+        if (str_starts_with($request->getRequestUri(), '/admin')) {
             $url = route('brackets/admin-auth::admin/login');
         } else {
             $url = route('login');

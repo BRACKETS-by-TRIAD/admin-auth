@@ -14,14 +14,14 @@ class ActivationServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = true;
+    protected bool $defer = true;
 
     /**
      * Bootstrap any application services.
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -41,7 +41,7 @@ class ActivationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../../../install-stubs/config/activation.php',
@@ -59,7 +59,7 @@ class ActivationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerActivationBroker()
+    protected function registerActivationBroker(): void
     {
         $this->app->singleton('auth.activation', function ($app) {
             return new ActivationBrokerManager($app);
@@ -75,7 +75,7 @@ class ActivationServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return ['auth.activation', 'auth.activation.broker'];
     }

@@ -72,7 +72,7 @@ class ActivationService
     /**
      * Get the broker to be used during activation.
      *
-     * @return ActivationBrokerContract
+     * @return ActivationBrokerContract|null
      */
     public function broker(): ?ActivationBrokerContract
     {

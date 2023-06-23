@@ -20,7 +20,7 @@ interface TokenRepositoryInterface
      * @param string $token
      * @return array|null
      */
-    public function getByToken($token): ?array;
+    public function getByToken(string $token): ?array;
 
     /**
      * Create a new token.
@@ -54,7 +54,7 @@ interface TokenRepositoryInterface
      * @param string $token
      * @return bool
      */
-    public function exists(CanActivateContract $user, $token): bool;
+    public function exists(CanActivateContract $user, string $token): bool;
 
     /**
      * Delete a token record.
