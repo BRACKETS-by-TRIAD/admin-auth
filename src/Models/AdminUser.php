@@ -65,7 +65,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
      *
      * @return UrlGenerator|string
      */
-    public function getResourceUrlAttribute()
+    public function getResourceUrlAttribute(): string
     {
         return url('/admin/admin-users/' . $this->getKey());
     }
@@ -96,7 +96,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
      * @param string $token
      * @return void
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(app(ResetPassword::class, ['token' => $token]));
     }
@@ -142,7 +142,7 @@ class AdminUser extends Authenticatable implements CanActivateContract, HasMedia
     /**
      * Auto register thumb overridden
      */
-    public function autoRegisterThumb200()
+    public function autoRegisterThumb200(): void
     {
         $this->getMediaCollections()->filter->isImage()->each(function ($mediaCollection) {
             $this->addMediaConversion('thumb_200')

@@ -7,7 +7,7 @@ use Brackets\AdminAuth\Activation\Facades\Activation;
 use Brackets\AdminAuth\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 
 class ActivationEmailController extends Controller
@@ -28,14 +28,14 @@ class ActivationEmailController extends Controller
      *
      * @var string
      */
-    protected $guard = 'admin';
+    protected mixed $guard = 'admin';
 
     /**
      * Activation broker used for admin user
      *
      * @var string
      */
-    protected $activationBroker = 'admin_users';
+    protected mixed $activationBroker = 'admin_users';
 
     /**
      * Create a new controller instance.
@@ -52,9 +52,9 @@ class ActivationEmailController extends Controller
     /**
      * Display the form to request a activation link.
      *
-     * @return Response
+     * @return View
      */
-    public function showLinkRequestForm()
+    public function showLinkRequestForm(): View
     {
         if (config('admin-auth.self_activation_form_enabled')) {
             return view('brackets/admin-auth::admin.auth.activation.email');
@@ -67,10 +67,10 @@ class ActivationEmailController extends Controller
      * Send an activation link to the given user.
      *
      * @param Request $request
+     * @return RedirectResponse
      * @throws ValidationException
-     * @return RedirectResponse|Response
-     */
-    public function sendActivationEmail(Request $request)
+      */
+    public function sendActivationEmail(Request $request): RedirectResponse
     {
         if (config('admin-auth.self_activation_form_enabled')) {
             if (!config('admin-auth.activation_enabled')) {
@@ -99,7 +99,7 @@ class ActivationEmailController extends Controller
      * @throws ValidationException
      * @return void
      */
-    protected function validateEmail(Request $request)
+    protected function validateEmail(Request $request): void
     {
         $this->validate($request, ['email' => 'required|email']);
     }
@@ -111,7 +111,7 @@ class ActivationEmailController extends Controller
      * @param string $response
      * @return RedirectResponse
      */
-    protected function sendActivationLinkResponse(Request $request, $response)
+    protected function sendActivationLinkResponse(Request $request, string $response): RedirectResponse
     {
         $message = trans('brackets/admin-auth::admin.activations.sent');
         return back()->with('status', $message);
@@ -125,7 +125,7 @@ class ActivationEmailController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    protected function sendActivationLinkFailedResponse(Request $request, $response)
+    protected function sendActivationLinkFailedResponse(Request $request, string $response): RedirectResponse
     {
         $message = trans($response);
         if ($response === Activation::ACTIVATION_DISABLED) {
@@ -151,7 +151,7 @@ class ActivationEmailController extends Controller
     /**
      * Get the broker to be used during activation.
      *
-     * @return ActivationBrokerContract
+     * @return ActivationBrokerContract|null
      */
     public function broker(): ?ActivationBrokerContract
     {

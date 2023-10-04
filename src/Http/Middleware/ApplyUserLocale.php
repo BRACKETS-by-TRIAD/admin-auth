@@ -30,7 +30,7 @@ class ApplyUserLocale
      * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next): mixed
     {
         if (Auth::guard($this->guard)->check() && isset(Auth::guard($this->guard)->user()->language)) {
             app()->setLocale(Auth::guard($this->guard)->user()->language);

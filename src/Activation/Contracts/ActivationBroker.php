@@ -56,5 +56,5 @@ interface ActivationBroker
      * @param Closure $callback
      * @return mixed
      */
-    public function activate(array $credentials, Closure $callback);
+    public function activate(array $credentials, Closure $callback): mixed;
 }

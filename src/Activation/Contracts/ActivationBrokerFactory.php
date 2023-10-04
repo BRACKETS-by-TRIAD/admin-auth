@@ -10,5 +10,5 @@ interface ActivationBrokerFactory
      * @param string|null $name
      * @return mixed
      */
-    public function broker($name = null);
+    public function broker(string $name = null): mixed;
 }

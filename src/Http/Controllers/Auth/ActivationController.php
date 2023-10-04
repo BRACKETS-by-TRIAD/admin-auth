@@ -29,21 +29,21 @@ class ActivationController extends Controller
      *
      * @var string
      */
-    protected $guard = 'admin';
+    protected mixed $guard = 'admin';
 
     /**
      * Where to redirect users after activating their accounts.
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected mixed $redirectTo = '/';
 
     /**
      * Activation broker used for admin user
      *
      * @var string
      */
-    protected $activationBroker = 'admin_users';
+    protected mixed $activationBroker = 'admin_users';
 
     /**
      * Create a new controller instance.
@@ -66,7 +66,7 @@ class ActivationController extends Controller
      * @throws ValidationException
      * @return RedirectResponse
      */
-    public function activate(Request $request, $token)
+    public function activate(Request $request, mixed $token): RedirectResponse
     {
         if (!config('admin-auth.activation_enabled')) {
             return $this->sendActivationFailedResponse($request, Activation::ACTIVATION_DISABLED);
@@ -144,7 +144,7 @@ class ActivationController extends Controller
      * @param string $response
      * @return RedirectResponse
      */
-    protected function sendActivationResponse(Request $request, $response)
+    protected function sendActivationResponse(Request $request, string $response): RedirectResponse
     {
         $message = trans($response);
         if ($response === Activation::ACTIVATED) {
@@ -157,12 +157,11 @@ class ActivationController extends Controller
     /**
      * Get the response for a failed activation.
      *
-     * @param Request
-     * @param string $response
      * @param Request $request
+     * @param string $response
      * @return RedirectResponse
      */
-    protected function sendActivationFailedResponse(Request $request, string $response)
+    protected function sendActivationFailedResponse(Request $request, string $response): RedirectResponse
     {
         $message = trans($response);
         if ($response === Activation::INVALID_USER || $response === Activation::INVALID_TOKEN) {
@@ -186,7 +185,7 @@ class ActivationController extends Controller
     /**
      * Get the broker to be used during activation.
      *
-     * @return ActivationBrokerContract
+     * @return ActivationBrokerContract|null
      */
     public function broker(): ?ActivationBrokerContract
     {

@@ -3,16 +3,16 @@
 namespace Brackets\AdminAuth\Http\Controllers;
 
 use Illuminate\Contracts\View\Factory;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class AdminHomepageController extends Controller
 {
     /**
      * Display default admin home page
      *
-     * @return Factory|View
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $quote = 'Well begun is half done.';
         $quoteAuthor = 'Aristotle';

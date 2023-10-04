@@ -5,9 +5,11 @@ namespace Brackets\AdminAuth\Http\Controllers\Auth;
 use Brackets\AdminAuth\Http\Controllers\Controller;
 use Brackets\AdminAuth\Traits\AuthenticatesUsers;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LoginController extends Controller
 {
@@ -29,21 +31,21 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected mixed $redirectTo = '/admin';
 
     /**
      * Where to redirect users after logout.
      *
      * @var string
      */
-    protected $redirectToAfterLogout = '/admin/login';
+    protected mixed $redirectToAfterLogout = '/admin/login';
 
     /**
      * Guard used for admin user
      *
      * @var string
      */
-    protected $guard = 'admin';
+    protected mixed $guard = 'admin';
 
     /**
      * Create a new controller instance.
@@ -61,9 +63,9 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
-     * @return Response
+     * @return View
      */
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
         return view('brackets/admin-auth::admin.auth.login');
     }
@@ -72,9 +74,9 @@ class LoginController extends Controller
      * Log the user out of the application.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         $this->guard()->logout();
 
@@ -122,7 +124,7 @@ class LoginController extends Controller
      *
      * @return StatefulGuard
      */
-    protected function guard()
+    protected function guard(): StatefulGuard
     {
         return Auth::guard($this->guard);
     }
