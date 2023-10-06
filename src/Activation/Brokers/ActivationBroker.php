@@ -175,7 +175,6 @@ class ActivationBroker implements ActivationBrokerContract
      */
     public function getRepository(): TokenRepositoryInterface
     {
-        dd($this->tokens);
         return $this->tokens;
     }
 
@@ -184,7 +183,7 @@ class ActivationBroker implements ActivationBrokerContract
      *
      * @return CanActivateContract
      */
-    public function getUserModelClass(): string 
+    public function getUserModelClass(): CanActivateContract 
     {
         return $this->users->getModel();
     }
