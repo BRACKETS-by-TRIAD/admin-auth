@@ -181,9 +181,9 @@ class ActivationBroker implements ActivationBrokerContract
     /**
      * Get the user model class implementation.
      *
-     * @return CanActivateContract
+     * @return string
      */
-    public function getUserModelClass(): CanActivateContract 
+    public function getUserModelClass(): string
     {
         return $this->users->getModel();
     }
